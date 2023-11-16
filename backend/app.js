@@ -1,11 +1,12 @@
 // import {express} from 'express';
 const express = require("express");
 const app = express();
+require("dotevn").config();
 
-const port = 8000;
+const port = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
-  res.send("hello world! from backend app.js !!");
+  res.send("hello world! from backend> app.js !!");
 });
 
 app.listen(port, () => {
