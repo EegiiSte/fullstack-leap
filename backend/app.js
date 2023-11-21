@@ -1,6 +1,8 @@
 // import {express} from 'express';
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
+
 app.use(express.json());
 
 const usersRouter = require("./routes/users");
@@ -38,6 +40,16 @@ app.use((req, res, next) => {
 
 // ----------------------------------------------------------------
 
-app.listen(port, () => {
-  console.log(`server is running at http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`server is running at http://localhost:${port}`);
+// });
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(
+    console.log("Connect to MongoDB successfully!"),
+    app.listen(port, () => {
+      console.log(`server is running at http://localhost:${port}`);
+    })
+  )
+  .catch((error) => console.log(error));
