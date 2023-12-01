@@ -1,6 +1,6 @@
 import { Home, Product, Products } from "./pages";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-
+import "./mainStyle.css";
 export const App = () => {
   return (
     <BrowserRouter>

@@ -7,13 +7,16 @@
 .just-c {
   justify-content: center;
 }
+.just-s-evenly {
+  justify-content: space-evenly;
+}
 .just-end {
   justify-content: end;
 }
-.just-space-between {
+.just-s-between {
   justify-content: space-between;
 }
-.just-space-around {
+.just-s-around {
   justify-content: space-around;
 }
 .align-start {
@@ -110,16 +113,16 @@
 .gap-30 {
   gap: 30px;
 }
-.padding10 {
+.padding-10 {
   padding: 10px;
 }
-.paddingTop10 {
+.padding-top-10 {
   padding-top: 10px;
 }
-.marginTop10 {
+.margin-top-10 {
   margin-top: 10px;
 }
-.margin20 {
+.margin-20 {
   margin: 20px;
 }
 .margin10 {

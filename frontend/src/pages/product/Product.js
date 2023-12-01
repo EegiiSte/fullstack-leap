@@ -29,7 +29,7 @@ export const Product = () => {
     return () => fetchProduct();
   }, [id]);
 
-  console.log(selectedProduct.name);
+  console.log(selectedProduct);
 
   return (
     <div
@@ -48,16 +48,32 @@ export const Product = () => {
       >
         This is Single Product page
       </div>
-      <div
-        style={{
-          backgroundColor: "whitesmoke",
-          height: "50%",
-          width: "80%",
-          borderRadius: "10px",
-          padding: "20px",
-          margin: "20px",
-        }}
-      ></div>
+      {selectedProduct && (
+        <div
+          style={{
+            backgroundColor: "whitesmoke",
+            height: "50%",
+            width: "80%",
+            borderRadius: "10px",
+            padding: "20px",
+            margin: "20px",
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <div
+            style={{
+              width: "40%",
+            }}
+          >
+            <h3>Name : {selectedProduct.name}</h3>
+            <p>Description : {selectedProduct.description}</p>
+            <p>Price : {selectedProduct.price}</p>
+            <p>Category : {selectedProduct.category}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

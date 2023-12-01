@@ -4,8 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "../../component/header/Header";
 import "./Product.css";
 
+import { ModalCreateProduct } from "../../component";
+
 export const Products = () => {
   const [products, setProducts] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,10 +38,13 @@ export const Products = () => {
         style={{
           width: "100%",
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "space-evenly",
         }}
       >
         This is Products page
+        <div>
+          <button onClick={handleOpen}> Create Product</button>
+        </div>
       </div>
       {products &&
         products.map((product) => (
@@ -55,6 +64,23 @@ export const Products = () => {
             <p>{product.price}</p>
           </div>
         ))}
+
+      <ModalCreateProduct handleClose={handleClose} open={open}>
+        <div className="d-flex flex-direction-c gap-10">
+          <div className="d-flex just-c">
+            <h3>Create Product</h3>
+          </div>
+          <input placeholder="Name"></input>
+          <input placeholder="Price"></input>
+          <input placeholder="Description"></input>
+          <input placeholder="Category"></input>
+
+          <div className="d-flex just-s-evenly margin-top-10">
+            <button>Create</button>
+            <button onClick={handleClose}>Cancel</button>
+          </div>
+        </div>
+      </ModalCreateProduct>
     </div>
   );
 };
