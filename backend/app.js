@@ -2,11 +2,14 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 app.use(express.json());
+app.use(cors());
 
 const usersRouter = require("./routes/users");
 const productsRouter = require("./routes/products");
+const notesRouter = require("./routes/notes");
 
 require("dotenv").config();
 
@@ -28,6 +31,8 @@ app.get("/", (req, res) => {
 app.use("/users", usersRouter);
 
 app.use("/products", productsRouter);
+
+app.use("/notes", notesRouter);
 
 // 11.17 middleware ---> error handling
 app.use((req, res, next) => {
