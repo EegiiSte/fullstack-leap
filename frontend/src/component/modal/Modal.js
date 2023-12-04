@@ -1,7 +1,7 @@
+import { Box, Modal as MuiModal } from "@mui/material";
 import React from "react";
-import { Box, Typography, Modal } from "@mui/material";
 
-export const ModalCreateProduct = (props) => {
+export const Modal = (props) => {
   const { open, handleClose, children } = props;
 
   const style = {
@@ -18,14 +18,14 @@ export const ModalCreateProduct = (props) => {
 
   return (
     <div>
-      <Modal
+      <MuiModal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>{children}</Box>
-      </Modal>
+      </MuiModal>
     </div>
   );
 };
