@@ -3,8 +3,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Header } from "../../component";
-import { DeleteProductModal } from "./DeleteProductModal";
-import { EditProductModal } from "./EditProductModal";
+import { DeleteProductModal } from "./modal/DeleteProductModal";
+import { EditProductModal } from "./modal/EditProductModal";
 
 import "./Product.css";
 
@@ -13,12 +13,12 @@ export const Product = () => {
 
   const { id } = useParams();
   //state for edit modal
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   //state for delete modal
-  const [openDelete, setOpenDelete] = React.useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
 
@@ -42,6 +42,9 @@ export const Product = () => {
   }, [id]);
 
   //   console.log(selectedProduct);
+  if (!selectedProduct) {
+    return <div>Item not found </div>;
+  }
 
   return (
     <div
@@ -101,6 +104,7 @@ export const Product = () => {
         handleClose={handleClose}
         open={open}
         selectedProduct={selectedProduct}
+        id={id}
       />
       <DeleteProductModal
         handleCloseDelete={handleCloseDelete}

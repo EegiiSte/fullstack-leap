@@ -2,7 +2,7 @@ import { Button, message } from "antd";
 import axios from "axios";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Modal } from "../../component";
+import { Modal } from "../../../component";
 
 export const DeleteProductModal = (props) => {
   const { handleCloseDelete, openDelete, id } = props;
