@@ -3,14 +3,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Header } from "../../component";
-import { DeleteProductModal } from "./modal/DeleteProductModal";
-import { EditProductModal2 } from "./modal/EditProductModal2";
+
 // import { EditProductModal } from "./modal/EditProductModal";
 
-import "./Product.css";
+import ".";
+import { DeleteNoteModal } from "./modal/DeleteNoteModal";
+import { EditNoteModal } from "./modal/EditNoteModal";
 
-export const Product = () => {
-  const [selectedProduct, setSelectedProduct] = useState();
+export const Note = () => {
+  const [selectedNote, setSelectedNote] = useState();
 
   const { id } = useParams();
   //state for edit modal
@@ -23,27 +24,25 @@ export const Product = () => {
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
 
-  //   console.log(`Product -> id ${id}`);
+  //   console.log(`Note -> id ${id}`);
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchNote = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8080/products/${id}`
-        );
+        const response = await axios.get(`http://localhost:8080/notes/${id}`);
         const data = await response.data;
 
-        setSelectedProduct(data);
+        setSelectedNote(data);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchProduct();
-    return () => fetchProduct();
+    fetchNote();
+    return () => fetchNote();
   }, [id]);
 
   //   console.log(selectedProduct);
-  if (!selectedProduct) {
+  if (!selectedNote) {
     return <div>Item not found </div>;
   }
 
@@ -62,7 +61,7 @@ export const Product = () => {
           justifyContent: "space-evenly",
         }}
       >
-        This is Single Product page
+        This is Single Note page
         <Flex className="gap-10" wrap="wrap" gap="small">
           <Button block onClick={handleOpen}>
             {" "}
@@ -74,7 +73,7 @@ export const Product = () => {
           </Button>
         </Flex>
       </div>
-      {selectedProduct && (
+      {selectedNote && (
         <div
           style={{
             backgroundColor: "whitesmoke",
@@ -93,33 +92,33 @@ export const Product = () => {
               width: "40%",
             }}
           >
-            <h3>Name : {selectedProduct.name}</h3>
-            <p>Description : {selectedProduct.description}</p>
-            <p>Price : {selectedProduct.price}</p>
-            <p>Category : {selectedProduct.category}</p>
+            <h3>Name : {selectedNote.name}</h3>
+            <p>Description : {selectedNote.description}</p>
+            <p>Goal : {selectedNote.goal}</p>
+            <p>Category : {selectedNote.category}</p>
           </div>
         </div>
       )}
-
-      <EditProductModal2
+      /{" "}
+      <EditNoteModal
         handleClose={handleClose}
         open={open}
-        selectedProduct={selectedProduct}
+        selectedNote={selectedNote}
         id={id}
       />
-      <DeleteProductModal
+      <DeleteNoteModal
         handleCloseDelete={handleCloseDelete}
         openDelete={openDelete}
-        selectedProduct={selectedProduct}
         id={id}
       />
     </div>
   );
 };
 
-// <EditProductModal
+// <EditProductModal2
 // handleClose={handleClose}
 // open={open}
 // selectedProduct={selectedProduct}
 // id={id}
 // />
+//

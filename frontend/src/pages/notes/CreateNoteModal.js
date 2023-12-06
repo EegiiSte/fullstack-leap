@@ -3,21 +3,21 @@ import axios from "axios";
 import React from "react";
 import { Modal } from "../../component";
 
-export const CreateProductModal = (props) => {
+export const CreateNoteModal = (props) => {
   const { handleClose, open, reload } = props;
 
   //input values
   const [messageApi, contextHolder] = message.useMessage();
 
-  const dulmaa = async (values) => {
-    // console.log(`dulmaagaas - ${values}`, values);
-    await axios.post("http://localhost:8080/products", values);
+  const baldan = async (values) => {
+    console.log(`baldangaas - ${values}`, values);
+    await axios.post("http://localhost:8080/notes", values);
 
     handleClose();
 
     messageApi.open({
       type: "success",
-      content: "Create Product successfully",
+      content: "Create Note successfully",
     });
 
     reload();
@@ -34,7 +34,7 @@ export const CreateProductModal = (props) => {
           <Form
             name="trigger"
             onFinish={(values) => {
-              dulmaa(values);
+              baldan(values);
             }}
             onFinishFailed={(errorInfo) => {
               console.log(errorInfo);
@@ -56,11 +56,11 @@ export const CreateProductModal = (props) => {
               <Input />
             </Form.Item>
             <Form.Item
-              label="Price"
-              name="price"
-              rules={[{ min: 1, required: true, type: "number" }]}
+              label="Goal"
+              name="goal"
+              rules={[{ min: 1, required: true }]}
             >
-              <InputNumber
+              <Input
                 style={{
                   width: "100%",
                 }}

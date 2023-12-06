@@ -1,40 +1,35 @@
 import { Button, Form, Input, InputNumber, message } from "antd";
 import axios from "axios";
 import React from "react";
-import { Modal } from "../../component";
+import { Modal } from "../../../component/modal";
 
-export const CreateProductModal = (props) => {
-  const { handleClose, open, reload } = props;
+export const EditNoteModal = (props) => {
+  const { handleClose, open, selectedNote, id } = props;
 
-  //input values
   const [messageApi, contextHolder] = message.useMessage();
 
-  const dulmaa = async (values) => {
-    // console.log(`dulmaagaas - ${values}`, values);
-    await axios.post("http://localhost:8080/products", values);
+  const handleEditButton = async (values) => {
+    try {
+      await axios.put(`http://localhost:8080/notes/${id}`, values);
+      console.log(`Successfully Edited`, id);
+      handleClose();
 
-    handleClose();
-
-    messageApi.open({
-      type: "success",
-      content: "Create Product successfully",
-    });
-
-    reload();
+      messageApi.open({
+        type: "success",
+        content: "Note edited successfully",
+      });
+    } catch (err) {
+      console.error(err);
+    }
   };
-
   return (
     <div>
       <Modal handleClose={handleClose} open={open}>
-        <div className="d-flex flex-direction-c gap-10">
-          <div className="d-flex just-c">
-            <h3>Create Product</h3>
-          </div>
-
+        {selectedNote && (
           <Form
             name="trigger"
             onFinish={(values) => {
-              dulmaa(values);
+              handleEditButton(values);
             }}
             onFinishFailed={(errorInfo) => {
               console.log(errorInfo);
@@ -53,17 +48,18 @@ export const CreateProductModal = (props) => {
                 { min: 4, message: "4oos ih baih" },
               ]}
             >
-              <Input />
+              <Input defaultValue={selectedNote.name} />
             </Form.Item>
             <Form.Item
-              label="Price"
-              name="price"
-              rules={[{ min: 1, required: true, type: "number" }]}
+              label="Goal"
+              name="goal"
+              rules={[{ min: 1, required: true }]}
             >
-              <InputNumber
+              <Input
                 style={{
                   width: "100%",
                 }}
+                defaultValue={selectedNote.goal}
               />
             </Form.Item>
             <Form.Item
@@ -71,14 +67,14 @@ export const CreateProductModal = (props) => {
               name="description"
               rules={[{ required: true, message: "Required" }]}
             >
-              <Input />
+              <Input defaultValue={selectedNote.description} />
             </Form.Item>
             <Form.Item
               label="Category"
               name="category"
               rules={[{ required: true, message: "Required" }]}
             >
-              <Input />
+              <Input defaultValue={selectedNote.category} />
             </Form.Item>
 
             <div className="d-flex just-s-evenly margin-top-10 gap-10">
@@ -88,7 +84,7 @@ export const CreateProductModal = (props) => {
                 block
                 style={{ width: "100%" }}
               >
-                Create
+                Submit
               </Button>
               <Button
                 block
@@ -101,7 +97,7 @@ export const CreateProductModal = (props) => {
               </Button>
             </div>
           </Form>
-        </div>
+        )}
       </Modal>
       {contextHolder}
     </div>
