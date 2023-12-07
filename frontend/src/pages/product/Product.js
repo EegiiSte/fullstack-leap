@@ -2,7 +2,7 @@ import { Button, Flex } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Header } from "../../component";
+import { Header, HeadMUI } from "../../component";
 import { DeleteProductModal } from "./modal/DeleteProductModal";
 import { EditProductModal2 } from "./modal/EditProductModal2";
 // import { EditProductModal } from "./modal/EditProductModal";
@@ -54,7 +54,7 @@ export const Product = () => {
         flexDirection: "column",
       }}
     >
-      <Header />
+      <HeadMUI pathValue={2} />
       <div
         style={{
           width: "100%",

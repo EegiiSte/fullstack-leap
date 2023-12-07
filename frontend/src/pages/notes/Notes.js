@@ -2,6 +2,7 @@ import { Button } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BasicTabs, HeadMUI } from "../../component";
 import { Header } from "../../component/header/Header";
 import { CreateNoteModal } from "./CreateNoteModal";
 
@@ -43,7 +44,7 @@ export const Notes = () => {
         flexWrap: "wrap",
       }}
     >
-      <Header />
+      <HeadMUI pathValue={3} />
       <div
         style={{
           width: "100%",

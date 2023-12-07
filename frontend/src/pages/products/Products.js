@@ -2,6 +2,7 @@ import { Button, message } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { HeadMUI } from "../../component";
 import { Header } from "../../component/header/Header";
 import { CreateProductModal } from "./CreateProductModal";
 import "./Product.css";
@@ -43,7 +44,7 @@ export const Products = () => {
         flexWrap: "wrap",
       }}
     >
-      <Header />
+      <HeadMUI pathValue={2} />
       <div
         style={{
           width: "100%",

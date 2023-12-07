@@ -1,4 +1,5 @@
 import React from "react";
+import { HeadMUI } from "../../component";
 import { Header } from "../../component/header/Header";
 import "./Home.css";
 
@@ -10,7 +11,7 @@ export const Home = () => {
         flexDirection: "column",
       }}
     >
-      <Header />
+      <HeadMUI pathValue={1} />
       <div
         style={{
           width: "100%",

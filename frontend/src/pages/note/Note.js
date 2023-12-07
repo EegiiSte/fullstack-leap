@@ -2,7 +2,7 @@ import { Button, Flex } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Header } from "../../component";
+import { Header, HeadMUI } from "../../component";
 
 // import { EditProductModal } from "./modal/EditProductModal";
 
@@ -53,7 +53,7 @@ export const Note = () => {
         flexDirection: "column",
       }}
     >
-      <Header />
+      <HeadMUI pathValue={3} />
       <div
         style={{
           width: "100%",
