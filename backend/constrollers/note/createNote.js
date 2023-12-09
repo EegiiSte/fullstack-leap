@@ -15,12 +15,7 @@ const createNote = async (req, res) => {
         description,
         category,
       });
-      res
-        .status(201)
-        .json({
-          note,
-          message: `Post  -->/${note.name}/ Note Created successfully`,
-        });
+      res.status(201).json(note);
     }
   } catch (err) {
     return res.status(500).json({

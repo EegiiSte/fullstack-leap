@@ -18,10 +18,7 @@ const getSingleNote = async (req, res) => {
     });
     return;
   }
-  res.status(200).json({
-    note,
-    message: `Note by id -->/${note.name}/ Request successful`,
-  });
+  res.status(200).json(note);
 };
 
 module.exports = { getSingleNote };
