@@ -5,8 +5,8 @@ const {
   deleteProduct,
   getSingleProduct,
   updateProduct,
-} = require("../constrollers/product");
-const { getAllProduct } = require("../constrollers/product/getAllProduct");
+} = require("../controllers/product");
+const { getAllProduct } = require("../controllers/product/getAllProduct");
 
 const router = express.Router();
 const Product = require("../models/product");

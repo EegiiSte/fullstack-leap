@@ -6,7 +6,7 @@ const {
   getSingleNote,
   updateNote,
   deleteNote,
-} = require("../constrollers/note");
+} = require("../controllers/note");
 
 const router = express.Router();
 

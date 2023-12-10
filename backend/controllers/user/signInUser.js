@@ -9,6 +9,7 @@ const CreateToken = (id) => {
 
 const signInUser = async (req, res) => {
   const { email, password } = req.body;
+  console.log("signInUser", req.body);
 
   // Check if the email and password are provided
   if (!email || !password) {
@@ -31,7 +32,13 @@ const signInUser = async (req, res) => {
   }
   const token = CreateToken(user._id);
 
-  res.status(200).json({ message: "Sign in successfully", user, token });
+  res
+    .status(200)
+    .json({
+      message: "Sign in successfully",
+      user: { email: user.email },
+      token,
+    });
 };
 
 module.exports = { signInUser };
