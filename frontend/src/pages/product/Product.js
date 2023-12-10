@@ -49,8 +49,8 @@ export const Product = () => {
 
   return (
     <div
+      className="align-c d-flex"
       style={{
-        display: "flex",
         flexDirection: "column",
       }}
     >

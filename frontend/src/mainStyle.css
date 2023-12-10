@@ -45,6 +45,10 @@
   flex-direction: column;
 }
 
+.flex-wrap-wrap {
+  flex-wrap: wrap;
+}
+
 .backgroundSize-c {
   background-size: cover;
 }

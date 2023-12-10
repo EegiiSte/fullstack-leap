@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Header, HeadMUI } from "../../component";
-
+import "./note.css";
 // import { EditProductModal } from "./modal/EditProductModal";
 
 import ".";
@@ -47,12 +47,7 @@ export const Note = () => {
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <div className="d-flex align-c flex-direction-c just-c">
       <HeadMUI pathValue={3} />
       <div
         style={{
@@ -62,13 +57,11 @@ export const Note = () => {
         }}
       >
         This is Single Note page
-        <Flex className="gap-10" wrap="wrap" gap="small">
-          <Button block onClick={handleOpen}>
-            {" "}
+        <Flex className="gap-10 d-flex flex-direction-row" gap="small">
+          <Button className="EditDelButton" block onClick={handleOpen}>
             Edit
           </Button>
-          <Button block onClick={handleOpenDelete}>
-            {" "}
+          <Button className="EditDelButton" block onClick={handleOpenDelete}>
             Delete
           </Button>
         </Flex>

@@ -1,4 +1,6 @@
 import { Home, Notes, Note, Product, Products } from "./pages";
+import { SignIn } from "../src/pages/signIn/SignIn";
+import { SignUp } from "../src/pages/sign-up/SignUp";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./mainStyle.css";
 export const App = () => {
@@ -10,6 +12,8 @@ export const App = () => {
         <Route path="/products/:id" element={<Product />} />
         <Route path="/notes" element={<Notes />} />
         <Route path="/notes/:id" element={<Note />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
       </Routes>
     </BrowserRouter>
   );

@@ -47,6 +47,32 @@ export const Header = () => {
           </Link>
         </div>
       </div>
+      <div className="Header-Right">
+        <div className="Header-Right_Item">
+          <Link
+            to="/sign-in"
+            style={{
+              textDecoration: "none",
+              color: "black",
+            }}
+          >
+            Sign In
+          </Link>
+        </div>
+      </div>
+      <div className="Header-Right">
+        <div className="Header-Right_Item">
+          <Link
+            to="/sign-up"
+            style={{
+              textDecoration: "none",
+              color: "black",
+            }}
+          >
+            Sign Up
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
