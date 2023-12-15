@@ -1,32 +1,50 @@
-import React, { useEffect, useState } from "react";
-import { Header, HeadMUI } from "../../component";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, message } from "antd";
 import axios from "axios";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Header } from "../../component";
+import { useNotificationContext } from "../../context/NotificationContext";
+import { useUserContext } from "../../context/UserContext";
 
-export const SignIn = () => {
-  const onFinish = (values) => {
-    console.log("Success:", values);
+export const SignIn = (props) => {
+  const { signIn } = useUserContext();
+  const { successNotification, errorNotification } = useNotificationContext();
+
+  const navigate = useNavigate();
+
+  const onFinish = async (values) => {
+    try {
+      // throw new Error("test error");
+      const response = await axios.post("http://localhost:8080/users/sign-in", {
+        email: values.email,
+        password: values.password,
+      });
+
+      const data = await response.data;
+      localStorage.setItem("user", JSON.stringify(data));
+
+      if (data) {
+        console.log("SignInModal", data.user);
+
+        signIn(data);
+
+        successNotification(`Sign in successfully`);
+
+        navigate("/");
+      } else {
+        errorNotification("Sign in failed, please try again");
+      }
+    } catch (err) {
+      errorNotification(err?.message);
+    }
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
 
-  const [user, setUser] = useState([]);
-
-  useEffect(() => {
-    const getUser = async () => {
-      const response = await axios.post("http://localhost:8080/sign-in");
-
-      const data = response.data;
-
-      setUser(data);
-    };
-    getUser();
-  }, []);
-
   return (
     <div className="d-flex align-c flex-wrap-wrap just-c">
-      <HeadMUI pathValue={4} />
+      <Header />
       <Form
         name="basic"
         labelCol={{
@@ -46,8 +64,9 @@ export const SignIn = () => {
         autoComplete="off"
       >
         <Form.Item
-          label="Username"
-          name="username"
+          label="Email"
+          name="email"
+          initialValue={"test9@gmail.com"}
           rules={[
             {
               required: true,
@@ -61,6 +80,7 @@ export const SignIn = () => {
         <Form.Item
           label="Password"
           name="password"
+          initialValue={"12345678aaa$$R"}
           rules={[
             {
               required: true,

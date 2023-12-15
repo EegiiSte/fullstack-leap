@@ -38,7 +38,7 @@ export const Notes = () => {
   console.log(`Notes  ==> ${notes}`);
   return (
     <div className="d-flex align-c flex-wrap-wrap just-c">
-      <HeadMUI pathValue={3} />
+      <Header />
       <div className="d-flex just-s-evenly width-100pr">
         This is Notes page
         <div>

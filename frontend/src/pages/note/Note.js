@@ -48,7 +48,7 @@ export const Note = () => {
 
   return (
     <div className="d-flex align-c flex-direction-c just-c">
-      <HeadMUI pathValue={3} />
+      <Header />
       <div
         style={{
           width: "100%",

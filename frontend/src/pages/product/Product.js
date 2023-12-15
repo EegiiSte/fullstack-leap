@@ -54,7 +54,7 @@ export const Product = () => {
         flexDirection: "column",
       }}
     >
-      <HeadMUI pathValue={2} />
+      <Header />
       <div
         style={{
           width: "100%",

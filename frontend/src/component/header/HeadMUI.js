@@ -3,13 +3,12 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SignInModal } from "./SignInModal";
 import { SignUpModal } from "./SignUpModal";
 
 import { message } from "antd";
-import axios from "axios";
 
 export const HeadMUI = (props) => {
   const { pathValue } = props;
@@ -30,9 +29,10 @@ export const HeadMUI = (props) => {
   const handleCloseSignUpModal = () => setOpenSignUpModal(false);
 
   const [user, setUser] = useState([]);
+
   const [messageApi, contextHolder] = message.useMessage();
 
-  console.log(`HeaderMui:user --> ${user}`);
+  // console.log(`HeaderMui:user --> ${user}`);
 
   return (
     <div style={{ width: "100%" }}>

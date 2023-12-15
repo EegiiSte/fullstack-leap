@@ -38,7 +38,7 @@ export const Products = () => {
   //   console.log(products);
   return (
     <div className="d-flex align-c flex-wrap-wrap just-c">
-      <HeadMUI pathValue={2} />
+      <Header />
       <div className="d-flex just-s-evenly width-100pr">
         This is Products page
         <div>

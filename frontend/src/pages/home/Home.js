@@ -1,7 +1,6 @@
 import { Transfer } from "antd";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { HeadMUI } from "../../component";
+import { Header } from "../../component";
 import "./Home.css";
 
 export const Home = () => {
@@ -46,7 +45,7 @@ export const Home = () => {
         justifyContent: "center",
       }}
     >
-      <HeadMUI pathValue={1} />
+      <Header />
       <div
         style={{
           width: "100%",

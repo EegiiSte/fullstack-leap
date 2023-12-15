@@ -1,7 +1,12 @@
-import React, { useState } from "react";
-import { HeadMUI } from "../../component";
-
 import { Button, Checkbox, Form, Input, Select } from "antd";
+import axios from "axios";
+import React, { useState } from "react";
+import { Header } from "../../component";
+import { message } from "antd";
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../context/UserContext";
+import { useNotificationContext } from "../../context/NotificationContext";
+
 const { Option } = Select;
 
 const formItemLayout = {
@@ -35,27 +40,57 @@ const tailFormItemLayout = {
   },
 };
 export const SignUp = () => {
-  const [form] = Form.useForm();
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-  };
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="1">+1</Option>
-        <Option value="86">+86</Option>
-        <Option value="976">+976</Option>
-      </Select>
-    </Form.Item>
-  );
+  const [user, setUser] = useState([]);
 
+  const { signUp } = useUserContext();
+  const { successNotification, errorNotification } = useNotificationContext();
+
+  const navigate = useNavigate();
+
+  const [form] = Form.useForm();
+
+  const onFinish = async (values) => {
+    console.log(
+      "Received values of form: ",
+      values.name,
+      values.password,
+      values.email
+    );
+
+    try {
+      // throw new Error("test error");
+      const response = await axios.post("http://localhost:8080/users/sign-up", {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+      });
+
+      const data = await response.data;
+      localStorage.setItem("user", JSON.stringify(data));
+
+      if (data) {
+        signUp(data);
+        setUser(data.user);
+        successNotification(`Sign Up successfully, Hello ${user.email}`);
+
+        navigate("/");
+      } else {
+        errorNotification("Sign up failed, please try again");
+      }
+    } catch (err) {
+      if (err && err.response && err.response.data) {
+        errorNotification(err.response.data);
+      } else {
+        errorNotification("Unkown error");
+      }
+
+      console.log("SignUpModal-->onFinish ", err);
+    }
+  };
   return (
-    <div className="d-flex align-c flex-wrap-wrap just-c">
-      <HeadMUI pathValue={5} />
+    <div className="d-flex align-c flex-direction-c just-c">
+      <Header />
+      <h1>Sign Up</h1>
       <Form
         {...formItemLayout}
         form={form}
@@ -70,8 +105,26 @@ export const SignUp = () => {
         scrollToFirstError
       >
         <Form.Item
+          name="name"
+          label="Name"
+          initialValue={"test13"}
+          tooltip="What do you want others to call you?"
+          rules={[
+            {
+              required: true,
+              message: "Please input your nickname!",
+              whitespace: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
           name="email"
           label="E-mail"
+          initialValue={
+            process.env.NODE_ENV === "development" ? "test13@gmail.com" : ""
+          }
           rules={[
             {
               type: "email",
@@ -89,22 +142,31 @@ export const SignUp = () => {
         <Form.Item
           name="password"
           label="Password"
+          initialValue={"12345678aaa$$R"}
           rules={[
             {
               required: true,
               message: "Please input your password!",
+            },
+            {
+              simbols: true,
+              message: "must included simbols!",
+            },
+            {
+              minlength: 6,
+              message: "minimium must include 6 characters",
             },
           ]}
           hasFeedback
         >
           <Input.Password />
         </Form.Item>
-
         <Form.Item
           name="confirm"
           label="Confirm Password"
           dependencies={["password"]}
           hasFeedback
+          initialValue={"12345678aaa$$R"}
           rules={[
             {
               required: true,
@@ -123,56 +185,6 @@ export const SignUp = () => {
           ]}
         >
           <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          name="nickname"
-          label="Nickname"
-          tooltip="What do you want others to call you?"
-          rules={[
-            {
-              required: true,
-              message: "Please input your nickname!",
-              whitespace: true,
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="phone"
-          label="Phone Number"
-          rules={[
-            {
-              required: true,
-              message: "Please input your phone number!",
-            },
-          ]}
-        >
-          <Input
-            addonBefore={prefixSelector}
-            style={{
-              width: "100%",
-            }}
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="gender"
-          label="Gender"
-          rules={[
-            {
-              required: true,
-              message: "Please select gender!",
-            },
-          ]}
-        >
-          <Select placeholder="select your gender">
-            <Option value="male">Male</Option>
-            <Option value="female">Female</Option>
-            <Option value="other">Other</Option>
-          </Select>
         </Form.Item>
 
         <Form.Item

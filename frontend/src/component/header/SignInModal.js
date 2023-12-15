@@ -19,10 +19,12 @@ export const SignInModal = (props) => {
       const data = await response.data;
       if (data) {
         console.log("SignInModal", data.user);
+
         setUser(data.user);
+
         messageApi.open({
           type: "success",
-          content: `Sign in successfully, Hello ${user.email}`,
+          content: `Sign in successfully`,
         });
 
         handleCloseSignInModal();

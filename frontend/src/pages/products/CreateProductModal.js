@@ -1,24 +1,21 @@
-import { Button, Form, Input, InputNumber, message } from "antd";
+import { Button, Form, Input, InputNumber } from "antd";
 import axios from "axios";
 import React from "react";
 import { Modal } from "../../component";
+import { useNotificationContext } from "../../context/NotificationContext";
 
 export const CreateProductModal = (props) => {
   const { handleClose, open, reload } = props;
 
   //input values
-  const [messageApi, contextHolder] = message.useMessage();
+  const { successNotification } = useNotificationContext();
 
   const dulmaa = async (values) => {
     // console.log(`dulmaagaas - ${values}`, values);
     await axios.post("http://localhost:8080/products", values);
 
     handleClose();
-
-    messageApi.open({
-      type: "success",
-      content: "Create Product successfully",
-    });
+    successNotification("Create Product successfully");
 
     reload();
   };
@@ -103,7 +100,6 @@ export const CreateProductModal = (props) => {
           </Form>
         </div>
       </Modal>
-      {contextHolder}
     </div>
   );
 };
