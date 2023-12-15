@@ -2,11 +2,12 @@ import { Button, Form, Input, InputNumber, message } from "antd";
 import axios from "axios";
 import React from "react";
 import { Modal } from "../../../component/modal";
+import { useNotificationContext } from "../../context/NotificationContext";
 
 export const EditNoteModal = (props) => {
   const { handleClose, open, selectedNote, id } = props;
 
-  const [messageApi, contextHolder] = message.useMessage();
+  const { successNotification, errorNotification } = useNotificationContext();
 
   const handleEditButton = async (values) => {
     try {
@@ -14,11 +15,9 @@ export const EditNoteModal = (props) => {
       console.log(`Successfully Edited`, id);
       handleClose();
 
-      messageApi.open({
-        type: "success",
-        content: "Product edited successfully",
-      });
+      successNotification("Product edited successfully");
     } catch (err) {
+      errorNotification(err?.message);
       console.error(err);
     }
   };
@@ -99,7 +98,6 @@ export const EditNoteModal = (props) => {
           </Form>
         )}
       </Modal>
-      {contextHolder}
     </div>
   );
 };

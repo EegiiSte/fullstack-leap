@@ -4,11 +4,12 @@ import { SignUp } from "../src/pages/sign-up/SignUp";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import "./mainStyle.css";
 import { useUserContext } from "./context/UserContext";
+
 export const App = () => {
   const { currentUser, userContextLoading } = useUserContext();
 
   if (userContextLoading) {
-    return <div>Loading</div>;
+    return <div>...Loading</div>;
   }
 
   return (

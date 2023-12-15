@@ -1,13 +1,15 @@
-import { Button, message } from "antd";
+import { Button } from "antd";
 import axios from "axios";
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Modal } from "../../../component";
+import { useNotificationContext } from "../../../context/NotificationContext";
 
 export const DeleteProductModal = (props) => {
   const { handleCloseDelete, openDelete, id } = props;
 
-  const [messageApi, contextHolder] = message.useMessage();
+  const { successNotification, errorNotification } = useNotificationContext();
+
   const navigate = useNavigate();
 
   const handleDeleteButton = async (id) => {
@@ -17,11 +19,9 @@ export const DeleteProductModal = (props) => {
       handleCloseDelete();
       navigate("/products");
 
-      messageApi.open({
-        type: "success",
-        content: "Product Deleted successfully",
-      });
+      successNotification("Product Deleted successfully");
     } catch (err) {
+      errorNotification(err?.message);
       console.error(err);
     }
   };
@@ -57,7 +57,6 @@ export const DeleteProductModal = (props) => {
           </div>
         </div>
       </Modal>
-      {contextHolder}
     </div>
   );
 };

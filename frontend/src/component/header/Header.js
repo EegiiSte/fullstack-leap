@@ -1,11 +1,9 @@
-import { message } from "antd";
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../../context/UserContext";
 import "./Header.css";
 
 export const Header = () => {
-  const [messageApi, contextHolder] = message.useMessage();
   // console.log(`Header:user --> ${user}`);
 
   const { currentUser, signOut, userContextLoading } = useUserContext();
@@ -79,8 +77,6 @@ export const Header = () => {
             </Link>
           </div>
         </div>
-
-        {contextHolder}
       </div>
     );
   }
@@ -132,8 +128,6 @@ export const Header = () => {
           </Link>
         </div>
       </div>
-
-      {contextHolder}
     </div>
   );
 };

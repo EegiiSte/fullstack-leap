@@ -1,12 +1,13 @@
-import { Button, Form, Input, InputNumber, message } from "antd";
+import { Button, Form, Input, InputNumber } from "antd";
 import axios from "axios";
 import React from "react";
 import { Modal } from "../../../component/modal";
+import { useNotificationContext } from "../../../context/NotificationContext";
 
 export const EditProductModal2 = (props) => {
   const { handleClose, open, selectedProduct, id } = props;
 
-  const [messageApi, contextHolder] = message.useMessage();
+  const { successNotification } = useNotificationContext();
 
   const handleEditButton = async (values) => {
     try {
@@ -14,10 +15,7 @@ export const EditProductModal2 = (props) => {
       console.log(`Successfully Edited`, id);
       handleClose();
 
-      messageApi.open({
-        type: "success",
-        content: "Product edited successfully",
-      });
+      successNotification("Product edited successfully");
     } catch (err) {
       console.error(err);
     }
@@ -27,6 +25,12 @@ export const EditProductModal2 = (props) => {
       <Modal handleClose={handleClose} open={open}>
         {selectedProduct && (
           <Form
+            initialValues={{
+              name: selectedProduct.name,
+              description: selectedProduct.description,
+              category: selectedProduct.category,
+              price: selectedProduct.price,
+            }}
             name="trigger"
             onFinish={(values) => {
               handleEditButton(values);
@@ -48,7 +52,7 @@ export const EditProductModal2 = (props) => {
                 { min: 4, message: "4oos ih baih" },
               ]}
             >
-              <Input defaultValue={selectedProduct.name} />
+              <Input />
             </Form.Item>
             <Form.Item
               label="Price"
@@ -59,7 +63,6 @@ export const EditProductModal2 = (props) => {
                 style={{
                   width: "100%",
                 }}
-                defaultValue={selectedProduct.price}
               />
             </Form.Item>
             <Form.Item
@@ -67,14 +70,14 @@ export const EditProductModal2 = (props) => {
               name="description"
               rules={[{ required: true, message: "Required" }]}
             >
-              <Input defaultValue={selectedProduct.description} />
+              <Input />
             </Form.Item>
             <Form.Item
               label="Category"
               name="category"
               rules={[{ required: true, message: "Required" }]}
             >
-              <Input defaultValue={selectedProduct.category} />
+              <Input />
             </Form.Item>
 
             <div className="d-flex just-s-evenly margin-top-10 gap-10">
@@ -99,7 +102,6 @@ export const EditProductModal2 = (props) => {
           </Form>
         )}
       </Modal>
-      {contextHolder}
     </div>
   );
 };
