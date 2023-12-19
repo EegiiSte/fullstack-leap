@@ -3,21 +3,36 @@ import axios from "axios";
 import React from "react";
 import { Modal } from "../../component";
 import { useNotificationContext } from "../../context/NotificationContext";
+import { useProductsContext } from "../../context/ProductsContext";
+import { useUserContext } from "../../context/UserContext";
 
 export const CreateProductModal = (props) => {
   const { handleClose, open, reload } = props;
+
+  const { currentUser, userContextLoading } = useUserContext();
+  const { Create_Product } = useProductsContext();
 
   //input values
   const { successNotification } = useNotificationContext();
 
   const dulmaa = async (values) => {
     // console.log(`dulmaagaas - ${values}`, values);
-    await axios.post("http://localhost:8080/products", values);
+    const response = await axios.post(
+      "http://localhost:8080/products",
+      values,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      }
+    );
 
+    const data = await response.data;
+
+    Create_Product(data);
     handleClose();
     successNotification("Create Product successfully");
-
-    reload();
   };
 
   return (

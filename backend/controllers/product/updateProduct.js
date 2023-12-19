@@ -13,7 +13,8 @@ const updateProduct = async (req, res) => {
 
   const updatedProduct = await Product.findOneAndUpdate(
     { _id: id },
-    { ...req.body }
+    { ...req.body },
+    { new: true }
   );
 
   if (!updatedProduct) {
@@ -22,10 +23,7 @@ const updateProduct = async (req, res) => {
     });
     return;
   }
-  res.status(200).json({
-    updatedProduct,
-    message: "Update by id --> Product updated successful",
-  });
+  res.status(200).json(updatedProduct);
 };
 
 module.exports = { updateProduct };

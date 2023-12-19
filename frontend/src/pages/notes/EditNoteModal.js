@@ -3,15 +3,21 @@ import axios from "axios";
 import React from "react";
 import { Modal } from "../../../component/modal";
 import { useNotificationContext } from "../../context/NotificationContext";
+import { useUserContext } from "../../context/UserContext";
 
 export const EditNoteModal = (props) => {
   const { handleClose, open, selectedNote, id } = props;
+  const { currentUser, userContextLoading } = useUserContext();
 
   const { successNotification, errorNotification } = useNotificationContext();
 
   const handleEditButton = async (values) => {
     try {
-      await axios.put(`http://localhost:8080/products/${id}`, values);
+      await axios.put(`http://localhost:8080/products/${id}`, values, {
+        headers: {
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      });
       console.log(`Successfully Edited`, id);
       handleClose();
 

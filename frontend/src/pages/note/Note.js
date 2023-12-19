@@ -9,9 +9,12 @@ import "./note.css";
 import ".";
 import { DeleteNoteModal } from "./modal/DeleteNoteModal";
 import { EditNoteModal } from "./modal/EditNoteModal";
+import { useUserContext } from "../../context/UserContext";
 
 export const Note = () => {
   const [selectedNote, setSelectedNote] = useState();
+
+  const { currentUser, userContextLoading } = useUserContext();
 
   const { id } = useParams();
   //state for edit modal
@@ -29,7 +32,11 @@ export const Note = () => {
   useEffect(() => {
     const fetchNote = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/notes/${id}`);
+        const response = await axios.get(`http://localhost:8080/notes/${id}`, {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        });
         const data = await response.data;
 
         setSelectedNote(data);

@@ -3,9 +3,12 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Modal } from "../../../component";
 import * as yup from "yup";
+import { useUserContext } from "../../../context/UserContext";
 
 export const EditProductModal = (props) => {
   const { handleClose, open, selectedProduct, id } = props;
+
+  const { currentUser, userContextLoading } = useUserContext();
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -107,7 +110,12 @@ export const EditProductModal = (props) => {
       try {
         await axios.put(
           `http://localhost:8080/products/${id}`,
-          editedFormValues
+          editedFormValues,
+          {
+            headers: {
+              Authorization: `Bearer ${currentUser.token}`,
+            },
+          }
         );
 
         console.log(`Successfully Edited`, id);

@@ -19,9 +19,7 @@ const deleteProduct = async (req, res) => {
     });
     return;
   }
-  res.status(200).json({
-    message: `Product by id -->${product.name} Product deleted successfully`,
-  });
+  res.status(200).json(product);
 };
 
 module.exports = { deleteProduct };

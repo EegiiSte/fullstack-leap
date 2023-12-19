@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BasicTabs, HeadMUI } from "../../component";
 import { Header } from "../../component/header/Header";
+import { useUserContext } from "../../context/UserContext";
 import { CreateNoteModal } from "./CreateNoteModal";
 
 import "./Notes.css";
@@ -16,9 +17,15 @@ export const Notes = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const { currentUser, userContextLoading } = useUserContext();
+
   useEffect(() => {
     const getNotes = async () => {
-      const response = await axios.get("http://localhost:8080/notes");
+      const response = await axios.get("http://localhost:8080/notes", {
+        headers: {
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      });
 
       const data = response.data;
 

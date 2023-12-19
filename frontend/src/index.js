@@ -4,13 +4,16 @@ import { App } from "./App";
 import "./index.css";
 import { UserProvider } from "./context/UserContext";
 import { NotificationProvider } from "./context/NotificationContext";
+import { ProductContexProvider } from "./context/ProductsContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <NotificationProvider>
       <UserProvider>
-        <App />
+        <ProductContexProvider>
+          <App />
+        </ProductContexProvider>
       </UserProvider>
     </NotificationProvider>
   </React.StrictMode>

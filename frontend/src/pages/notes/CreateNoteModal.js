@@ -1,26 +1,37 @@
-import { Button, Form, Input, InputNumber, message } from "antd";
+import { Button, Form, Input } from "antd";
 import axios from "axios";
 import React from "react";
 import { Modal } from "../../component";
+import { useNotificationContext } from "../../context/NotificationContext";
+import { useProductsContext } from "../../context/ProductsContext";
+import { useUserContext } from "../../context/UserContext";
 
 export const CreateNoteModal = (props) => {
   const { handleClose, open, reload } = props;
 
   //input values
-  const [messageApi, contextHolder] = message.useMessage();
+
+  const { currentUser, userContextLoading } = useUserContext();
+  const { successNotification, errorNotification } = useNotificationContext();
 
   const baldan = async (values) => {
     console.log(`baldangaas - ${values}`, values);
-    await axios.post("http://localhost:8080/notes", values);
-
-    handleClose();
-
-    messageApi.open({
-      type: "success",
-      content: "Create Note successfully",
+    const newNote = {
+      name: values.name,
+      description: values.description,
+      goal: values.goal,
+      category: values.category,
+    };
+    const response = await axios.post("http://localhost:8080/notes", newNote, {
+      headers: {
+        Authorization: `Bearer ${currentUser.token}`,
+      },
     });
 
-    reload();
+    const data = await response.data;
+
+    handleClose();
+    successNotification("Create Note successfully");
   };
 
   return (
@@ -103,7 +114,6 @@ export const CreateNoteModal = (props) => {
           </Form>
         </div>
       </Modal>
-      {contextHolder}
     </div>
   );
 };

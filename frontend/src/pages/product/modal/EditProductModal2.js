@@ -3,19 +3,34 @@ import axios from "axios";
 import React from "react";
 import { Modal } from "../../../component/modal";
 import { useNotificationContext } from "../../../context/NotificationContext";
+import { useUserContext } from "../../../context/UserContext";
+import { useProductsContext } from "../../../context/ProductsContext";
 
 export const EditProductModal2 = (props) => {
-  const { handleClose, open, selectedProduct, id } = props;
+  const { handleClose, open, selectedProduct, setSelectedProduct, id } = props;
+  const { Update_Product } = useProductsContext();
+  const { currentUser, userContextLoading } = useUserContext();
 
   const { successNotification } = useNotificationContext();
 
   const handleEditButton = async (values) => {
+    const updatedProduct = {
+      name: values.name,
+      description: values.description,
+      price: values.price,
+      category: values.category,
+    };
     try {
-      await axios.put(`http://localhost:8080/products/${id}`, values);
+      await axios.put(`http://localhost:8080/products/${id}`, updatedProduct, {
+        headers: {
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      });
       console.log(`Successfully Edited`, id);
-      handleClose();
 
+      setSelectedProduct(updatedProduct);
       successNotification("Product edited successfully");
+      handleClose();
     } catch (err) {
       console.error(err);
     }

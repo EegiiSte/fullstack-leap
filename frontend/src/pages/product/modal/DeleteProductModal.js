@@ -4,9 +4,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "../../../component";
 import { useNotificationContext } from "../../../context/NotificationContext";
+import { useUserContext } from "../../../context/UserContext";
 
 export const DeleteProductModal = (props) => {
   const { handleCloseDelete, openDelete, id } = props;
+
+  const { currentUser, userContextLoading } = useUserContext();
 
   const { successNotification, errorNotification } = useNotificationContext();
 
@@ -14,7 +17,11 @@ export const DeleteProductModal = (props) => {
 
   const handleDeleteButton = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/products/${id}`);
+      await axios.delete(`http://localhost:8080/products/${id}`, {
+        headers: {
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      });
       console.log(`Successfully deleted`, id);
       handleCloseDelete();
       navigate("/products");
