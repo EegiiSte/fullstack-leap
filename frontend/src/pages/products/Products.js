@@ -3,6 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../component/header/Header";
 import { useProductsContext } from "../../context/ProductsContext";
+import { useThemeContext } from "../../context/ThemeContext";
 import { CreateProductModal } from "./CreateProductModal";
 import "./Product.css";
 
@@ -15,10 +16,18 @@ export const Products = () => {
   const handleClose = () => setOpen(false);
 
   const { products, productContextLoading } = useProductsContext();
+  const {
+    textColor,
+    themeLoading,
+    menuColor,
+    backgroundColor,
+    blackAndWhite,
+    blackAndWhiteSmoke,
+  } = useThemeContext();
 
   // console.log("Products", products);
 
-  if (productContextLoading) {
+  if (productContextLoading && themeLoading) {
     return <div>...Loading Products</div>;
   }
   return (
@@ -38,11 +47,12 @@ export const Products = () => {
             className="box-shadow-gray"
             key={product.id}
             style={{
-              backgroundColor: "whitesmoke",
+              backgroundColor: blackAndWhiteSmoke,
               width: 200,
               borderRadius: "10px",
               padding: "20px",
               margin: "20px",
+              color: textColor,
             }}
             onClick={() => navigate(`/products/${product._id}`)}
           >

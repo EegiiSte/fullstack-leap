@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App";
-import "./index.css";
-import { UserProvider } from "./context/UserContext";
 import { NotificationProvider } from "./context/NotificationContext";
 import { ProductContexProvider } from "./context/ProductsContext";
+import { ThemeContextProvider } from "./context/ThemeContext";
+import { UserProvider } from "./context/UserContext";
+import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -12,7 +13,9 @@ root.render(
     <NotificationProvider>
       <UserProvider>
         <ProductContexProvider>
-          <App />
+          <ThemeContextProvider>
+            <App />
+          </ThemeContextProvider>
         </ProductContexProvider>
       </UserProvider>
     </NotificationProvider>

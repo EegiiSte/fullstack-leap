@@ -1,5 +1,7 @@
+import { Switch } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useThemeContext } from "../../context/ThemeContext";
 import { useUserContext } from "../../context/UserContext";
 import "./Header.css";
 
@@ -8,7 +10,9 @@ export const Header = () => {
 
   const { currentUser, signOut, userContextLoading } = useUserContext();
 
-  if (userContextLoading) {
+  const { onChange, textColor, themeLoading, menuColor } = useThemeContext();
+
+  if (userContextLoading && themeLoading) {
     return <div>Loading</div>;
   }
 
@@ -17,16 +21,17 @@ export const Header = () => {
       <div
         className="Header box-shadow-gray"
         style={{
-          // backgroundColor: "white",
-          color: "white",
+          backgroundColor: menuColor,
+          color: textColor,
         }}
       >
+        <Switch defaultChecked onChange={onChange} size="small" />
         <div className="Header-Left">
           <Link
             to="/"
             style={{
               textDecoration: "none",
-              color: "black",
+              color: textColor,
             }}
           >
             Home
@@ -38,7 +43,7 @@ export const Header = () => {
               to="/products"
               style={{
                 textDecoration: "none",
-                color: "black",
+                color: textColor,
               }}
             >
               Products
@@ -51,8 +56,7 @@ export const Header = () => {
               to="/notes"
               style={{
                 textDecoration: "none",
-                color: "black",
-                textShadow: " 1px 0 20px blue",
+                color: textColor,
               }}
             >
               Notes
@@ -64,7 +68,7 @@ export const Header = () => {
           <div className="Header-Right_Item">
             <div
               style={{
-                color: "black",
+                color: textColor,
               }}
             >
               {currentUser.user.email}
@@ -77,7 +81,7 @@ export const Header = () => {
               onClick={() => signOut()}
               style={{
                 textDecoration: "none",
-                color: "black",
+                color: textColor,
               }}
             >
               Sign Out
@@ -93,7 +97,7 @@ export const Header = () => {
       className="Header box-shadow-gray"
       style={{
         // backgroundColor: "white",
-        color: "white",
+        color: textColor,
       }}
     >
       <div className="Header-Left">
@@ -101,7 +105,7 @@ export const Header = () => {
           to="/"
           style={{
             textDecoration: "none",
-            color: "black",
+            color: textColor,
           }}
         >
           Home
@@ -114,7 +118,7 @@ export const Header = () => {
             to="/sign-in"
             style={{
               textDecoration: "none",
-              color: "white",
+              color: textColor,
             }}
           >
             Sign In
@@ -128,7 +132,7 @@ export const Header = () => {
             to="/sign-up"
             style={{
               textDecoration: "none",
-              color: "white",
+              color: textColor,
             }}
           >
             Sign Up

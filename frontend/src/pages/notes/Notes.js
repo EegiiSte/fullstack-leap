@@ -42,7 +42,7 @@ export const Notes = () => {
     setNotes(data);
   };
 
-  console.log(`Notes  ==> ${notes}`);
+  // console.log(`Notes  ==> ${notes}`);
   return (
     <div className="d-flex align-c flex-wrap-wrap just-c">
       <Header />
