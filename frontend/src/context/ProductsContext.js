@@ -22,6 +22,7 @@ export const ProductContexProvider = ({ children }) => {
           });
 
           const data = await response.data;
+
           setProducts(data);
           setProductContextLoading(false);
         } catch (error) {
@@ -42,7 +43,7 @@ export const ProductContexProvider = ({ children }) => {
   };
 
   const Create_Product = async (product) => {
-    setProducts([...products, product]);
+    setProducts([product, ...products]);
   };
 
   const Update_Product = async (updatedProduct) => {
@@ -56,12 +57,18 @@ export const ProductContexProvider = ({ children }) => {
     setProducts(updatedProducts);
   };
 
+  const Delete_Product = async (id) => {
+    const updatedProducts = products.filter((product) => product._id !== id);
+    setProducts(updatedProducts);
+  };
+
   return (
     <ProductsContext.Provider
       value={{
         Set_Products,
         Create_Product,
         Update_Product,
+        Delete_Product,
         products,
         productContextLoading,
       }}

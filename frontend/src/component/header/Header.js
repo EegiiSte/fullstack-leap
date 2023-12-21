@@ -15,10 +15,10 @@ export const Header = () => {
   if (!userContextLoading && currentUser) {
     return (
       <div
-        className="Header"
+        className="Header box-shadow-gray"
         style={{
-          backgroundColor: "white",
-          color: "black",
+          // backgroundColor: "white",
+          color: "white",
         }}
       >
         <div className="Header-Left">
@@ -52,6 +52,7 @@ export const Header = () => {
               style={{
                 textDecoration: "none",
                 color: "black",
+                textShadow: " 1px 0 20px blue",
               }}
             >
               Notes
@@ -61,7 +62,13 @@ export const Header = () => {
 
         <div className="Header-Right">
           <div className="Header-Right_Item">
-            <div>{currentUser.user.email}</div>
+            <div
+              style={{
+                color: "black",
+              }}
+            >
+              {currentUser.user.email}
+            </div>
           </div>
         </div>
         <div className="Header-Right">
@@ -83,10 +90,10 @@ export const Header = () => {
 
   return (
     <div
-      className="Header"
+      className="Header box-shadow-gray"
       style={{
-        backgroundColor: "white",
-        color: "black",
+        // backgroundColor: "white",
+        color: "white",
       }}
     >
       <div className="Header-Left">
@@ -107,7 +114,7 @@ export const Header = () => {
             to="/sign-in"
             style={{
               textDecoration: "none",
-              color: "black",
+              color: "white",
             }}
           >
             Sign In
@@ -121,7 +128,7 @@ export const Header = () => {
             to="/sign-up"
             style={{
               textDecoration: "none",
-              color: "black",
+              color: "white",
             }}
           >
             Sign Up

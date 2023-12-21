@@ -47,6 +47,7 @@ export const Home = () => {
     >
       <Header />
       <div
+        className="padding-top-10"
         style={{
           width: "100%",
           display: "flex",

@@ -21,14 +21,21 @@ export const EditProductModal2 = (props) => {
       category: values.category,
     };
     try {
-      await axios.put(`http://localhost:8080/products/${id}`, updatedProduct, {
-        headers: {
-          Authorization: `Bearer ${currentUser.token}`,
-        },
-      });
-      console.log(`Successfully Edited`, id);
+      const response = await axios.put(
+        `http://localhost:8080/products/${id}`,
+        updatedProduct,
+        {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        }
+      );
 
-      setSelectedProduct(updatedProduct);
+      // console.log(`Edited Successfully `, id);
+      const data = await response.data;
+
+      Update_Product(data);
+
       successNotification("Product edited successfully");
       handleClose();
     } catch (err) {

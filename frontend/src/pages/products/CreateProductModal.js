@@ -7,9 +7,9 @@ import { useProductsContext } from "../../context/ProductsContext";
 import { useUserContext } from "../../context/UserContext";
 
 export const CreateProductModal = (props) => {
-  const { handleClose, open, reload } = props;
+  const { handleClose, open } = props;
 
-  const { currentUser, userContextLoading } = useUserContext();
+  const { currentUser } = useUserContext();
   const { Create_Product } = useProductsContext();
 
   //input values

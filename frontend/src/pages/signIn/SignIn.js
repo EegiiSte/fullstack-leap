@@ -24,7 +24,7 @@ export const SignIn = (props) => {
       localStorage.setItem("user", JSON.stringify(data));
 
       if (data) {
-        console.log("SignInModal", data.user);
+        console.log("SignIn", data.user);
 
         signIn(data);
 
@@ -43,9 +43,11 @@ export const SignIn = (props) => {
   };
 
   return (
-    <div className="d-flex align-c flex-wrap-wrap just-c">
+    <div className="d-flex align-c flex-direction-c just-c">
       <Header />
+      <h1>Login in</h1>
       <Form
+        className="padding-top-10"
         name="basic"
         labelCol={{
           span: 8,

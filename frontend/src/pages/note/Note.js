@@ -57,6 +57,7 @@ export const Note = () => {
     <div className="d-flex align-c flex-direction-c just-c">
       <Header />
       <div
+        className="padding-top-10"
         style={{
           width: "100%",
           display: "flex",

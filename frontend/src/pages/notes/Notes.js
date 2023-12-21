@@ -46,7 +46,7 @@ export const Notes = () => {
   return (
     <div className="d-flex align-c flex-wrap-wrap just-c">
       <Header />
-      <div className="d-flex just-s-evenly width-100pr">
+      <div className="d-flex just-s-evenly width-100pr padding-top-10">
         This is Notes page
         <div>
           <Button block onClick={handleOpen}>
@@ -57,6 +57,7 @@ export const Notes = () => {
       {notes &&
         notes.map((note) => (
           <div
+            className="box-shadow-gray"
             key={note.id}
             style={{
               backgroundColor: "whitesmoke",
