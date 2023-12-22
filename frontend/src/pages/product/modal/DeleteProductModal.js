@@ -30,7 +30,7 @@ export const DeleteProductModal = (props) => {
       // console.log(`Successfully deleted`, id);
       const data = await response.data;
 
-      console.log("DeleteProductModal", data._id);
+      // console.log("DeleteProductModal", data._id);
 
       Delete_Product(data._id);
 

@@ -3,24 +3,35 @@ import axios from "axios";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Modal } from "../../../component";
+import { useNotesContext } from "../../../context/NotesContext";
+import { useNotificationContext } from "../../../context/NotificationContext";
+import { useUserContext } from "../../../context/UserContext";
 
 export const DeleteNoteModal = (props) => {
   const { handleCloseDelete, openDelete, id } = props;
 
-  const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
 
-  const handleDeleteButton = async (id) => {
+  const { currentUser } = useUserContext();
+  const { successNotification } = useNotificationContext();
+  const { Delete_Note } = useNotesContext();
+
+  const handleDeleteButton = async () => {
     try {
-      await axios.delete(`http://localhost:8080/notes/${id}`);
-      console.log(`Successfully deleted`, id);
+      const response = await axios.delete(`http://localhost:8080/notes/${id}`, {
+        headers: {
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      });
+
+      const data = await response.data;
+
+      Delete_Note(data._id);
+
       handleCloseDelete();
       navigate("/notes");
 
-      messageApi.open({
-        type: "success",
-        content: "Note Deleted successfully",
-      });
+      successNotification("Note Deleted successfully");
     } catch (err) {
       console.error(err);
     }
@@ -57,7 +68,6 @@ export const DeleteNoteModal = (props) => {
           </div>
         </div>
       </Modal>
-      {contextHolder}
     </div>
   );
 };

@@ -16,27 +16,39 @@ export const Products = () => {
   const handleClose = () => setOpen(false);
 
   const { products, productContextLoading } = useProductsContext();
-  const {
-    textColor,
-    themeLoading,
-    menuColor,
-    backgroundColor,
-    blackAndWhite,
-    blackAndWhiteSmoke,
-  } = useThemeContext();
+  const { theme } = useThemeContext();
 
   // console.log("Products", products);
 
-  if (productContextLoading && themeLoading) {
+  if (productContextLoading) {
     return <div>...Loading Products</div>;
   }
   return (
-    <div className="d-flex align-c flex-wrap-wrap just-c">
+    <div
+      className="d-flex align-c flex-wrap-wrap just-c"
+      style={{
+        backgroundColor: theme === "light" ? "#cbdaf0a8" : "#4A78FF",
+      }}
+    >
       <Header />
-      <div className="d-flex just-s-evenly width-100pr padding-top-10">
+      <div
+        className="d-flex just-s-evenly width-100pr padding-top-10"
+        style={{
+          textShadow:
+            theme === "light" ? "0px 0px 0px black" : "0px 0px 4px black",
+          color: theme === "light" ? "black" : "white",
+        }}
+      >
         This is Products page
         <div>
-          <Button block onClick={handleOpen}>
+          <Button
+            block
+            onClick={handleOpen}
+            style={{
+              backgroundColor: theme === "light" ? "white" : "black",
+              color: theme === "light" ? "black" : "white",
+            }}
+          >
             Create Product
           </Button>
         </div>
@@ -44,15 +56,17 @@ export const Products = () => {
       {products &&
         products.map((product) => (
           <div
-            className="box-shadow-gray"
+            // className="box-shadow-gray"
             key={product.id}
             style={{
-              backgroundColor: blackAndWhiteSmoke,
+              boxShadow:
+                theme === "light" ? "0px 0px 10px gray" : "0px 0px 20px white",
+              backgroundColor: theme === "light" ? "white" : "#6d697f5f",
               width: 200,
               borderRadius: "10px",
               padding: "20px",
               margin: "20px",
-              color: textColor,
+              color: theme === "light" ? "black" : "white",
             }}
             onClick={() => navigate(`/products/${product._id}`)}
           >

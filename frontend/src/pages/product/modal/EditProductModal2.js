@@ -7,11 +7,11 @@ import { useUserContext } from "../../../context/UserContext";
 import { useProductsContext } from "../../../context/ProductsContext";
 
 export const EditProductModal2 = (props) => {
-  const { handleClose, open, selectedProduct, setSelectedProduct, id } = props;
+  const { handleClose, open, selectedProduct, id } = props;
   const { Update_Product } = useProductsContext();
-  const { currentUser, userContextLoading } = useUserContext();
+  const { currentUser } = useUserContext();
 
-  const { successNotification } = useNotificationContext();
+  const { successNotification, warningNotification } = useNotificationContext();
 
   const handleEditButton = async (values) => {
     const updatedProduct = {
@@ -20,24 +20,34 @@ export const EditProductModal2 = (props) => {
       price: values.price,
       category: values.category,
     };
+
     try {
-      const response = await axios.put(
-        `http://localhost:8080/products/${id}`,
-        updatedProduct,
-        {
-          headers: {
-            Authorization: `Bearer ${currentUser.token}`,
-          },
-        }
-      );
+      if (
+        updatedProduct.name === selectedProduct.name ||
+        updatedProduct.price === selectedProduct.price ||
+        updatedProduct.description === selectedProduct.description ||
+        updatedProduct.category === selectedProduct.category
+      ) {
+        warningNotification("Nothing changed");
+        handleClose();
+      } else {
+        const response = await axios.put(
+          `http://localhost:8080/products/${id}`,
+          updatedProduct,
+          {
+            headers: {
+              Authorization: `Bearer ${currentUser.token}`,
+            },
+          }
+        );
 
-      // console.log(`Edited Successfully `, id);
-      const data = await response.data;
+        const data = await response.data;
 
-      Update_Product(data);
+        Update_Product(data);
 
-      successNotification("Product edited successfully");
-      handleClose();
+        successNotification("Product edited successfully");
+        handleClose();
+      }
     } catch (err) {
       console.error(err);
     }

@@ -10,9 +10,18 @@ export const Header = () => {
 
   const { currentUser, signOut, userContextLoading } = useUserContext();
 
-  const { onChange, textColor, themeLoading, menuColor } = useThemeContext();
+  const { setTheme, theme } = useThemeContext();
 
-  if (userContextLoading && themeLoading) {
+  const handleChange = (checked) => {
+    console.log("Header", checked);
+    if (!checked) {
+      setTheme("light");
+    } else {
+      setTheme("dark");
+    }
+  };
+
+  if (userContextLoading) {
     return <div>Loading</div>;
   }
 
@@ -21,17 +30,23 @@ export const Header = () => {
       <div
         className="Header box-shadow-gray"
         style={{
-          backgroundColor: menuColor,
-          color: textColor,
+          backgroundColor: theme === "light" ? "white" : "black",
+          color: theme === "light" ? "black" : "white",
         }}
       >
-        <Switch defaultChecked onChange={onChange} size="small" />
+        <Switch
+          checkedChildren="Black Theme"
+          unCheckedChildren="Light Theme"
+          defaultUnChecked
+          onChange={handleChange}
+          size="small"
+        />
         <div className="Header-Left">
           <Link
             to="/"
             style={{
               textDecoration: "none",
-              color: textColor,
+              color: theme === "light" ? "black" : "white",
             }}
           >
             Home
@@ -43,7 +58,7 @@ export const Header = () => {
               to="/products"
               style={{
                 textDecoration: "none",
-                color: textColor,
+                color: theme === "light" ? "black" : "white",
               }}
             >
               Products
@@ -56,7 +71,7 @@ export const Header = () => {
               to="/notes"
               style={{
                 textDecoration: "none",
-                color: textColor,
+                color: theme === "light" ? "black" : "white",
               }}
             >
               Notes
@@ -68,7 +83,7 @@ export const Header = () => {
           <div className="Header-Right_Item">
             <div
               style={{
-                color: textColor,
+                color: theme === "light" ? "black" : "white",
               }}
             >
               {currentUser.user.email}
@@ -81,7 +96,7 @@ export const Header = () => {
               onClick={() => signOut()}
               style={{
                 textDecoration: "none",
-                color: textColor,
+                color: theme === "light" ? "black" : "white",
               }}
             >
               Sign Out
@@ -96,16 +111,17 @@ export const Header = () => {
     <div
       className="Header box-shadow-gray"
       style={{
-        // backgroundColor: "white",
-        color: textColor,
+        backgroundColor: theme === "light" ? "white" : "black",
+        color: theme === "light" ? "black" : "white",
       }}
     >
+      <Switch defaultChecked onChange={handleChange} size="small" />
       <div className="Header-Left">
         <Link
           to="/"
           style={{
             textDecoration: "none",
-            color: textColor,
+            color: theme === "light" ? "black" : "white",
           }}
         >
           Home
@@ -118,7 +134,7 @@ export const Header = () => {
             to="/sign-in"
             style={{
               textDecoration: "none",
-              color: textColor,
+              color: theme === "light" ? "black" : "white",
             }}
           >
             Sign In
@@ -132,7 +148,7 @@ export const Header = () => {
             to="/sign-up"
             style={{
               textDecoration: "none",
-              color: textColor,
+              color: theme === "light" ? "black" : "white",
             }}
           >
             Sign Up

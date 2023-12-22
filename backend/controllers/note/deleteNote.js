@@ -19,9 +19,7 @@ const deleteNote = async (req, res) => {
     });
     return;
   }
-  res.status(200).json({
-    message: `Note by id -->${note.name} Note deleted successfully`,
-  });
+  res.status(200).json(note);
 };
 
 module.exports = { deleteNote };

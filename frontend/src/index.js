@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App";
+import { NotesContexProvider } from "./context/NotesContext";
 import { NotificationProvider } from "./context/NotificationContext";
 import { ProductContexProvider } from "./context/ProductsContext";
 import { ThemeContextProvider } from "./context/ThemeContext";
@@ -13,9 +14,11 @@ root.render(
     <NotificationProvider>
       <UserProvider>
         <ProductContexProvider>
-          <ThemeContextProvider>
-            <App />
-          </ThemeContextProvider>
+          <NotesContexProvider>
+            <ThemeContextProvider>
+              <App />
+            </ThemeContextProvider>
+          </NotesContexProvider>
         </ProductContexProvider>
       </UserProvider>
     </NotificationProvider>

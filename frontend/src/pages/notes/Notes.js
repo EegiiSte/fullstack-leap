@@ -1,48 +1,24 @@
 import { Button } from "antd";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { BasicTabs, HeadMUI } from "../../component";
 import { Header } from "../../component/header/Header";
-import { useUserContext } from "../../context/UserContext";
+import { useNotesContext } from "../../context/NotesContext";
 import { CreateNoteModal } from "./CreateNoteModal";
 
 import "./Notes.css";
 
 export const Notes = () => {
-  const [notes, setNotes] = useState([]);
   const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { currentUser, userContextLoading } = useUserContext();
+  const { notes, notesContextLoading } = useNotesContext();
 
-  useEffect(() => {
-    const getNotes = async () => {
-      const response = await axios.get("http://localhost:8080/notes", {
-        headers: {
-          Authorization: `Bearer ${currentUser.token}`,
-        },
-      });
-
-      const data = response.data;
-
-      setNotes(data);
-    };
-    getNotes();
-  }, []);
-
-  const getNotes = async () => {
-    const response = await axios.get("http://localhost:8080/notes");
-
-    const data = response.data;
-
-    setNotes(data);
-  };
-
-  // console.log(`Notes  ==> ${notes}`);
+  if (notesContextLoading) {
+    return <div>...Loading Notes</div>;
+  }
   return (
     <div className="d-flex align-c flex-wrap-wrap just-c">
       <Header />
@@ -75,13 +51,7 @@ export const Notes = () => {
           </div>
         ))}
 
-      <CreateNoteModal
-        handleClose={handleClose}
-        reload={() => {
-          getNotes();
-        }}
-        open={open}
-      />
+      <CreateNoteModal handleClose={handleClose} open={open} />
     </div>
   );
 };

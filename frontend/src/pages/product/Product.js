@@ -1,20 +1,15 @@
 import { Button, Flex } from "antd";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Header, HeadMUI } from "../../component";
+import { Header } from "../../component";
 import { useProductsContext } from "../../context/ProductsContext";
-import { useUserContext } from "../../context/UserContext";
 import { DeleteProductModal } from "./modal/DeleteProductModal";
 import { EditProductModal2 } from "./modal/EditProductModal2";
-// import { EditProductModal } from "./modal/EditProductModal";
 
 import "./Product.css";
 
 export const Product = () => {
   const { id } = useParams();
-
-  const { currentUser, userContextLoading } = useUserContext();
 
   //state for edit modal
   const [open, setOpen] = useState(false);
@@ -30,9 +25,6 @@ export const Product = () => {
   const { products, productContextLoading } = useProductsContext();
 
   const selectedProduct = products.find((product) => product._id === id);
-
-  // console.log("Product", selectedProduct);
-  // console.log("Product", products);
 
   if (productContextLoading) {
     return <div>...Loading Products</div>;

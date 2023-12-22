@@ -2,22 +2,51 @@ import { Button, Form, Input, InputNumber, message } from "antd";
 import axios from "axios";
 import React from "react";
 import { Modal } from "../../../component/modal";
+import { useNotesContext } from "../../../context/NotesContext";
+import { useNotificationContext } from "../../../context/NotificationContext";
+import { useUserContext } from "../../../context/UserContext";
 
 export const EditNoteModal = (props) => {
   const { handleClose, open, selectedNote, id } = props;
+  const { Update_Note } = useNotesContext();
+  const { currentUser } = useUserContext();
 
-  const [messageApi, contextHolder] = message.useMessage();
+  const { successNotification, warningNotification } = useNotificationContext();
 
   const handleEditButton = async (values) => {
-    try {
-      await axios.put(`http://localhost:8080/notes/${id}`, values);
-      console.log(`Successfully Edited`, id);
-      handleClose();
+    const updatedNote = {
+      name: values.name,
+      description: values.description,
+      goal: values.goal,
+      category: values.category,
+    };
 
-      messageApi.open({
-        type: "success",
-        content: "Note edited successfully",
-      });
+    try {
+      if (
+        updatedNote.name === selectedNote.name ||
+        updatedNote.goal === selectedNote.goal ||
+        updatedNote.description === selectedNote.description ||
+        updatedNote.category === selectedNote.category
+      ) {
+        warningNotification("Nothing changed");
+        handleClose();
+      } else {
+        const response = await axios.put(
+          `http://localhost:8080/notes/${id}`,
+          updatedNote,
+          {
+            headers: {
+              Authorization: `Bearer ${currentUser.token}`,
+            },
+          }
+        );
+        const data = await response.data;
+
+        Update_Note(data);
+
+        successNotification("Note edited successfully");
+        handleClose();
+      }
     } catch (err) {
       console.error(err);
     }
@@ -27,6 +56,12 @@ export const EditNoteModal = (props) => {
       <Modal handleClose={handleClose} open={open}>
         {selectedNote && (
           <Form
+            initialValues={{
+              name: selectedNote.name,
+              description: selectedNote.description,
+              goal: selectedNote.goal,
+              category: selectedNote.category,
+            }}
             name="trigger"
             onFinish={(values) => {
               handleEditButton(values);
@@ -48,33 +83,28 @@ export const EditNoteModal = (props) => {
                 { min: 4, message: "4oos ih baih" },
               ]}
             >
-              <Input defaultValue={selectedNote.name} />
+              <Input />
             </Form.Item>
             <Form.Item
               label="Goal"
               name="goal"
               rules={[{ min: 1, required: true }]}
             >
-              <Input
-                style={{
-                  width: "100%",
-                }}
-                defaultValue={selectedNote.goal}
-              />
+              <Input />
             </Form.Item>
             <Form.Item
               label="Description"
               name="description"
               rules={[{ required: true, message: "Required" }]}
             >
-              <Input defaultValue={selectedNote.description} />
+              <Input />
             </Form.Item>
             <Form.Item
               label="Category"
               name="category"
               rules={[{ required: true, message: "Required" }]}
             >
-              <Input defaultValue={selectedNote.category} />
+              <Input />
             </Form.Item>
 
             <div className="d-flex just-s-evenly margin-top-10 gap-10">
@@ -99,7 +129,6 @@ export const EditNoteModal = (props) => {
           </Form>
         )}
       </Modal>
-      {contextHolder}
     </div>
   );
 };

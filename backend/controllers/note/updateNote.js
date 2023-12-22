@@ -10,8 +10,12 @@ const updateNote = async (req, res) => {
       message: "Update by id --> Invalid note id",
     });
   }
-  const oldNote = await Note.findById(id);
-  const updatedNote = await Note.findOneAndUpdate({ _id: id }, { ...req.body });
+
+  const updatedNote = await Note.findOneAndUpdate(
+    { _id: id },
+    { ...req.body },
+    { new: true }
+  );
 
   if (!updatedNote) {
     res.status(404).json({
@@ -19,10 +23,7 @@ const updateNote = async (req, res) => {
     });
     return;
   }
-  res.status(200).json({
-    updatedNote,
-    message: `Update by id -->/${oldNote.name} to ${req.body.name}/ Note updated successful`,
-  });
+  res.status(200).json(updatedNote);
 };
 
 module.exports = { updateNote };

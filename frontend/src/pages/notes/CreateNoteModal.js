@@ -2,17 +2,17 @@ import { Button, Form, Input } from "antd";
 import axios from "axios";
 import React from "react";
 import { Modal } from "../../component";
+import { useNotesContext } from "../../context/NotesContext";
 import { useNotificationContext } from "../../context/NotificationContext";
-import { useProductsContext } from "../../context/ProductsContext";
 import { useUserContext } from "../../context/UserContext";
 
 export const CreateNoteModal = (props) => {
-  const { handleClose, open, reload } = props;
+  const { handleClose, open } = props;
 
   //input values
-
-  const { currentUser, userContextLoading } = useUserContext();
-  const { successNotification, errorNotification } = useNotificationContext();
+  const { Create_Note } = useNotesContext();
+  const { currentUser } = useUserContext();
+  const { successNotification } = useNotificationContext();
 
   const baldan = async (values) => {
     console.log(`baldangaas - ${values}`, values);
@@ -30,6 +30,7 @@ export const CreateNoteModal = (props) => {
 
     const data = await response.data;
 
+    Create_Note(data);
     handleClose();
     successNotification("Create Note successfully");
   };
