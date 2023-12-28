@@ -32,7 +32,7 @@ export const EditProductModal2 = (props) => {
         handleClose();
       } else {
         const response = await axios.put(
-          `http://localhost:8080/products/${id}`,
+          `https://fullstack-backend-pm5t.onrender.com/products/${id}`,
           updatedProduct,
           {
             headers: {

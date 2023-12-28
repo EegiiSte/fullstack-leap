@@ -15,11 +15,14 @@ export const ProductContexProvider = ({ children }) => {
     if (!userContextLoading) {
       const fetchProducts = async () => {
         try {
-          const response = await axios.get("http://localhost:8080/products", {
-            headers: {
-              Authorization: `Bearer ${currentUser.token}`,
-            },
-          });
+          const response = await axios.get(
+            "https://fullstack-backend-pm5t.onrender.com/products",
+            {
+              headers: {
+                Authorization: `Bearer ${currentUser.token}`,
+              },
+            }
+          );
 
           const data = await response.data;
 

@@ -18,7 +18,7 @@ export const CreateProductModal = (props) => {
   const dulmaa = async (values) => {
     // console.log(`dulmaagaas - ${values}`, values);
     const response = await axios.post(
-      "http://localhost:8080/products",
+      "https://fullstack-backend-pm5t.onrender.com/products",
       values,
       {
         headers: {

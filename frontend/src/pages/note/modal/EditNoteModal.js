@@ -32,7 +32,7 @@ export const EditNoteModal = (props) => {
         handleClose();
       } else {
         const response = await axios.put(
-          `http://localhost:8080/notes/${id}`,
+          `https://fullstack-backend-pm5t.onrender.com/notes/${id}`,
           updatedNote,
           {
             headers: {

@@ -15,11 +15,14 @@ export const NotesContexProvider = ({ children }) => {
     if (!userContextLoading) {
       const fetchNotes = async () => {
         try {
-          const response = await axios.get("http://localhost:8080/notes", {
-            headers: {
-              Authorization: `Bearer ${currentUser.token}`,
-            },
-          });
+          const response = await axios.get(
+            "https://fullstack-backend-pm5t.onrender.com/notes",
+            {
+              headers: {
+                Authorization: `Bearer ${currentUser.token}`,
+              },
+            }
+          );
 
           const data = await response.data;
 

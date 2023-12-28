@@ -22,11 +22,15 @@ export const CreateNoteModal = (props) => {
       goal: values.goal,
       category: values.category,
     };
-    const response = await axios.post("http://localhost:8080/notes", newNote, {
-      headers: {
-        Authorization: `Bearer ${currentUser.token}`,
-      },
-    });
+    const response = await axios.post(
+      "https://fullstack-backend-pm5t.onrender.com/notes",
+      newNote,
+      {
+        headers: {
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      }
+    );
 
     const data = await response.data;
 

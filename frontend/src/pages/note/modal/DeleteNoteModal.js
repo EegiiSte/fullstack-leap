@@ -18,11 +18,14 @@ export const DeleteNoteModal = (props) => {
 
   const handleDeleteButton = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8080/notes/${id}`, {
-        headers: {
-          Authorization: `Bearer ${currentUser.token}`,
-        },
-      });
+      const response = await axios.delete(
+        `https://fullstack-backend-pm5t.onrender.com/notes/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        }
+      );
 
       const data = await response.data;
 
