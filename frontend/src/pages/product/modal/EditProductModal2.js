@@ -23,9 +23,9 @@ export const EditProductModal2 = (props) => {
 
     try {
       if (
-        updatedProduct.name === selectedProduct.name ||
-        updatedProduct.price === selectedProduct.price ||
-        updatedProduct.description === selectedProduct.description ||
+        updatedProduct.name === selectedProduct.name &&
+        updatedProduct.price === selectedProduct.price &&
+        updatedProduct.description === selectedProduct.description &&
         updatedProduct.category === selectedProduct.category
       ) {
         warningNotification("Nothing changed");

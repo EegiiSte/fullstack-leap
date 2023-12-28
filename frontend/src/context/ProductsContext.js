@@ -21,17 +21,6 @@ export const ProductContexProvider = ({ children }) => {
             },
           });
 
-          const sum_ii = (n) => {
-            let sum = 0;
-
-            for (let i = 1; i < n + 1; i++) {
-              sum = sum + 10 ** i - 1;
-            }
-            return sum;
-          };
-
-          console.log("ProductPage", sum_ii(7));
-
           const data = await response.data;
 
           setProducts(data);

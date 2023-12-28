@@ -23,10 +23,10 @@ export const EditNoteModal = (props) => {
 
     try {
       if (
-        updatedNote.name === selectedNote.name ||
-        updatedNote.goal === selectedNote.goal ||
-        updatedNote.description === selectedNote.description ||
-        updatedNote.category === selectedNote.category
+        values.name === selectedNote.name &&
+        values.goal === selectedNote.goal &&
+        values.description === selectedNote.description &&
+        values.category === selectedNote.category
       ) {
         warningNotification("Nothing changed");
         handleClose();
