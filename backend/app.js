@@ -5,7 +5,16 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
+
+app.use(
+  cors({
+    origin: "https://fullstack-leap-frontend-nu.vercel.app",
+    credentials: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    optionsSuccessStatus: 204,
+  })
+);
 
 const usersRouter = require("./routes/users");
 const productsRouter = require("./routes/products");

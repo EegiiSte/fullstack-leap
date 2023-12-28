@@ -27,7 +27,7 @@ export const Products = () => {
     <div
       className="d-flex align-c flex-wrap-wrap just-c"
       style={{
-        backgroundColor: theme === "light" ? "#cbdaf0a8" : "#4A78FF",
+        backgroundColor: theme === "light" ? "#cbdaf0a8" : "#a3a5a9",
       }}
     >
       <Header />
@@ -61,7 +61,7 @@ export const Products = () => {
             style={{
               boxShadow:
                 theme === "light" ? "0px 0px 10px gray" : "0px 0px 20px white",
-              backgroundColor: theme === "light" ? "white" : "#6d697f5f",
+              backgroundColor: theme === "light" ? "white" : "#769ce8",
               width: 200,
               borderRadius: "10px",
               padding: "20px",
