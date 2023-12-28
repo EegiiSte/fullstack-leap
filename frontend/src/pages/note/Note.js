@@ -2,7 +2,7 @@ import { Button, Flex } from "antd";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Header } from "../../component";
-import "./note.css";
+import "./Note.css";
 // import { EditProductModal } from "./modal/EditProductModal";
 
 import ".";

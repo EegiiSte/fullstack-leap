@@ -20,7 +20,7 @@ const auth = async (req, res, next) => {
 
     next();
   } catch (err) {
-    return res.status(401).send({ error: "Invalid torken" });
+    return res.status(401).send({ error: "Invalid token" });
   }
 };
 module.exports = auth;

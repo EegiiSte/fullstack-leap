@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Header } from "../../component";
 import { useProductsContext } from "../../context/ProductsContext";
+import { useThemeContext } from "../../context/ThemeContext";
 import { DeleteProductModal } from "./modal/DeleteProductModal";
 import { EditProductModal2 } from "./modal/EditProductModal2";
 
@@ -23,6 +24,7 @@ export const Product = () => {
 
   //   console.log(`Product -> id ${id}`);
   const { products, productContextLoading } = useProductsContext();
+  const { theme } = useThemeContext();
 
   const selectedProduct = products.find((product) => product._id === id);
 
@@ -34,6 +36,7 @@ export const Product = () => {
         className="align-c d-flex "
         style={{
           flexDirection: "column",
+          backgroundColor: theme === "light" ? "#cbdaf0a8" : "#4A78FF",
         }}
       >
         <Header />
