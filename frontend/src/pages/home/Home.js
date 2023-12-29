@@ -21,12 +21,12 @@ export const Home = () => {
         className="padding-top-10"
         style={{
           width: "100%",
+          height: "100vh",
           display: "flex",
           justifyContent: "center",
+          backgroundColor: theme === "light" ? "" : "#5896cf",
         }}
-      >
-        {theme === "light" ? <div /> : <Metaballs />}
-      </div>
+      ></div>
     </div>
   );
 };
