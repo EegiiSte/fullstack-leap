@@ -115,7 +115,13 @@ export const Header = () => {
         color: theme === "light" ? "black" : "white",
       }}
     >
-      <Switch defaultChecked onChange={handleChange} size="small" />
+      <Switch
+        checkedChildren="Black Theme"
+        unCheckedChildren="Light Theme"
+        defaultChecked
+        onChange={handleChange}
+        size="small"
+      />
       <div className="Header-Left">
         <Link
           to="/"

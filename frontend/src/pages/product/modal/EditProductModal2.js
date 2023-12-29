@@ -1,6 +1,6 @@
 import { Button, Form, Input, InputNumber } from "antd";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { Modal } from "../../../component/modal";
 import { useNotificationContext } from "../../../context/NotificationContext";
 import { useUserContext } from "../../../context/UserContext";
@@ -11,6 +11,14 @@ export const EditProductModal2 = (props) => {
   const { Update_Product } = useProductsContext();
   const { currentUser } = useUserContext();
 
+  const [disabledSubmitButton, setDisabledSubmitButton] = useState(true);
+
+  const inputPress = () => {
+    setDisabledSubmitButton(false);
+  };
+
+  // console.log("inputPress", disabledSubmitButton);
+
   const { successNotification, warningNotification } = useNotificationContext();
 
   const handleEditButton = async (values) => {
@@ -20,34 +28,25 @@ export const EditProductModal2 = (props) => {
       price: values.price,
       category: values.category,
     };
+    console.log("handleEditButton", updatedProduct);
 
     try {
-      if (
-        updatedProduct.name === selectedProduct.name &&
-        updatedProduct.price === selectedProduct.price &&
-        updatedProduct.description === selectedProduct.description &&
-        updatedProduct.category === selectedProduct.category
-      ) {
-        warningNotification("Nothing changed");
-        handleClose();
-      } else {
-        const response = await axios.put(
-          `https://fullstack-backend-pm5t.onrender.com/products/${id}`,
-          updatedProduct,
-          {
-            headers: {
-              Authorization: `Bearer ${currentUser.token}`,
-            },
-          }
-        );
+      const response = await axios.put(
+        `https://fullstack-backend-pm5t.onrender.com/products/${id}`,
+        updatedProduct,
+        {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        }
+      );
 
-        const data = await response.data;
+      const data = await response.data;
 
-        Update_Product(data);
+      Update_Product(data);
 
-        successNotification("Product edited successfully");
-        handleClose();
-      }
+      successNotification("Product edited successfully");
+      handleClose();
     } catch (err) {
       console.error(err);
     }
@@ -84,7 +83,7 @@ export const EditProductModal2 = (props) => {
                 { min: 4, message: "4oos ih baih" },
               ]}
             >
-              <Input />
+              <Input onChange={inputPress} />
             </Form.Item>
             <Form.Item
               label="Price"
@@ -92,6 +91,7 @@ export const EditProductModal2 = (props) => {
               rules={[{ min: 1, required: true, type: "number" }]}
             >
               <InputNumber
+                onChange={inputPress}
                 style={{
                   width: "100%",
                 }}
@@ -102,14 +102,14 @@ export const EditProductModal2 = (props) => {
               name="description"
               rules={[{ required: true, message: "Required" }]}
             >
-              <Input />
+              <Input onChange={inputPress} />
             </Form.Item>
             <Form.Item
               label="Category"
               name="category"
               rules={[{ required: true, message: "Required" }]}
             >
-              <Input />
+              <Input onChange={inputPress} />
             </Form.Item>
 
             <div className="d-flex just-s-evenly margin-top-10 gap-10">
@@ -118,6 +118,7 @@ export const EditProductModal2 = (props) => {
                 htmlType="submit"
                 block
                 style={{ width: "100%" }}
+                disabled={disabledSubmitButton}
               >
                 Submit
               </Button>

@@ -1,6 +1,6 @@
 import { Button, Form, Input, InputNumber, message } from "antd";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { Modal } from "../../../component/modal";
 import { useNotesContext } from "../../../context/NotesContext";
 import { useNotificationContext } from "../../../context/NotificationContext";
@@ -10,6 +10,12 @@ export const EditNoteModal = (props) => {
   const { handleClose, open, selectedNote, id } = props;
   const { Update_Note } = useNotesContext();
   const { currentUser } = useUserContext();
+
+  const [disabledSubmitButton, setDisabledSubmitButton] = useState(true);
+
+  const inputPress = () => {
+    setDisabledSubmitButton(false);
+  };
 
   const { successNotification, warningNotification } = useNotificationContext();
 
@@ -22,31 +28,21 @@ export const EditNoteModal = (props) => {
     };
 
     try {
-      if (
-        values.name === selectedNote.name &&
-        values.goal === selectedNote.goal &&
-        values.description === selectedNote.description &&
-        values.category === selectedNote.category
-      ) {
-        warningNotification("Nothing changed");
-        handleClose();
-      } else {
-        const response = await axios.put(
-          `https://fullstack-backend-pm5t.onrender.com/notes/${id}`,
-          updatedNote,
-          {
-            headers: {
-              Authorization: `Bearer ${currentUser.token}`,
-            },
-          }
-        );
-        const data = await response.data;
+      const response = await axios.put(
+        `https://fullstack-backend-pm5t.onrender.com/notes/${id}`,
+        updatedNote,
+        {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        }
+      );
+      const data = await response.data;
 
-        Update_Note(data);
+      Update_Note(data);
 
-        successNotification("Note edited successfully");
-        handleClose();
-      }
+      successNotification("Note edited successfully");
+      handleClose();
     } catch (err) {
       console.error(err);
     }
@@ -83,28 +79,28 @@ export const EditNoteModal = (props) => {
                 { min: 4, message: "4oos ih baih" },
               ]}
             >
-              <Input />
+              <Input onChange={inputPress} />
             </Form.Item>
             <Form.Item
               label="Goal"
               name="goal"
               rules={[{ min: 1, required: true }]}
             >
-              <Input />
+              <Input onChange={inputPress} />
             </Form.Item>
             <Form.Item
               label="Description"
               name="description"
               rules={[{ required: true, message: "Required" }]}
             >
-              <Input />
+              <Input onChange={inputPress} />
             </Form.Item>
             <Form.Item
               label="Category"
               name="category"
               rules={[{ required: true, message: "Required" }]}
             >
-              <Input />
+              <Input onChange={inputPress} />
             </Form.Item>
 
             <div className="d-flex just-s-evenly margin-top-10 gap-10">
@@ -113,6 +109,7 @@ export const EditNoteModal = (props) => {
                 htmlType="submit"
                 block
                 style={{ width: "100%" }}
+                disabled={disabledSubmitButton}
               >
                 Submit
               </Button>
