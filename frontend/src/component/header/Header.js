@@ -118,7 +118,7 @@ export const Header = () => {
       <Switch
         checkedChildren="Black Theme"
         unCheckedChildren="Light Theme"
-        defaultChecked
+        defaultUnChecked
         onChange={handleChange}
         size="small"
       />
