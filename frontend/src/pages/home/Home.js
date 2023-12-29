@@ -1,7 +1,5 @@
-import { Transfer } from "antd";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Header } from "../../component";
-import { Metaballs } from "../../component/canvas";
 import { useThemeContext } from "../../context/ThemeContext";
 import "./Home.css";
 
