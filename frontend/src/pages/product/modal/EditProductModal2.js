@@ -13,8 +13,11 @@ export const EditProductModal2 = (props) => {
 
   const [disabledSubmitButton, setDisabledSubmitButton] = useState(true);
 
-  const inputPress = () => {
-    setDisabledSubmitButton(false);
+  const inputPress = (e) => {
+    const { value, name } = e.target;
+    console.log("inputPress", value, name);
+
+    setDisabledSubmitButton(value === selectedProduct[name]);
   };
 
   // console.log("inputPress", disabledSubmitButton);
@@ -47,6 +50,7 @@ export const EditProductModal2 = (props) => {
 
       successNotification("Product edited successfully");
       handleClose();
+      setDisabledSubmitButton(true);
     } catch (err) {
       console.error(err);
     }
@@ -83,14 +87,16 @@ export const EditProductModal2 = (props) => {
                 { min: 4, message: "4oos ih baih" },
               ]}
             >
-              <Input onChange={inputPress} />
+              <Input name="name" onChange={inputPress} />
             </Form.Item>
             <Form.Item
               label="Price"
               name="price"
               rules={[{ min: 1, required: true, type: "number" }]}
             >
-              <InputNumber
+              <Input
+                type="number"
+                name="price"
                 onChange={inputPress}
                 style={{
                   width: "100%",
@@ -102,14 +108,14 @@ export const EditProductModal2 = (props) => {
               name="description"
               rules={[{ required: true, message: "Required" }]}
             >
-              <Input onChange={inputPress} />
+              <Input name="description" onChange={inputPress} />
             </Form.Item>
             <Form.Item
               label="Category"
               name="category"
               rules={[{ required: true, message: "Required" }]}
             >
-              <Input onChange={inputPress} />
+              <Input name="category" onChange={inputPress} />
             </Form.Item>
 
             <div className="d-flex just-s-evenly margin-top-10 gap-10">
@@ -126,6 +132,7 @@ export const EditProductModal2 = (props) => {
                 block
                 onClick={() => {
                   handleClose();
+                  setDisabledSubmitButton(true);
                 }}
                 style={{ width: "100%" }}
               >
