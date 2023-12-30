@@ -71,7 +71,10 @@ export const SignIn = (props) => {
         <Form.Item
           label="Email"
           name="email"
-          initialValue={"test9@gmail.com"}
+          // initialValue={"test9@gmail.com"}
+          initialValue={
+            process.env.NODE_ENV === "development" ? "test9@gmail.com" : ""
+          }
           rules={[
             {
               required: true,
@@ -85,7 +88,10 @@ export const SignIn = (props) => {
         <Form.Item
           label="Password"
           name="password"
-          initialValue={"12345678aaa$$R"}
+          // initialValue={"12345678aaa$$R"}
+          initialValue={
+            process.env.NODE_ENV === "development" ? "12345678aaa$$R" : ""
+          }
           rules={[
             {
               required: true,

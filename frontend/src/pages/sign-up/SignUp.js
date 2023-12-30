@@ -109,7 +109,8 @@ export const SignUp = () => {
         <Form.Item
           name="name"
           label="Name"
-          initialValue={"test13"}
+          // initialValue={"test13"}
+          initialValue={process.env.NODE_ENV === "development" ? "test13" : ""}
           tooltip="What do you want others to call you?"
           rules={[
             {
@@ -144,7 +145,10 @@ export const SignUp = () => {
         <Form.Item
           name="password"
           label="Password"
-          initialValue={"12345678aaa$$R"}
+          // initialValue={"12345678aaa$$R"}
+          initialValue={
+            process.env.NODE_ENV === "development" ? "12345678aaa$$R" : ""
+          }
           rules={[
             {
               required: true,
@@ -168,7 +172,10 @@ export const SignUp = () => {
           label="Confirm Password"
           dependencies={["password"]}
           hasFeedback
-          initialValue={"12345678aaa$$R"}
+          // initialValue={"12345678aaa$$R"}
+          initialValue={
+            process.env.NODE_ENV === "development" ? "12345678aaa$$R" : ""
+          }
           rules={[
             {
               required: true,
