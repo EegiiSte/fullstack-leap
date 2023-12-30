@@ -60,38 +60,42 @@ export const Products = () => {
             </Button>
           </div>
         </div>
-        <div className="d-flex flex-direction-row just-s-evenly">
-          <div className="d-flex flex-direction-row align-c gap-10">
-            <p>Background Color</p>
-            <ColorPicker
-              showText
-              value={bgColor}
-              onChangeComplete={(color) => {
-                setBgColor(color.toHexString());
-              }}
-            />
+        {theme === "light" ? (
+          <div />
+        ) : (
+          <div className="d-flex flex-direction-row just-s-evenly">
+            <div className="d-flex flex-direction-row align-c gap-10">
+              <p>Background Color</p>
+              <ColorPicker
+                showText
+                value={bgColor}
+                onChangeComplete={(color) => {
+                  setBgColor(color.toHexString());
+                }}
+              />
+            </div>
+            <div className="d-flex flex-direction-row align-c gap-10">
+              <p>Card Box Color</p>
+              <ColorPicker
+                showText
+                value={cardBoxColor}
+                onChangeComplete={(color) => {
+                  setCardBoxColor(color.toHexString());
+                }}
+              />
+            </div>
+            <div className="d-flex flex-direction-row align-c gap-10">
+              <p>Text Color</p>
+              <ColorPicker
+                showText
+                value={textColor}
+                onChangeComplete={(color) => {
+                  setTextColor(color.toHexString());
+                }}
+              />
+            </div>
           </div>
-          <div className="d-flex flex-direction-row align-c gap-10">
-            <p>Card Box Color</p>
-            <ColorPicker
-              showText
-              value={cardBoxColor}
-              onChangeComplete={(color) => {
-                setCardBoxColor(color.toHexString());
-              }}
-            />
-          </div>
-          <div className="d-flex flex-direction-row align-c gap-10">
-            <p>Text Color</p>
-            <ColorPicker
-              showText
-              value={textColor}
-              onChangeComplete={(color) => {
-                setTextColor(color.toHexString());
-              }}
-            />
-          </div>
-        </div>
+        )}
       </div>
       <Flex
         wrap="wrap"
