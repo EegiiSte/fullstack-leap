@@ -36,7 +36,7 @@ export const Product = () => {
         className="align-c d-flex "
         style={{
           flexDirection: "column",
-          backgroundColor: theme === "light" ? "#cbdaf0a8" : "#4A78FF",
+          backgroundColor: theme === "light" ? "#cbdaf0a8" : "#cbdaf0a8",
         }}
       >
         <Header />
@@ -50,12 +50,24 @@ export const Product = () => {
         >
           This is Single Product page
           <Flex className="gap-10" wrap="wrap" gap="small">
-            <Button block onClick={handleOpen}>
-              {" "}
+            <Button
+              block
+              onClick={handleOpen}
+              style={{
+                backgroundColor: theme === "light" ? "white" : "black",
+                color: theme === "light" ? "black" : "white",
+              }}
+            >
               Edit
             </Button>
-            <Button block onClick={handleOpenDelete}>
-              {" "}
+            <Button
+              block
+              onClick={handleOpenDelete}
+              style={{
+                backgroundColor: theme === "light" ? "white" : "black",
+                color: theme === "light" ? "black" : "white",
+              }}
+            >
               Delete
             </Button>
           </Flex>
@@ -64,7 +76,7 @@ export const Product = () => {
           <div
             className="box-shadow-gray"
             style={{
-              backgroundColor: "whitesmoke",
+              backgroundColor: theme === "light" ? "white" : "black",
               height: "50%",
               width: "80%",
               borderRadius: "10px",
@@ -78,6 +90,7 @@ export const Product = () => {
             <div
               style={{
                 width: "40%",
+                color: theme === "light" ? "black" : "white",
               }}
             >
               <h3>Name : {selectedProduct.name}</h3>

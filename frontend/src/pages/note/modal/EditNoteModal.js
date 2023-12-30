@@ -13,8 +13,11 @@ export const EditNoteModal = (props) => {
 
   const [disabledSubmitButton, setDisabledSubmitButton] = useState(true);
 
-  const inputPress = () => {
-    setDisabledSubmitButton(false);
+  const inputPress = (e) => {
+    const { value, name } = e.target;
+    console.log("inputPress", value, name);
+
+    setDisabledSubmitButton(value === selectedNote[name]);
   };
 
   const { successNotification, warningNotification } = useNotificationContext();
@@ -43,6 +46,7 @@ export const EditNoteModal = (props) => {
 
       successNotification("Note edited successfully");
       handleClose();
+      setDisabledSubmitButton(true);
     } catch (err) {
       console.error(err);
     }
@@ -79,28 +83,28 @@ export const EditNoteModal = (props) => {
                 { min: 4, message: "4oos ih baih" },
               ]}
             >
-              <Input onChange={inputPress} />
+              <Input name="name" onChange={inputPress} />
             </Form.Item>
             <Form.Item
               label="Goal"
               name="goal"
               rules={[{ min: 1, required: true }]}
             >
-              <Input onChange={inputPress} />
+              <Input name="goal" onChange={inputPress} />
             </Form.Item>
             <Form.Item
               label="Description"
               name="description"
               rules={[{ required: true, message: "Required" }]}
             >
-              <Input onChange={inputPress} />
+              <Input name="description" onChange={inputPress} />
             </Form.Item>
             <Form.Item
               label="Category"
               name="category"
               rules={[{ required: true, message: "Required" }]}
             >
-              <Input onChange={inputPress} />
+              <Input name="category" onChange={inputPress} />
             </Form.Item>
 
             <div className="d-flex just-s-evenly margin-top-10 gap-10">
@@ -117,6 +121,7 @@ export const EditNoteModal = (props) => {
                 block
                 onClick={() => {
                   handleClose();
+                  setDisabledSubmitButton(true);
                 }}
                 style={{ width: "100%" }}
               >

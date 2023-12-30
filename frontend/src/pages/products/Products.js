@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Card, Flex, Typography } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../component/header/Header";
@@ -27,7 +27,7 @@ export const Products = () => {
     <div
       className="d-flex align-c flex-wrap-wrap just-c"
       style={{
-        backgroundColor: theme === "light" ? "#cbdaf0a8" : "#a3a5a9",
+        backgroundColor: theme === "light" ? "#cbdaf0a8" : "#cbdaf0a8",
       }}
     >
       <Header />
@@ -53,29 +53,79 @@ export const Products = () => {
           </Button>
         </div>
       </div>
-      {products &&
-        products.map((product) => (
-          <div
-            // className="box-shadow-gray"
-            key={product.id}
-            style={{
-              boxShadow:
-                theme === "light" ? "0px 0px 10px gray" : "0px 0px 20px white",
-              backgroundColor: theme === "light" ? "white" : "#769ce8",
-              width: 200,
-              borderRadius: "10px",
-              padding: "20px",
-              margin: "20px",
-              color: theme === "light" ? "black" : "white",
-            }}
-            onClick={() => navigate(`/products/${product._id}`)}
-          >
-            <h3>Name : {product.name}</h3>
-            <p>Price : {product.price}</p>
-            <p>Description : {product.description}</p>
-            <p>Category : {product.category}</p>
-          </div>
-        ))}
+      <Flex
+        wrap="wrap"
+        gap="middle"
+        align="center"
+        justify="center"
+        style={{
+          padding: 20,
+        }}
+      >
+        {products &&
+          products.map((product) => (
+            <Card
+              hoverable
+              style={{
+                flexWrap: "wrap",
+                width: 260,
+                height: 200,
+              }}
+              bodyStyle={{
+                borderRadius: "10px",
+                padding: 10,
+                overflow: "hidden",
+                backgroundColor: theme === "light" ? "white" : "black",
+              }}
+              onClick={() => navigate(`/products/${product._id}`)}
+            >
+              <Flex justify="center">
+                <Flex
+                  vertical
+                  align="center"
+                  justify="center"
+                  style={{
+                    padding: 10,
+                    fontSize: 10,
+                  }}
+                >
+                  <Typography
+                    level={3}
+                    style={{
+                      fontSize: 14,
+                      color: theme === "light" ? "black" : "white",
+                    }}
+                  >
+                    <p>Name : {product.name}</p>
+                    <p>Price : {product.price}</p>
+                    <p>Description : {product.description}</p>
+                    <p>Category : {product.category}</p>
+                  </Typography>
+                </Flex>
+              </Flex>
+            </Card>
+            // <div
+            //   // className="box-shadow-gray"
+            //   key={product.id}
+            //   style={{
+            //     boxShadow:
+            //       theme === "light" ? "0px 0px 10px gray" : "0px 0px 20px white",
+            //     backgroundColor: theme === "light" ? "white" : "#769ce8",
+            //     width: 200,
+            //     borderRadius: "10px",
+            //     padding: "20px",
+            //     margin: "20px",
+            //     color: theme === "light" ? "black" : "white",
+            //   }}
+            //   onClick={() => navigate(`/products/${product._id}`)}
+            // >
+            //   <h3>Name : {product.name}</h3>
+            //   <p>Price : {product.price}</p>
+            //   <p>Description : {product.description}</p>
+            //   <p>Category : {product.category}</p>
+            // </div>
+          ))}
+      </Flex>
 
       <CreateProductModal handleClose={handleClose} open={open} />
     </div>
