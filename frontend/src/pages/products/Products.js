@@ -1,5 +1,5 @@
-import { Button, Card, Flex, Typography } from "antd";
-import React from "react";
+import { Button, Card, ColorPicker, Flex, Space, Typography } from "antd";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../component/header/Header";
 import { useProductsContext } from "../../context/ProductsContext";
@@ -18,6 +18,12 @@ export const Products = () => {
   const { products, productContextLoading } = useProductsContext();
   const { theme } = useThemeContext();
 
+  const [bgColor, setBgColor] = useState("#cbdaf0a8");
+  const [cardBoxColor, setCardBoxColor] = useState("black");
+  const [textColor, setTextColor] = useState("white");
+
+  console.log("Products", bgColor);
+
   // console.log("Products", products)
 
   if (productContextLoading) {
@@ -27,30 +33,64 @@ export const Products = () => {
     <div
       className="d-flex align-c flex-wrap-wrap just-c"
       style={{
-        backgroundColor: theme === "light" ? "#cbdaf0a8" : "#cbdaf0a8",
+        backgroundColor: theme === "light" ? "#cbdaf0a8" : bgColor,
       }}
     >
       <Header />
       <div
-        className="d-flex just-s-evenly width-100pr padding-top-10"
+        className="d-flex flex-direction-c just-s-evenly width-100pr padding-top-10"
         style={{
           textShadow:
             theme === "light" ? "0px 0px 0px black" : "0px 0px 4px black",
           color: theme === "light" ? "black" : "white",
         }}
       >
-        This is Products page
-        <div>
-          <Button
-            block
-            onClick={handleOpen}
-            style={{
-              backgroundColor: theme === "light" ? "white" : "black",
-              color: theme === "light" ? "black" : "white",
-            }}
-          >
-            Create Product
-          </Button>
+        <div className="d-flex flex-direction-row just-s-evenly">
+          This is Products page
+          <div>
+            <Button
+              block
+              onClick={handleOpen}
+              style={{
+                backgroundColor: theme === "light" ? "white" : cardBoxColor,
+                color: theme === "light" ? "black" : textColor,
+              }}
+            >
+              Create Product
+            </Button>
+          </div>
+        </div>
+        <div className="d-flex flex-direction-row just-s-evenly">
+          <div className="d-flex flex-direction-row align-c gap-10">
+            <p>Background Color</p>
+            <ColorPicker
+              showText
+              value={bgColor}
+              onChangeComplete={(color) => {
+                setBgColor(color.toHexString());
+              }}
+            />
+          </div>
+          <div className="d-flex flex-direction-row align-c gap-10">
+            <p>Card Box Color</p>
+            <ColorPicker
+              showText
+              value={cardBoxColor}
+              onChangeComplete={(color) => {
+                setCardBoxColor(color.toHexString());
+              }}
+            />
+          </div>
+          <div className="d-flex flex-direction-row align-c gap-10">
+            <p>Text Color</p>
+            <ColorPicker
+              showText
+              value={textColor}
+              onChangeComplete={(color) => {
+                setTextColor(color.toHexString());
+              }}
+            />
+          </div>
         </div>
       </div>
       <Flex
@@ -75,7 +115,7 @@ export const Products = () => {
                 borderRadius: "10px",
                 padding: 10,
                 overflow: "hidden",
-                backgroundColor: theme === "light" ? "white" : "black",
+                backgroundColor: theme === "light" ? "white" : cardBoxColor,
               }}
               onClick={() => navigate(`/products/${product._id}`)}
             >
@@ -93,7 +133,7 @@ export const Products = () => {
                     level={3}
                     style={{
                       fontSize: 14,
-                      color: theme === "light" ? "black" : "white",
+                      color: theme === "light" ? "black" : textColor,
                     }}
                   >
                     <p>Name : {product.name}</p>

@@ -1,5 +1,5 @@
 import { Switch } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useThemeContext } from "../../context/ThemeContext";
 import { useUserContext } from "../../context/UserContext";
@@ -11,6 +11,10 @@ export const Header = () => {
   const { currentUser, signOut, userContextLoading } = useUserContext();
 
   const { setTheme, theme } = useThemeContext();
+
+  const switchT = theme === "light" ? "defaultUnChecked" : "defaultChecked";
+
+  console.log("Header", switchT);
 
   const handleChange = (checked) => {
     console.log("Header", checked);
@@ -37,7 +41,7 @@ export const Header = () => {
         <Switch
           checkedChildren="Black Theme"
           unCheckedChildren="Light Theme"
-          defaultUnChecked
+          defaultValue={switchT}
           onChange={handleChange}
           size="small"
         />
