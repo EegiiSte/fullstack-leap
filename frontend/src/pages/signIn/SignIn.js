@@ -1,6 +1,6 @@
-import { Button, Checkbox, Form, Input, message } from "antd";
+import { Button, Checkbox, Form, Input } from "antd";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../component";
 import { useNotificationContext } from "../../context/NotificationContext";
@@ -10,9 +10,12 @@ export const SignIn = (props) => {
   const { signIn } = useUserContext();
   const { successNotification, errorNotification } = useNotificationContext();
 
+  const [signinLoading, setSigninLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
+    setSigninLoading(true);
     try {
       // throw new Error("test error");
       const response = await axios.post(
@@ -28,6 +31,9 @@ export const SignIn = (props) => {
 
       if (data) {
         console.log("SignIn", data.user);
+        setTimeout(() => {
+          setSigninLoading(false);
+        }, 6000);
 
         signIn(data);
 
@@ -119,7 +125,7 @@ export const SignIn = (props) => {
             span: 16,
           }}
         >
-          <Button type="primary" htmlType="submit">
+          <Button loading={signinLoading} type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>
