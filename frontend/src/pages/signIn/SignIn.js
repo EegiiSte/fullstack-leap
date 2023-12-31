@@ -31,24 +31,26 @@ export const SignIn = (props) => {
 
       if (data) {
         console.log("SignIn", data.user);
-        setTimeout(() => {
-          setSigninLoading(false);
-        }, 6000);
 
         signIn(data);
 
         successNotification(`Sign in successfully`);
 
         navigate("/");
+
+        setSigninLoading(false);
       } else {
         errorNotification("Sign in failed, please try again");
+        setSigninLoading(false);
       }
     } catch (err) {
       errorNotification(err?.message);
+      setSigninLoading(false);
     }
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
+    setSigninLoading(false);
   };
 
   return (
