@@ -90,7 +90,9 @@ export const Header = () => {
                 color: theme === "light" ? "black" : "white",
               }}
             >
-              {currentUser.user.email}
+              {currentUser.user
+                ? currentUser.user.email
+                : currentUser.newUser.email}
             </div>
           </div>
         </div>

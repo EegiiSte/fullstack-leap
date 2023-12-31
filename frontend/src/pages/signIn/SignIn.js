@@ -28,6 +28,8 @@ export const SignIn = (props) => {
 
       const data = await response.data;
       localStorage.setItem("user", JSON.stringify(data));
+      console.log("SignIn-data", data);
+      console.log("SignIn-data.user", data.user);
 
       if (data) {
         console.log("SignIn", data.user);

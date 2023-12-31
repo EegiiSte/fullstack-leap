@@ -39,8 +39,6 @@ const tailFormItemLayout = {
   },
 };
 export const SignUp = () => {
-  const [user, setUser] = useState([]);
-
   const { signUp } = useUserContext();
   const { successNotification, errorNotification } = useNotificationContext();
 
@@ -70,10 +68,15 @@ export const SignUp = () => {
       const data = await response.data;
       localStorage.setItem("user", JSON.stringify(data));
 
+      console.log("SignUp-data", data);
+      console.log("SignUp-data", data.newUser);
+
       if (data) {
         signUp(data);
-        setUser(data.user);
-        successNotification(`Sign Up successfully, Hello ${user.email}`);
+
+        successNotification(
+          `Sign Up successfully, Hello ${data.newUser.email}`
+        );
 
         navigate("/");
       } else {

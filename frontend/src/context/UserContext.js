@@ -7,6 +7,8 @@ export const UserProvider = (props) => {
 
   const [currentUser, setCurrentUser] = useState(null);
 
+  console.log("UserProvider-currentUser ", currentUser);
+
   const [userContextLoading, setUserContextLoading] = useState(true);
 
   useEffect(() => {
