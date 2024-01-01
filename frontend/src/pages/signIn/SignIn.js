@@ -3,12 +3,15 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../component";
+import { MatrixBG } from "../../component/matrix";
 import { useNotificationContext } from "../../context/NotificationContext";
+import { useThemeContext } from "../../context/ThemeContext";
 import { useUserContext } from "../../context/UserContext";
 
 export const SignIn = (props) => {
   const { signIn } = useUserContext();
   const { successNotification, errorNotification } = useNotificationContext();
+  const { setTheme, theme } = useThemeContext();
 
   const [signinLoading, setSigninLoading] = useState(false);
 
@@ -58,11 +61,17 @@ export const SignIn = (props) => {
   return (
     <div className="d-flex align-c flex-direction-c just-c">
       <Header />
+      {theme === "light" ? (
+        <div style={{ backgroundColor: "#cbdaf0a8" }} />
+      ) : (
+        <MatrixBG />
+      )}
       <div
-        className="d-flex align-c flex-direction-c  just-c"
+        className="d-flex align-c flex-direction-c "
         style={{
+          paddingTop: "100px",
           height: "100vh",
-          width: "100wh",
+          // width: "100wh",
         }}
       >
         <h1>Login in</h1>
@@ -86,7 +95,15 @@ export const SignIn = (props) => {
           autoComplete="off"
         >
           <Form.Item
-            label="Email"
+            label={
+              <span
+                style={{
+                  color: theme === "light" ? "black" : "white",
+                }}
+              >
+                Email
+              </span>
+            }
             name="email"
             // initialValue={"test9@gmail.com"}
             initialValue={
@@ -103,7 +120,15 @@ export const SignIn = (props) => {
           </Form.Item>
 
           <Form.Item
-            label="Password"
+            label={
+              <span
+                style={{
+                  color: theme === "light" ? "black" : "white",
+                }}
+              >
+                Password
+              </span>
+            }
             name="password"
             // initialValue={"12345678aaa$$R"}
             initialValue={
@@ -127,7 +152,13 @@ export const SignIn = (props) => {
               span: 16,
             }}
           >
-            <Checkbox>Remember me</Checkbox>
+            <Checkbox
+              style={{
+                color: theme === "light" ? "black" : "white",
+              }}
+            >
+              Remember me
+            </Checkbox>
           </Form.Item>
 
           <Form.Item

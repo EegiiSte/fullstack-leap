@@ -3,7 +3,9 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../component";
+import { MatrixBG } from "../../component/matrix";
 import { useNotificationContext } from "../../context/NotificationContext";
+import { useThemeContext } from "../../context/ThemeContext";
 import { useUserContext } from "../../context/UserContext";
 
 const { Option } = Select;
@@ -43,6 +45,7 @@ export const SignUp = () => {
   const { successNotification, errorNotification } = useNotificationContext();
 
   const [signinLoading, setSigninLoading] = useState(false);
+  const { setTheme, theme } = useThemeContext();
 
   const navigate = useNavigate();
 
@@ -100,7 +103,20 @@ export const SignUp = () => {
   return (
     <div className="d-flex align-c flex-direction-c just-c">
       <Header />
-      <h1>Sign Up</h1>
+      {theme === "light" ? (
+        <div style={{ backgroundColor: "#cbdaf0a8" }} />
+      ) : (
+        <MatrixBG />
+      )}
+      <h1
+        style={{
+          paddingTop: "100px",
+          paddingBottom: "10px",
+          color: theme === "light" ? "black" : "white",
+        }}
+      >
+        Sign Up
+      </h1>
       <Form
         {...formItemLayout}
         form={form}
@@ -116,7 +132,15 @@ export const SignUp = () => {
       >
         <Form.Item
           name="name"
-          label="Name"
+          label={
+            <span
+              style={{
+                color: theme === "light" ? "black" : "white",
+              }}
+            >
+              Name
+            </span>
+          }
           // initialValue={"test13"}
           initialValue={process.env.NODE_ENV === "development" ? "test13" : ""}
           tooltip="What do you want others to call you?"
@@ -132,7 +156,15 @@ export const SignUp = () => {
         </Form.Item>
         <Form.Item
           name="email"
-          label="E-mail"
+          label={
+            <span
+              style={{
+                color: theme === "light" ? "black" : "white",
+              }}
+            >
+              E-mail
+            </span>
+          }
           initialValue={
             process.env.NODE_ENV === "development" ? "test13@gmail.com" : ""
           }
@@ -152,7 +184,15 @@ export const SignUp = () => {
 
         <Form.Item
           name="password"
-          label="Password"
+          label={
+            <span
+              style={{
+                color: theme === "light" ? "black" : "white",
+              }}
+            >
+              Password
+            </span>
+          }
           // initialValue={"12345678aaa$$R"}
           initialValue={
             process.env.NODE_ENV === "development" ? "12345678aaa$$R" : ""
@@ -177,7 +217,15 @@ export const SignUp = () => {
         </Form.Item>
         <Form.Item
           name="confirm"
-          label="Confirm Password"
+          label={
+            <span
+              style={{
+                color: theme === "light" ? "black" : "white",
+              }}
+            >
+              Confirm Password
+            </span>
+          }
           dependencies={["password"]}
           hasFeedback
           // initialValue={"12345678aaa$$R"}
@@ -217,7 +265,11 @@ export const SignUp = () => {
           ]}
           {...tailFormItemLayout}
         >
-          <Checkbox>
+          <Checkbox
+            style={{
+              color: theme === "light" ? "black" : "white",
+            }}
+          >
             I have read the <a href="">agreement</a>
           </Checkbox>
         </Form.Item>
