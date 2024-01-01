@@ -72,6 +72,7 @@ export const SignIn = (props) => {
           paddingTop: "100px",
           height: "100vh",
           // width: "100wh",
+          color: theme === "light" ? "black" : "white",
         }}
       >
         <h1>Login in</h1>
