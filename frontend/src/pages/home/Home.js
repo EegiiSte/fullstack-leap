@@ -26,6 +26,7 @@ export const Home = () => {
             display: "flex",
             justifyContent: "center",
             backgroundColor: theme === "light" ? "" : "whitesmoke",
+            paddingTop: "30px",
           }}
         >
           <QRCode
@@ -46,9 +47,9 @@ export const Home = () => {
               height: "100vh",
               display: "flex",
               justifyContent: "center",
+              paddingTop: "30px",
             }}
           >
-            <p>Hello SomeOne</p>
             <QRCode
               zIndex="100"
               color={theme === "light" ? "black" : "white"}
