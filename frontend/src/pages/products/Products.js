@@ -2,6 +2,7 @@ import { Button, Card, ColorPicker, Flex, Space, Typography } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../component/header/Header";
+import { MatrixBG } from "../../component/matrix";
 import { useProductsContext } from "../../context/ProductsContext";
 import { useThemeContext } from "../../context/ThemeContext";
 import { CreateProductModal } from "./CreateProductModal";
@@ -19,7 +20,7 @@ export const Products = () => {
   const { theme } = useThemeContext();
 
   const [bgColor, setBgColor] = useState("#cbdaf0a8");
-  const [cardBoxColor, setCardBoxColor] = useState("black");
+  const [cardBoxColor, setCardBoxColor] = useState("#0000006c");
   const [textColor, setTextColor] = useState("white");
 
   console.log("Products", bgColor);
@@ -32,11 +33,19 @@ export const Products = () => {
   return (
     <div
       className="d-flex align-c flex-wrap-wrap just-c"
-      style={{
-        backgroundColor: theme === "light" ? "#cbdaf0a8" : bgColor,
-      }}
+      style={
+        {
+          // backgroundColor: theme === "light" ? "#cbdaf0a8" : bgColor,
+        }
+      }
     >
       <Header />
+      {theme === "light" ? (
+        <div style={{ backgroundColor: "#cbdaf0a8" }} />
+      ) : (
+        <MatrixBG />
+      )}
+
       <div
         className="d-flex flex-direction-c just-s-evenly width-100pr padding-top-10"
         style={{
@@ -52,7 +61,8 @@ export const Products = () => {
               block
               onClick={handleOpen}
               style={{
-                backgroundColor: theme === "light" ? "white" : cardBoxColor,
+                // backgroundColor: theme === "light" ? "white" : cardBoxColor,
+                backgroundColor: theme === "light" ? "white" : "#0000007c",
                 color: theme === "light" ? "black" : textColor,
               }}
             >
@@ -108,66 +118,70 @@ export const Products = () => {
       >
         {products &&
           products.map((product) => (
-            <Card
-              hoverable
-              style={{
-                flexWrap: "wrap",
-                width: 260,
-                height: 200,
-              }}
-              bodyStyle={{
-                borderRadius: "10px",
-                padding: 10,
-                overflow: "hidden",
-                backgroundColor: theme === "light" ? "white" : cardBoxColor,
-              }}
-              onClick={() => navigate(`/products/${product._id}`)}
-            >
-              <Flex justify="center">
-                <Flex
-                  vertical
-                  align="center"
-                  justify="center"
-                  style={{
-                    padding: 10,
-                    fontSize: 10,
-                  }}
-                >
-                  <Typography
-                    level={3}
-                    style={{
-                      fontSize: 14,
-                      color: theme === "light" ? "black" : textColor,
-                    }}
-                  >
-                    <p>Name : {product.name}</p>
-                    <p>Price : {product.price}</p>
-                    <p>Description : {product.description}</p>
-                    <p>Category : {product.category}</p>
-                  </Typography>
-                </Flex>
-              </Flex>
-            </Card>
-            // <div
-            //   // className="box-shadow-gray"
-            //   key={product.id}
+            // <Card
+            //   hoverable
             //   style={{
-            //     boxShadow:
-            //       theme === "light" ? "0px 0px 10px gray" : "0px 0px 20px white",
-            //     backgroundColor: theme === "light" ? "white" : "#769ce8",
-            //     width: 200,
+            //     flexWrap: "wrap",
+            //     width: 260,
+            //     height: 194,
+            //   }}
+            //   bodyStyle={{
             //     borderRadius: "10px",
-            //     padding: "20px",
-            //     margin: "20px",
-            //     color: theme === "light" ? "black" : "white",
+            //     // padding: 10,
+            //     overflow: "hidden",
+            //     backgroundColor:
+            //       theme === "light" ? "transperint" : cardBoxColor,
             //   }}
             //   onClick={() => navigate(`/products/${product._id}`)}
             // >
-            //   <h3>Name : {product.name}</h3>
-            //   <p>Price : {product.price}</p>
-            //   <p>Description : {product.description}</p>
-            //   <p>Category : {product.category}</p>
-            // </div>
+            //   <Flex justify="center">
+            //     <Flex
+            //       vertical
+            //       align="center"
+            //       justify="center"
+            //       style={{
+            //         // padding: 10,
+            //         fontSize: 10,
+            //       }}
+            //     >
+            //       <Typography
+            //         level={2}
+            //         style={{
+            //           fontSize: 14,
+            //           color: theme === "light" ? "black" : textColor,
+            //         }}
+            //       >
+            //         <p>Name : {product.name}</p>
+            //         <p>Price : {product.price}</p>
+            //         <p>Description : {product.description}</p>
+            //         <p>Category : {product.category}</p>
+            //       </Typography>
+            //     </Flex>
+            //   </Flex>
+            // </Card>
+            <div
+              className="d-flex flex-wrap-wrap just-c align-c"
+              key={product.id}
+              style={{
+                boxShadow:
+                  theme === "light"
+                    ? "0px 0px 10px gray"
+                    : "0px 0px 20px white",
+                backgroundColor: theme === "light" ? "white" : cardBoxColor,
+                width: 200,
+                height: 160,
+                borderRadius: "10px",
+                padding: "20px",
+                margin: "20px",
+                color: theme === "light" ? "black" : textColor,
+              }}
+              onClick={() => navigate(`/products/${product._id}`)}
+            >
+              <h3>Name : {product.name}</h3>
+              <p>Price : {product.price}</p>
+              <p>Description : {product.description}</p>
+              <p>Category : {product.category}</p>
+            </div>
           ))}
       </Flex>
 
@@ -175,3 +189,45 @@ export const Products = () => {
     </div>
   );
 };
+
+// <Card
+//               hoverable
+//               style={{
+//                 flexWrap: "wrap",
+//                 width: 260,
+//                 height: 194,
+//               }}
+//               bodyStyle={{
+//                 borderRadius: "10px",
+//                 // padding: 10,
+//                 overflow: "hidden",
+//                 backgroundColor:
+//                   theme === "light" ? "transperint" : cardBoxColor,
+//               }}
+//               onClick={() => navigate(`/products/${product._id}`)}
+//             >
+//               <Flex justify="center">
+//                 <Flex
+//                   vertical
+//                   align="center"
+//                   justify="center"
+//                   style={{
+//                     // padding: 10,
+//                     fontSize: 10,
+//                   }}
+//                 >
+//                   <Typography
+//                     level={2}
+//                     style={{
+//                       fontSize: 14,
+//                       color: theme === "light" ? "black" : textColor,
+//                     }}
+//                   >
+//                     <p>Name : {product.name}</p>
+//                     <p>Price : {product.price}</p>
+//                     <p>Description : {product.description}</p>
+//                     <p>Category : {product.category}</p>
+//                   </Typography>
+//                 </Flex>
+//               </Flex>
+//             </Card>

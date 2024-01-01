@@ -42,6 +42,8 @@ export const SignUp = () => {
   const { signUp } = useUserContext();
   const { successNotification, errorNotification } = useNotificationContext();
 
+  const [signinLoading, setSigninLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const [form] = Form.useForm();
@@ -53,7 +55,7 @@ export const SignUp = () => {
       values.password,
       values.email
     );
-
+    setSigninLoading(true);
     try {
       // throw new Error("test error");
       const response = await axios.post(
@@ -77,16 +79,19 @@ export const SignUp = () => {
         successNotification(
           `Sign Up successfully, Hello ${data.newUser.email}`
         );
-
+        setSigninLoading(false);
         navigate("/");
       } else {
         errorNotification("Sign up failed, please try again");
+        setSigninLoading(false);
       }
     } catch (err) {
       if (err && err.response && err.response.data) {
         errorNotification(err.response.data);
+        setSigninLoading(false);
       } else {
         errorNotification("Unkown error");
+        setSigninLoading(false);
       }
 
       console.log("SignUpModal-->onFinish ", err);
@@ -217,7 +222,7 @@ export const SignUp = () => {
           </Checkbox>
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">
+          <Button loading={signinLoading} type="primary" htmlType="submit">
             Register
           </Button>
         </Form.Item>

@@ -2,6 +2,7 @@ import { Button, Flex } from "antd";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Header } from "../../component";
+import { MatrixBG } from "../../component/matrix";
 import { useProductsContext } from "../../context/ProductsContext";
 import { useThemeContext } from "../../context/ThemeContext";
 import { DeleteProductModal } from "./modal/DeleteProductModal";
@@ -36,10 +37,15 @@ export const Product = () => {
         className="align-c d-flex "
         style={{
           flexDirection: "column",
-          backgroundColor: theme === "light" ? "#cbdaf0a8" : "#cbdaf0a8",
+          // backgroundColor: theme === "light" ? "#cbdaf0a8" : "#cbdaf0a8",
         }}
       >
         <Header />
+        {theme === "light" ? (
+          <div style={{ backgroundColor: "#cbdaf0a8" }} />
+        ) : (
+          <MatrixBG />
+        )}
         <div
           className="padding-top-10 "
           style={{
@@ -54,7 +60,7 @@ export const Product = () => {
               block
               onClick={handleOpen}
               style={{
-                backgroundColor: theme === "light" ? "white" : "black",
+                backgroundColor: theme === "light" ? "white" : "#0000006c",
                 color: theme === "light" ? "black" : "white",
               }}
             >
@@ -64,7 +70,7 @@ export const Product = () => {
               block
               onClick={handleOpenDelete}
               style={{
-                backgroundColor: theme === "light" ? "white" : "black",
+                backgroundColor: theme === "light" ? "white" : "#0000006c",
                 color: theme === "light" ? "black" : "white",
               }}
             >
@@ -76,9 +82,9 @@ export const Product = () => {
           <div
             className="box-shadow-gray"
             style={{
-              backgroundColor: theme === "light" ? "white" : "black",
-              height: "50%",
-              width: "80%",
+              backgroundColor: theme === "light" ? "white" : "#0000007c",
+              height: "300px",
+              width: "55%",
               borderRadius: "10px",
               padding: "20px",
               margin: "20px",
@@ -88,9 +94,11 @@ export const Product = () => {
             }}
           >
             <div
+              // className="d-flex flex-direction-c just-c align-c"
               style={{
                 width: "40%",
                 color: theme === "light" ? "black" : "white",
+                fontSize: "220%",
               }}
             >
               <h3>Name : {selectedProduct.name}</h3>

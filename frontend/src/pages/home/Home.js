@@ -1,6 +1,7 @@
 import { QRCode, Watermark } from "antd";
 import React from "react";
 import { Header } from "../../component";
+import { MatrixBG } from "../../component/matrix/MatrixBG.js";
 import { useThemeContext } from "../../context/ThemeContext";
 import "./Home.css";
 
@@ -16,7 +17,7 @@ export const Home = () => {
       }}
     >
       <Header />
-      <Watermark content={["Home Page"]}>
+      {theme === "light" ? (
         <div
           className="padding-top-10"
           style={{
@@ -28,12 +29,35 @@ export const Home = () => {
           }}
         >
           <QRCode
+            zIndex="100"
             color={theme === "light" ? "black" : "white"}
             bgColor={theme === "light" ? "white" : "black"}
             value="https://fullstack-leap-frontend-six.vercel.app"
           />
         </div>
-      </Watermark>
+      ) : (
+        <div>
+          <MatrixBG />
+          <div
+            zIndex="1"
+            className="padding-top-10"
+            style={{
+              width: "100%",
+              height: "100vh",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <p>Hello SomeOne</p>
+            <QRCode
+              zIndex="100"
+              color={theme === "light" ? "black" : "white"}
+              bgColor={theme === "light" ? "white" : "black"}
+              value="https://fullstack-leap-frontend-six.vercel.app"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
