@@ -1,6 +1,8 @@
 import { Switch } from "antd";
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import { useNotificationContext } from "../../context/NotificationContext";
+import { useProductsContext } from "../../context/ProductsContext";
 import { useThemeContext } from "../../context/ThemeContext";
 import { useUserContext } from "../../context/UserContext";
 import "./Header.css";
@@ -9,12 +11,21 @@ export const Header = () => {
   // console.log(`Header:user --> ${user}`);
 
   const { currentUser, signOut, userContextLoading } = useUserContext();
+  const { successNotification, errorNotification } = useNotificationContext();
+
+  const { setProducts } = useProductsContext();
 
   const { setTheme, theme } = useThemeContext();
 
   const switchT = theme === "light" ? "defaultUnChecked" : "defaultChecked";
 
   console.log("Header", switchT);
+
+  const handleLogOut = () => {
+    signOut();
+    setProducts([]);
+    successNotification("You have been logged out.");
+  };
 
   const handleChange = (checked) => {
     console.log("Header", checked);
@@ -99,7 +110,7 @@ export const Header = () => {
         <div className="Header-Right">
           <div className="Header-Right_Item">
             <Link
-              onClick={() => signOut()}
+              onClick={handleLogOut}
               style={{
                 textDecoration: "none",
                 color: theme === "light" ? "black" : "white",

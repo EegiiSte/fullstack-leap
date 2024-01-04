@@ -31,14 +31,7 @@ export const Products = () => {
     return <div>...Loading Products</div>;
   }
   return (
-    <div
-      className="d-flex align-c flex-wrap-wrap just-c"
-      style={
-        {
-          // backgroundColor: theme === "light" ? "#cbdaf0a8" : bgColor,
-        }
-      }
-    >
+    <div className="d-flex align-c flex-wrap-wrap just-c">
       <Header />
       {theme === "light" ? (
         <div style={{ backgroundColor: "#cbdaf0a8" }} />
@@ -70,42 +63,6 @@ export const Products = () => {
             </Button>
           </div>
         </div>
-        {theme === "light" ? (
-          <div />
-        ) : (
-          <div className="d-flex flex-direction-row just-s-evenly">
-            <div className="d-flex flex-direction-row align-c gap-10">
-              <p>Background Color</p>
-              <ColorPicker
-                showText
-                value={bgColor}
-                onChangeComplete={(color) => {
-                  setBgColor(color.toHexString());
-                }}
-              />
-            </div>
-            <div className="d-flex flex-direction-row align-c gap-10">
-              <p>Card Box Color</p>
-              <ColorPicker
-                showText
-                value={cardBoxColor}
-                onChangeComplete={(color) => {
-                  setCardBoxColor(color.toHexString());
-                }}
-              />
-            </div>
-            <div className="d-flex flex-direction-row align-c gap-10">
-              <p>Text Color</p>
-              <ColorPicker
-                showText
-                value={textColor}
-                onChangeComplete={(color) => {
-                  setTextColor(color.toHexString());
-                }}
-              />
-            </div>
-          </div>
-        )}
       </div>
       <Flex
         wrap="wrap"
@@ -118,47 +75,6 @@ export const Products = () => {
       >
         {products &&
           products.map((product) => (
-            // <Card
-            //   hoverable
-            //   style={{
-            //     flexWrap: "wrap",
-            //     width: 260,
-            //     height: 194,
-            //   }}
-            //   bodyStyle={{
-            //     borderRadius: "10px",
-            //     // padding: 10,
-            //     overflow: "hidden",
-            //     backgroundColor:
-            //       theme === "light" ? "transperint" : cardBoxColor,
-            //   }}
-            //   onClick={() => navigate(`/products/${product._id}`)}
-            // >
-            //   <Flex justify="center">
-            //     <Flex
-            //       vertical
-            //       align="center"
-            //       justify="center"
-            //       style={{
-            //         // padding: 10,
-            //         fontSize: 10,
-            //       }}
-            //     >
-            //       <Typography
-            //         level={2}
-            //         style={{
-            //           fontSize: 14,
-            //           color: theme === "light" ? "black" : textColor,
-            //         }}
-            //       >
-            //         <p>Name : {product.name}</p>
-            //         <p>Price : {product.price}</p>
-            //         <p>Description : {product.description}</p>
-            //         <p>Category : {product.category}</p>
-            //       </Typography>
-            //     </Flex>
-            //   </Flex>
-            // </Card>
             <div
               className="d-flex flex-wrap-wrap just-c align-c"
               key={product.id}

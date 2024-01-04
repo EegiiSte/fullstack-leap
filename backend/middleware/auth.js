@@ -8,7 +8,6 @@ const auth = async (req, res, next) => {
     return res.status(401).send({ error: " No authorization" });
   }
   console.log(authorization);
-
   const token = authorization.replace("Bearer ", "");
 
   try {

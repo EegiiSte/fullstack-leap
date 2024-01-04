@@ -68,6 +68,7 @@ export const ProductContexProvider = ({ children }) => {
   return (
     <ProductsContext.Provider
       value={{
+        setProducts,
         Set_Products,
         Create_Product,
         Update_Product,

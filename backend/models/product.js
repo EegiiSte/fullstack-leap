@@ -18,6 +18,10 @@ const productSchema = new mongoose.Schema(
       type: "string",
       required: [true, "Product category is required"],
     },
+    userId: {
+      type: "string",
+      required: [true, "Product userId is required"],
+    },
   },
   { timestamps: true }
 );
