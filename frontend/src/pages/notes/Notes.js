@@ -116,7 +116,7 @@ export const Notes = () => {
                   margin: "20px",
                   color: theme === "light" ? "black" : textColor,
                 }}
-                onClick={() => navigate(`/products/${note._id}`)}
+                onClick={() => navigate(`/notes/${note._id}`)}
               >
                 <p>Name : {note.name}</p>
                 <p>Goal : {note.goal}</p>
