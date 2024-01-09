@@ -23,7 +23,7 @@ export const Products = () => {
   const [cardBoxColor, setCardBoxColor] = useState("#0000006c");
   const [textColor, setTextColor] = useState("white");
 
-  console.log("Products", bgColor);
+  // console.log("Products", bgColor);
 
   // console.log("Products", products)
 
@@ -76,13 +76,14 @@ export const Products = () => {
         {products &&
           products.map((product) => (
             <div
-              className="d-flex flex-wrap-wrap just-c align-c"
+              className="d-flex flex-direction-c just-s-evenly "
               key={product.id}
               style={{
-                boxShadow:
-                  theme === "light"
-                    ? "0px 0px 10px gray"
-                    : "0px 0px 20px white",
+                border: "1px solid white",
+                // boxShadow:
+                //   theme === "light"
+                //     ? "0px 0px 10px gray"
+                //     : "0px 0px 20px white",
                 backgroundColor: theme === "light" ? "white" : cardBoxColor,
                 width: 200,
                 height: 160,
@@ -93,10 +94,30 @@ export const Products = () => {
               }}
               onClick={() => navigate(`/products/${product._id}`)}
             >
-              <h3>Name : {product.name}</h3>
-              <p>Price : {product.price}</p>
-              <p>Description : {product.description}</p>
-              <p>Category : {product.category}</p>
+              <p
+                className="d-flex just-c"
+                style={{
+                  width: "30%",
+                  borderRadius: "5px",
+
+                  backgroundColor: product.type === "public" ? "green" : "gray",
+                }}
+              >
+                {product.type}
+              </p>
+              <div className="d-flex flex-wrap-wrap just-c align-c">
+                <h3>Name : {product.name}</h3>
+                <p>Price : {product.price}</p>
+                <p>Description : {product.description}</p>
+                <p>Category : {product.category}</p>
+              </div>
+              <p
+                style={{
+                  fontSize: "12px",
+                }}
+              >
+                Created User : {product.userEmail}
+              </p>
             </div>
           ))}
       </Flex>

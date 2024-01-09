@@ -18,6 +18,14 @@ const noteSchema = new mongoose.Schema(
       type: "string",
       required: [true, "Note category is required"],
     },
+    userId: {
+      type: "string",
+      required: [true, "Product userId is required"],
+    },
+    displayMode: {
+      type: "string",
+      required: [true, "Product display mode is required"],
+    },
   },
   { timestamps: true }
 );

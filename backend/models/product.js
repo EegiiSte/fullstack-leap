@@ -6,6 +6,10 @@ const productSchema = new mongoose.Schema(
       type: "string",
       required: [true, "Product name is required"],
     },
+    userEmail: {
+      type: "string",
+      required: [true, "Product userEmail is required"],
+    },
     price: {
       type: "number",
       required: [true, "Product price is required"],
@@ -18,9 +22,18 @@ const productSchema = new mongoose.Schema(
       type: "string",
       required: [true, "Product category is required"],
     },
+
     userId: {
       type: "string",
       required: [true, "Product userId is required"],
+    },
+    type: {
+      type: "string",
+      enum: ["public", "private"],
+      required: [true, "Product visibility is required"],
+    },
+    image: {
+      type: "string",
     },
   },
   { timestamps: true }

@@ -17,7 +17,9 @@ export const MatrixBG = () => {
 
     const matrix =
       // "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
-      "101101010101010101010010110101010101001001001010101001000101001010100111010100010011010";
+      // "っっさわかだゔぁばそせあ";
+      "10";
+    // "ㄷㅂㅇㅠㄱ라ㅂㄱㅁㅓㅗㅁㅁㅓㄴㅊㅁㅐㅜᇁ";
     // "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
     const font_size = 10;
     const columns = canvas.width / font_size;
@@ -27,9 +29,11 @@ export const MatrixBG = () => {
       // Black BG for the canvas
       // Translucent BG to show trail
       ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = "#f4427d"; // Green text
+      // ctx.fillStyle = "#f4427d"; // pink text
+      ctx.fillStyle = "#30c37a6c"; // Green text
       ctx.font = font_size + "px arial";
 
       // Looping over drops

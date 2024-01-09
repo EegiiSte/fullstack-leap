@@ -5,6 +5,7 @@ import { Header } from "../../component";
 import { MatrixBG } from "../../component/matrix";
 import { useProductsContext } from "../../context/ProductsContext";
 import { useThemeContext } from "../../context/ThemeContext";
+import { useUserContext } from "../../context/UserContext";
 import { DeleteProductModal } from "./modal/DeleteProductModal";
 import { EditProductModal2 } from "./modal/EditProductModal2";
 
@@ -26,8 +27,12 @@ export const Product = () => {
   //   console.log(`Product -> id ${id}`);
   const { products, productContextLoading } = useProductsContext();
   const { theme } = useThemeContext();
+  const { currentUser } = useUserContext();
 
   const selectedProduct = products.find((product) => product._id === id);
+
+  // console.log(`Product -> currentUser.email ${currentUser.user.email}`);
+  // console.log(`Product -> selectedProduct.email ${selectedProduct.userEmail}`);
 
   if (productContextLoading) {
     return <div>...Loading Products</div>;
@@ -52,36 +57,41 @@ export const Product = () => {
             width: "100%",
             display: "flex",
             justifyContent: "space-evenly",
+            color: theme === "light" ? "black" : "white",
           }}
         >
           This is Single Product page
-          <Flex className="gap-10" wrap="wrap" gap="small">
-            <Button
-              block
-              onClick={handleOpen}
-              style={{
-                backgroundColor: theme === "light" ? "white" : "#0000006c",
-                color: theme === "light" ? "black" : "white",
-              }}
-            >
-              Edit
-            </Button>
-            <Button
-              block
-              onClick={handleOpenDelete}
-              style={{
-                backgroundColor: theme === "light" ? "white" : "#0000006c",
-                color: theme === "light" ? "black" : "white",
-              }}
-            >
-              Delete
-            </Button>
-          </Flex>
+          {currentUser.user.email === selectedProduct.userEmail ? (
+            <Flex className="gap-10" wrap="wrap" gap="small">
+              <Button
+                block
+                onClick={handleOpen}
+                style={{
+                  backgroundColor: theme === "light" ? "white" : "#0000006c",
+                  color: theme === "light" ? "black" : "white",
+                }}
+              >
+                Edit
+              </Button>
+              <Button
+                block
+                onClick={handleOpenDelete}
+                style={{
+                  backgroundColor: theme === "light" ? "white" : "#0000006c",
+                }}
+              >
+                Delete
+              </Button>
+            </Flex>
+          ) : (
+            <div />
+          )}
         </div>
         {selectedProduct && (
           <div
-            className="box-shadow-gray"
+            // className="box-shadow-gray"
             style={{
+              border: "1px solid white",
               backgroundColor: theme === "light" ? "white" : "#0000007c",
               height: "300px",
               width: "55%",
@@ -90,21 +100,80 @@ export const Product = () => {
               margin: "20px",
               display: "flex",
               alignItems: "center",
-              flexDirection: "column",
+              flexDirection: "row",
             }}
           >
             <div
-              // className="d-flex flex-direction-c just-c align-c"
+              className="d-flex flex-direction-c just-s-evenly "
               style={{
-                width: "40%",
+                width: "50%",
+                height: "100%",
                 color: theme === "light" ? "black" : "white",
-                fontSize: "220%",
+                fontSize: "150%",
               }}
             >
-              <h3>Name : {selectedProduct.name}</h3>
-              <p>Description : {selectedProduct.description}</p>
-              <p>Price : {selectedProduct.price}</p>
-              <p>Category : {selectedProduct.category}</p>
+              <p
+                className="d-flex just-c"
+                style={{
+                  width: "30%",
+                  borderRadius: "5px",
+
+                  backgroundColor:
+                    selectedProduct.type === "public" ? "green" : "gray",
+                }}
+              >
+                {selectedProduct.type}
+              </p>
+              <div className="d-flex flex-direction-c just-c align-start ">
+                <p>
+                  <h3 className="d-flex flex-direction-row">
+                    <p>Name :</p>
+                    <p>{selectedProduct.name}</p>
+                  </h3>
+                </p>
+                <p>
+                  <h3 className="d-flex flex-direction-row">
+                    <p>Price :</p>
+                    <p>{selectedProduct.price}</p>
+                  </h3>
+                </p>
+                <p>
+                  <h3 className="d-flex flex-direction-row">
+                    <p>Description :</p> {selectedProduct.description}
+                  </h3>
+                </p>
+                <p>
+                  <h3 className="d-flex flex-direction-row">
+                    <p>Category :</p> {selectedProduct.category}
+                  </h3>
+                </p>
+              </div>
+              <p
+                style={{
+                  fontSize: "12px",
+                }}
+              >
+                Created User : {selectedProduct.userEmail}
+              </p>
+            </div>
+            <div
+              className="d-flex flex-direction-c just-s-evenly "
+              style={{
+                width: "50%",
+                height: "100%",
+                color: theme === "light" ? "black" : "white",
+                fontSize: "150%",
+              }}
+            >
+              <img
+                style={{
+                  borderRadius: "5px",
+                }}
+                src={selectedProduct.image}
+                alt={"productImage"}
+                // width="350px"
+                // height="150px"
+              />
             </div>
           </div>
         )}

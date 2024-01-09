@@ -19,7 +19,8 @@ export const DeleteNoteModal = (props) => {
   const handleDeleteButton = async () => {
     try {
       const response = await axios.delete(
-        `https://fullstack-backend-pm5t.onrender.com/notes/${id}`,
+        // `https://fullstack-backend-pm5t.onrender.com/notes/${id}`,
+        `http://localhost:8080/notes/${id}`,
         {
           headers: {
             Authorization: `Bearer ${currentUser.token}`,

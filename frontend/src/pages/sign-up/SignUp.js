@@ -62,7 +62,8 @@ export const SignUp = () => {
     try {
       // throw new Error("test error");
       const response = await axios.post(
-        "https://fullstack-backend-pm5t.onrender.com/users/sign-up",
+        // "https://fullstack-backend-pm5t.onrender.com/users/sign-up",
+        "http://localhost:8080/users/sign-up",
         {
           name: values.name,
           email: values.email,

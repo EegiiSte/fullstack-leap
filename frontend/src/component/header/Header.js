@@ -11,15 +11,13 @@ export const Header = () => {
   // console.log(`Header:user --> ${user}`);
 
   const { currentUser, signOut, userContextLoading } = useUserContext();
-  const { successNotification, errorNotification } = useNotificationContext();
+  const { successNotification } = useNotificationContext();
 
   const { setProducts } = useProductsContext();
 
   const { setTheme, theme } = useThemeContext();
 
-  const switchT = theme === "light" ? "defaultUnChecked" : "defaultChecked";
-
-  console.log("Header", switchT);
+  console.log("Header", theme);
 
   const handleLogOut = () => {
     signOut();
@@ -27,13 +25,13 @@ export const Header = () => {
     successNotification("You have been logged out.");
   };
 
+  const handleChangeTheme = (mode) => {
+    setTheme(mode);
+    localStorage.setItem("theme", mode);
+  };
+
   const handleChange = (checked) => {
-    console.log("Header", checked);
-    if (!checked) {
-      setTheme("light");
-    } else {
-      setTheme("dark");
-    }
+    checked ? handleChangeTheme("dark") : handleChangeTheme("light");
   };
 
   if (userContextLoading) {
@@ -52,10 +50,11 @@ export const Header = () => {
         <Switch
           checkedChildren="Black Theme"
           unCheckedChildren="Light Theme"
-          defaultValue={switchT}
+          checked={theme === "dark" ? true : false}
           onChange={handleChange}
-          size="small"
+          // size="small"
         />
+
         <div className="Header-Left">
           <Link
             to="/"
@@ -132,13 +131,6 @@ export const Header = () => {
         color: theme === "light" ? "black" : "white",
       }}
     >
-      <Switch
-        checkedChildren="Black Theme"
-        unCheckedChildren="Light Theme"
-        defaultUnChecked
-        onChange={handleChange}
-        size="small"
-      />
       <div className="Header-Left">
         <Link
           to="/"

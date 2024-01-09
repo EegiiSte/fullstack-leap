@@ -11,16 +11,16 @@ import "./index.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <NotificationProvider>
-      <UserProvider>
-        <ProductContexProvider>
-          <NotesContexProvider>
-            <ThemeContextProvider>
+    <ThemeContextProvider>
+      <NotificationProvider>
+        <UserProvider>
+          <ProductContexProvider>
+            <NotesContexProvider>
               <App />
-            </ThemeContextProvider>
-          </NotesContexProvider>
-        </ProductContexProvider>
-      </UserProvider>
-    </NotificationProvider>
+            </NotesContexProvider>
+          </ProductContexProvider>
+        </UserProvider>
+      </NotificationProvider>
+    </ThemeContextProvider>
   </React.StrictMode>
 );

@@ -1,10 +1,12 @@
-import { Button, Form, Input, InputNumber } from "antd";
+import { Button, Form, Input, InputNumber, Radio } from "antd";
 import axios from "axios";
-import React from "react";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import React, { useState } from "react";
 import { Modal } from "../../component";
 import { useNotificationContext } from "../../context/NotificationContext";
 import { useProductsContext } from "../../context/ProductsContext";
 import { useUserContext } from "../../context/UserContext";
+import { storage } from "../../firebase/firebase";
 
 export const CreateProductModal = (props) => {
   const { handleClose, open } = props;
@@ -15,11 +17,50 @@ export const CreateProductModal = (props) => {
   //input values
   const { successNotification } = useNotificationContext();
 
+  const [value3, setValue3] = useState("public");
+
+  const onChange3 = ({ target: { value } }) => {
+    console.log("radio3 checked", value);
+    setValue3(value);
+  };
+
+  const options = [
+    {
+      label: "public",
+      value: "public",
+    },
+    {
+      label: "private",
+      value: "private",
+    },
+  ];
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const [file, setFile] = useState();
+
+  const uploadImage = async () => {
+    const storageRef = ref(storage, file.name);
+    await uploadBytes(storageRef, file);
+    const downloadImageUrl = await getDownloadURL(storageRef);
+
+    return downloadImageUrl;
+  };
+
   const dulmaa = async (values) => {
+    const imageUrl = await uploadImage();
+
+    // console.log("CreateProductModal-imageUrl", imageUrl);
+
+    console.log("CreateProductModal", { ...values, image: imageUrl });
+
     // console.log(`dulmaagaas - ${values}`, values);
+
     const response = await axios.post(
-      "https://fullstack-backend-pm5t.onrender.com/products",
-      values,
+      // "https://fullstack-backend-pm5t.onrender.com/products",
+      "http://localhost:8080/products/",
+      { ...values, image: imageUrl },
       {
         headers: {
           "Content-Type": "application/json",
@@ -29,6 +70,8 @@ export const CreateProductModal = (props) => {
     );
 
     const data = await response.data;
+
+    // console.log("CreateProductModal-data", data);
 
     Create_Product(data);
     handleClose();
@@ -91,6 +134,29 @@ export const CreateProductModal = (props) => {
               rules={[{ required: true, message: "Required" }]}
             >
               <Input />
+            </Form.Item>
+
+            <Form.Item label="image" name="image">
+              <label>File</label>
+              <input
+                name="Image"
+                onChange={handleFileChange}
+                placeholder="choose file"
+                type="file"
+              ></input>
+            </Form.Item>
+            <Form.Item
+              label="Type"
+              name="type"
+              rules={[{ required: true, message: "Required" }]}
+            >
+              <Radio.Group
+                options={options}
+                onChange={onChange3}
+                value={value3}
+                optionType="button"
+                buttonStyle="solid"
+              />
             </Form.Item>
 
             <div className="d-flex just-s-evenly margin-top-10 gap-10">

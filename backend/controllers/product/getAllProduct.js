@@ -5,7 +5,9 @@ const getAllProduct = async (req, res) => {
 
   try {
     const sort = { createdAt: -1 };
-    const products = await Product.find({ userId }).sort(sort);
+    const products = await Product.find({
+      $or: [{ userId }, { type: "public" }],
+    }).sort(sort);
 
     if (!products) {
       res.status(404).json({ message: "Product not found" });

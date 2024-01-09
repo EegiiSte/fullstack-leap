@@ -2,9 +2,9 @@ const Note = require("../../models/note");
 
 const createNote = async (req, res) => {
   const { name, goal, description, category } = req.body;
-
+  const userId = req.user._id;
   try {
-    if (!name || !goal || !description || !category) {
+    if (!name || !goal || !description || !category || !userId) {
       return res.status(400).json({
         message: "All fields are required",
       });
@@ -14,6 +14,7 @@ const createNote = async (req, res) => {
         goal,
         description,
         category,
+        userId,
       });
       res.status(201).json(note);
     }
