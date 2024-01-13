@@ -1,28 +1,58 @@
-import { Button, Form, Input, InputNumber } from "antd";
+import { Button, Form, Image, Input, Radio } from "antd";
 import axios from "axios";
 import React, { useState } from "react";
 import { Modal } from "../../../component/modal";
-import { useNotificationContext } from "../../../context/NotificationContext";
-import { useUserContext } from "../../../context/UserContext";
-import { useProductsContext } from "../../../context/ProductsContext";
+import {
+  useNotificationContext,
+  useProductsContext,
+  useUserContext,
+} from "../../../context";
+import { uploadImage } from "../../../utils";
 
 export const EditProductModal2 = (props) => {
-  const { handleClose, open, selectedProduct, id } = props;
+  const {
+    handleClose,
+    open,
+    selectedProduct,
+    id,
+    setNewImageUrl,
+    newImageUrl,
+  } = props;
+
+  const { successNotification } = useNotificationContext();
   const { Update_Product } = useProductsContext();
   const { currentUser } = useUserContext();
 
   const [disabledSubmitButton, setDisabledSubmitButton] = useState(true);
+  const [selectedType, setSelectedType] = useState(selectedProduct.type);
+
+  const lenght = newImageUrl?.length;
+
+  const handleFileChange = async (e) => {
+    const imageUrl = await uploadImage(e.target.files[0]);
+    setNewImageUrl(imageUrl);
+  };
+
+  const onChangeType = ({ target: { value } }) => {
+    console.log("radio3 checked", value);
+    setSelectedType(value);
+  };
+
+  const options = [
+    {
+      label: "public",
+      value: "public",
+    },
+    {
+      label: "private",
+      value: "private",
+    },
+  ];
 
   const inputPress = (e) => {
     const { value, name } = e.target;
-    console.log("inputPress", value, name);
-
     setDisabledSubmitButton(value === selectedProduct[name]);
   };
-
-  // console.log("inputPress", disabledSubmitButton);
-
-  const { successNotification, warningNotification } = useNotificationContext();
 
   const handleEditButton = async (values) => {
     const updatedProduct = {
@@ -30,13 +60,14 @@ export const EditProductModal2 = (props) => {
       description: values.description,
       price: values.price,
       category: values.category,
+      type: values.type,
+      image: newImageUrl ? newImageUrl : selectedProduct.image,
     };
-    console.log("handleEditButton", updatedProduct);
 
     try {
       const response = await axios.put(
-        // `https://fullstack-backend-pm5t.onrender.com/products/${id}`,
-        `http://localhost:8080/products/${id}`,
+        `https://fullstack-backend-pm5t.onrender.com/products/${id}`,
+        // `http://localhost:8080/products/${id}`,
         updatedProduct,
         {
           headers: {
@@ -66,6 +97,7 @@ export const EditProductModal2 = (props) => {
               description: selectedProduct.description,
               category: selectedProduct.category,
               price: selectedProduct.price,
+              type: selectedProduct.type,
             }}
             name="trigger"
             onFinish={(values) => {
@@ -118,6 +150,32 @@ export const EditProductModal2 = (props) => {
             >
               <Input name="category" onChange={inputPress} />
             </Form.Item>
+            <Form.Item label="image" name="image">
+              <label>File</label>
+              <input
+                name="image"
+                onChange={handleFileChange}
+                placeholder="choose file"
+                type="file"
+              />
+              <Image
+                height={"60px"}
+                src={newImageUrl ? newImageUrl : selectedProduct.image}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Type"
+              name="type"
+              rules={[{ required: true, message: "Required" }]}
+            >
+              <Radio.Group
+                options={options}
+                onChange={(onChangeType, inputPress)}
+                value={selectedType}
+                optionType="button"
+                buttonStyle="solid"
+              />
+            </Form.Item>
 
             <div className="d-flex just-s-evenly margin-top-10 gap-10">
               <Button
@@ -125,7 +183,7 @@ export const EditProductModal2 = (props) => {
                 htmlType="submit"
                 block
                 style={{ width: "100%" }}
-                disabled={disabledSubmitButton}
+                disabled={disabledSubmitButton && lenght === 0}
               >
                 Submit
               </Button>

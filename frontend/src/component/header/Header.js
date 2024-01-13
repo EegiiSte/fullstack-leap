@@ -15,7 +15,7 @@ export const Header = () => {
 
   const { setProducts } = useProductsContext();
 
-  const { setTheme, theme } = useThemeContext();
+  const { setTheme, theme, textStyle, backgroundStyle } = useThemeContext();
 
   console.log("Header", theme);
 
@@ -42,10 +42,7 @@ export const Header = () => {
     return (
       <div
         className="Header box-shadow-gray"
-        style={{
-          backgroundColor: theme === "light" ? "white" : "black",
-          color: theme === "light" ? "black" : "white",
-        }}
+        style={(textStyle, backgroundStyle)}
       >
         <Switch
           checkedChildren="Black Theme"
@@ -56,38 +53,20 @@ export const Header = () => {
         />
 
         <div className="Header-Left">
-          <Link
-            to="/"
-            style={{
-              textDecoration: "none",
-              color: theme === "light" ? "black" : "white",
-            }}
-          >
+          <Link to="/" style={textStyle}>
             Home
           </Link>
         </div>
         <div className="Header-Right">
           <div className="Header-Right_Item">
-            <Link
-              to="/products"
-              style={{
-                textDecoration: "none",
-                color: theme === "light" ? "black" : "white",
-              }}
-            >
+            <Link to="/products" style={textStyle}>
               Products
             </Link>
           </div>
         </div>
         <div className="Header-Right">
           <div className="Header-Right_Item">
-            <Link
-              to="/notes"
-              style={{
-                textDecoration: "none",
-                color: theme === "light" ? "black" : "white",
-              }}
-            >
+            <Link to="/notes" style={textStyle}>
               Notes
             </Link>
           </div>
@@ -95,11 +74,7 @@ export const Header = () => {
 
         <div className="Header-Right">
           <div className="Header-Right_Item">
-            <div
-              style={{
-                color: theme === "light" ? "black" : "white",
-              }}
-            >
+            <div style={textStyle}>
               {currentUser.user
                 ? currentUser.user.email
                 : currentUser.newUser.email}
@@ -108,13 +83,7 @@ export const Header = () => {
         </div>
         <div className="Header-Right">
           <div className="Header-Right_Item">
-            <Link
-              onClick={handleLogOut}
-              style={{
-                textDecoration: "none",
-                color: theme === "light" ? "black" : "white",
-              }}
-            >
+            <Link onClick={handleLogOut} style={textStyle}>
               Sign Out
             </Link>
           </div>
@@ -126,32 +95,24 @@ export const Header = () => {
   return (
     <div
       className="Header box-shadow-gray"
-      style={{
-        backgroundColor: theme === "light" ? "white" : "black",
-        color: theme === "light" ? "black" : "white",
-      }}
+      style={(textStyle, backgroundStyle)}
     >
+      <Switch
+        checkedChildren="Black Theme"
+        unCheckedChildren="Light Theme"
+        checked={theme === "dark" ? true : false}
+        onChange={handleChange}
+        // size="small"
+      />
       <div className="Header-Left">
-        <Link
-          to="/"
-          style={{
-            textDecoration: "none",
-            color: theme === "light" ? "black" : "white",
-          }}
-        >
+        <Link to="/" style={textStyle}>
           Home
         </Link>
       </div>
 
       <div className="Header-Right">
         <div className="Header-Right_Item">
-          <Link
-            to="/sign-in"
-            style={{
-              textDecoration: "none",
-              color: theme === "light" ? "black" : "white",
-            }}
-          >
+          <Link to="/sign-in" style={textStyle}>
             Sign In
           </Link>
         </div>
@@ -159,13 +120,7 @@ export const Header = () => {
 
       <div className="Header-Right">
         <div className="Header-Right_Item">
-          <Link
-            to="/sign-up"
-            style={{
-              textDecoration: "none",
-              color: theme === "light" ? "black" : "white",
-            }}
-          >
+          <Link to="/sign-up" style={textStyle}>
             Sign Up
           </Link>
         </div>

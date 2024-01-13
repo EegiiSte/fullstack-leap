@@ -23,8 +23,8 @@ export const CreateNoteModal = (props) => {
       category: values.category,
     };
     const response = await axios.post(
-      // "https://fullstack-backend-pm5t.onrender.com/notes",
-      "http://localhost:8080/notes",
+      "https://fullstack-backend-pm5t.onrender.com/notes",
+      // "http://localhost:8080/notes",
       newNote,
       {
         headers: {

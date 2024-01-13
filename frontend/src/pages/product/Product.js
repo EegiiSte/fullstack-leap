@@ -78,6 +78,7 @@ export const Product = () => {
                 onClick={handleOpenDelete}
                 style={{
                   backgroundColor: theme === "light" ? "white" : "#0000006c",
+                  color: theme === "light" ? "black" : "white",
                 }}
               >
                 Delete
@@ -93,7 +94,7 @@ export const Product = () => {
             style={{
               border: "1px solid white",
               backgroundColor: theme === "light" ? "white" : "#0000007c",
-              height: "300px",
+              height: "70vh",
               width: "55%",
               borderRadius: "10px",
               padding: "20px",
@@ -109,7 +110,6 @@ export const Product = () => {
                 width: "50%",
                 height: "100%",
                 color: theme === "light" ? "black" : "white",
-                fontSize: "150%",
               }}
             >
               <p
@@ -124,29 +124,31 @@ export const Product = () => {
               >
                 {selectedProduct.type}
               </p>
-              <div className="d-flex flex-direction-c just-c align-start ">
+              <div
+                className="d-flex flex-direction-c just-c align-start "
+                style={{ gap: "10px" }}
+              >
                 <p>
-                  <h3 className="d-flex flex-direction-row">
+                  <div className="d-flex flex-direction-row">
                     <p>Name :</p>
                     <p>{selectedProduct.name}</p>
-                  </h3>
+                  </div>
                 </p>
                 <p>
-                  <h3 className="d-flex flex-direction-row">
-                    <p>Price :</p>
+                  <div className="d-flex flex-direction-row">
+                    <p>Price : $</p>
                     <p>{selectedProduct.price}</p>
-                  </h3>
+                  </div>
                 </p>
                 <p>
-                  <h3 className="d-flex flex-direction-row">
-                    <p>Description :</p> {selectedProduct.description}
-                  </h3>
-                </p>
-                <p>
-                  <h3 className="d-flex flex-direction-row">
+                  <div className="d-flex flex-direction-row">
                     <p>Category :</p> {selectedProduct.category}
-                  </h3>
+                  </div>
                 </p>
+                <div className="d-flex flex-direction-c gap-10">
+                  <span>Description : </span>
+                  <span>{selectedProduct.description}</span>
+                </div>
               </div>
               <p
                 style={{
@@ -187,7 +189,6 @@ export const Product = () => {
         <DeleteProductModal
           handleCloseDelete={handleCloseDelete}
           openDelete={openDelete}
-          selectedProduct={selectedProduct}
           id={id}
         />
       </div>

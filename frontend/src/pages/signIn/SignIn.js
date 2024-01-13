@@ -11,7 +11,7 @@ import { useUserContext } from "../../context/UserContext";
 export const SignIn = (props) => {
   const { signIn } = useUserContext();
   const { successNotification, errorNotification } = useNotificationContext();
-  const { setTheme, theme } = useThemeContext();
+  const { setTheme, theme, textStyle, backgroundStyle } = useThemeContext();
 
   const [signinLoading, setSigninLoading] = useState(false);
 
@@ -22,8 +22,8 @@ export const SignIn = (props) => {
     try {
       // throw new Error("test error");
       const response = await axios.post(
-        // "https://fullstack-backend-pm5t.onrender.com/users/sign-in",
-        "http://localhost:8080/users/sign-in",
+        "https://fullstack-backend-pm5t.onrender.com/users/sign-in",
+        // "http://localhost:8080/users/sign-in",
         {
           email: values.email,
           password: values.password,
@@ -32,8 +32,8 @@ export const SignIn = (props) => {
 
       const data = await response.data;
       localStorage.setItem("user", JSON.stringify(data));
-      console.log("SignIn-data", data);
-      console.log("SignIn-data.user", data.user);
+      // console.log("SignIn-data", data);
+      // console.log("SignIn-data.user", data.user);
 
       if (data) {
         console.log("SignIn", data.user);
@@ -60,7 +60,7 @@ export const SignIn = (props) => {
   };
 
   return (
-    <div className="d-flex align-c flex-direction-c just-c">
+    <div className="d-flex align-c flex-direction-c just-c ">
       <Header />
       {theme === "light" ? (
         <div style={{ backgroundColor: "#cbdaf0a8" }} />
@@ -68,112 +68,101 @@ export const SignIn = (props) => {
         <MatrixBG />
       )}
       <div
-        className="d-flex align-c flex-direction-c "
         style={{
-          paddingTop: "100px",
-          height: "100vh",
-          // width: "100wh",
-          color: theme === "light" ? "black" : "white",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          height: "calc(100vh - 80px)",
         }}
       >
-        <h1>Login in</h1>
-        <Form
-          className="padding-top-10"
-          name="basic"
-          labelCol={{
-            span: 8,
-          }}
-          wrapperCol={{
-            span: 16,
-          }}
-          style={{
-            maxWidth: 600,
-          }}
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
+        <div
+          className="d-flex just-c align-c flex-direction-c "
+          style={
+            (textStyle,
+            {
+              height: "60%",
+              width: "60%",
+            })
+          }
         >
-          <Form.Item
-            label={
-              <span
-                style={{
-                  color: theme === "light" ? "black" : "white",
-                }}
-              >
-                Email
-              </span>
-            }
-            name="email"
-            // initialValue={"test9@gmail.com"}
-            initialValue={
-              process.env.NODE_ENV === "development" ? "test9@gmail.com" : ""
-            }
-            rules={[
-              {
-                required: true,
-                message: "Please input your username!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label={
-              <span
-                style={{
-                  color: theme === "light" ? "black" : "white",
-                }}
-              >
-                Password
-              </span>
-            }
-            name="password"
-            // initialValue={"12345678aaa$$R"}
-            initialValue={
-              process.env.NODE_ENV === "development" ? "12345678aaa$$R" : ""
-            }
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
-
-          <Form.Item
-            name="remember"
-            valuePropName="checked"
+          <h1 style={textStyle}>Sign in</h1>
+          <Form
+            className="padding-top-10"
+            name="basic"
+            labelCol={{
+              span: 8,
+            }}
             wrapperCol={{
-              offset: 8,
               span: 16,
             }}
+            style={{
+              maxWidth: 600,
+            }}
+            initialValues={{
+              remember: true,
+            }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
           >
-            <Checkbox
-              style={{
-                color: theme === "light" ? "black" : "white",
+            <Form.Item
+              label={<span style={textStyle}>Email</span>}
+              name="email"
+              // initialValue={"test9@gmail.com"}
+              initialValue={
+                process.env.NODE_ENV === "development" ? "test9@gmail.com" : ""
+              }
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your username!",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              label={<span style={textStyle}>Password</span>}
+              name="password"
+              // initialValue={"12345678aaa$$R"}
+              initialValue={
+                process.env.NODE_ENV === "development" ? "12345678aaa$$R" : ""
+              }
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your password!",
+                },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+
+            <Form.Item
+              name="remember"
+              valuePropName="checked"
+              wrapperCol={{
+                offset: 8,
+                span: 16,
               }}
             >
-              Remember me
-            </Checkbox>
-          </Form.Item>
+              <Checkbox style={textStyle}>Remember me</Checkbox>
+            </Form.Item>
 
-          <Form.Item
-            wrapperCol={{
-              offset: 8,
-              span: 16,
-            }}
-          >
-            <Button loading={signinLoading} type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
+            <Form.Item
+              wrapperCol={{
+                offset: 8,
+                span: 16,
+              }}
+            >
+              <Button loading={signinLoading} type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       </div>
     </div>
   );

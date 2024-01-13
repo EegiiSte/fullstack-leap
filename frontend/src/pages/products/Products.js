@@ -1,31 +1,63 @@
-import { Button, Card, ColorPicker, Flex, Space, Typography } from "antd";
+import { Button, Flex, Image, Tag, Tooltip } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../component/header/Header";
 import { MatrixBG } from "../../component/matrix";
-import { useProductsContext } from "../../context/ProductsContext";
-import { useThemeContext } from "../../context/ThemeContext";
 import { CreateProductModal } from "./CreateProductModal";
 import "./Product.css";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  EditFilled,
+  DeleteFilled,
+} from "@ant-design/icons";
+import { DeleteProductModal } from "../product/modal/DeleteProductModal";
+import { EditProductModal2 } from "../product/modal/EditProductModal2";
+import {
+  useProductsContext,
+  useThemeContext,
+  useUserContext,
+} from "../../context";
 
 export const Products = () => {
-  // const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openCreate, setOpenCreate] = React.useState(false);
+  const handleOpenCreate = () => setOpenCreate(true);
+  const handleCloseCreate = () => setOpenCreate(false);
 
   const { products, productContextLoading } = useProductsContext();
-  const { theme } = useThemeContext();
+  const { theme, textStyle } = useThemeContext();
+  const { currentUser } = useUserContext();
 
-  const [bgColor, setBgColor] = useState("#cbdaf0a8");
-  const [cardBoxColor, setCardBoxColor] = useState("#0000006c");
-  const [textColor, setTextColor] = useState("white");
+  const [selectedProduct, setSelectedProduct] = useState({});
+  const [open, setOpen] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [newImageUrl, setNewImageUrl] = useState("");
 
-  // console.log("Products", bgColor);
+  //function for edit modal
+  const handleOpen = (product) => {
+    setOpen(true);
+    setSelectedProduct(product);
+  };
 
-  // console.log("Products", products)
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedProduct({});
+
+    setNewImageUrl("");
+  };
+
+  //for delete modal
+  const handleOpenDelete = (product) => {
+    setOpenDelete(true);
+    setSelectedProduct(product);
+  };
+
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
+    setSelectedProduct({});
+  };
 
   if (productContextLoading) {
     return <div>...Loading Products</div>;
@@ -40,23 +72,22 @@ export const Products = () => {
       )}
 
       <div
-        className="d-flex flex-direction-c just-s-evenly width-100pr padding-top-10"
+        className=" d-flex flex-direction-c just-s-evenly width-100pr padding-top-10"
         style={{
           textShadow:
             theme === "light" ? "0px 0px 0px black" : "0px 0px 4px black",
-          color: theme === "light" ? "black" : "white",
+          ...textStyle,
         }}
       >
-        <div className="d-flex flex-direction-row just-s-evenly">
+        <div className=" d-flex flex-direction-row just-s-evenly">
           This is Products page
           <div>
             <Button
               block
-              onClick={handleOpen}
+              onClick={handleOpenCreate}
               style={{
-                // backgroundColor: theme === "light" ? "white" : cardBoxColor,
+                ...textStyle,
                 backgroundColor: theme === "light" ? "white" : "#0000007c",
-                color: theme === "light" ? "black" : textColor,
               }}
             >
               Create Product
@@ -76,95 +107,112 @@ export const Products = () => {
         {products &&
           products.map((product) => (
             <div
-              className="d-flex flex-direction-c just-s-evenly "
+              className=" d-flex flex-direction-c just-s-evenly "
               key={product.id}
               style={{
+                ...textStyle,
                 border: "1px solid white",
-                // boxShadow:
-                //   theme === "light"
-                //     ? "0px 0px 10px gray"
-                //     : "0px 0px 20px white",
-                backgroundColor: theme === "light" ? "white" : cardBoxColor,
-                width: 200,
-                height: 160,
+                width: 240,
+                height: 320,
                 borderRadius: "10px",
-                padding: "20px",
-                margin: "20px",
-                color: theme === "light" ? "black" : textColor,
+                overflow: "hidden",
+                backgroundColor: theme === "light" ? "white" : "",
               }}
-              onClick={() => navigate(`/products/${product._id}`)}
             >
-              <p
-                className="d-flex just-c"
-                style={{
-                  width: "30%",
-                  borderRadius: "5px",
-
-                  backgroundColor: product.type === "public" ? "green" : "gray",
-                }}
-              >
-                {product.type}
-              </p>
-              <div className="d-flex flex-wrap-wrap just-c align-c">
-                <h3>Name : {product.name}</h3>
-                <p>Price : {product.price}</p>
-                <p>Description : {product.description}</p>
-                <p>Category : {product.category}</p>
+              <div className="d-flex align-c just-c" style={{ height: "10%" }}>
+                <p
+                  style={{
+                    fontSize: "12px",
+                  }}
+                >
+                  Created by : {product.userEmail}
+                </p>
               </div>
-              <p
+              <div
                 style={{
-                  fontSize: "12px",
+                  height: "40%",
+                  overflow: "hidden",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                Created User : {product.userEmail}
-              </p>
+                <Image height={"100%"} src={product.image} />
+              </div>
+              <div
+                className="d-flex align-c just-start"
+                // style={{ height: "10%" }}
+              >
+                <Tag color={product.type === "public" ? "success" : "cyan"}>
+                  {product.type}
+                </Tag>
+              </div>
+              <div
+                className="d-flex flex-direction-c just-c"
+                style={{ height: "30%", overflow: "hidden" }}
+              >
+                <div className="d-flex flex-direction-c just-c align-c">
+                  <div
+                    style={{
+                      width: "80%",
+
+                      justifyContent: "space-between",
+                    }}
+                    onClick={() => navigate(`/products/${product._id}`)}
+                  >
+                    <p>Name : {product.name}</p>
+                    <p>Price : ${product.price}</p>
+                    <p style={{ height: "10" }}>
+                      Description : {product.description.toString[(0, 1)]}
+                    </p>
+                    <p>Category : {product.category}</p>
+                  </div>
+                </div>
+              </div>
+              {product.userEmail === currentUser.user.email ? (
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-evenly",
+                  }}
+                >
+                  <Button
+                    icon={theme === "light" ? <EditOutlined /> : <EditFilled />}
+                    onClick={() => handleOpen(product)}
+                  />
+                  <Button
+                    icon={
+                      theme === "light" ? <DeleteOutlined /> : <DeleteFilled />
+                    }
+                    onClick={() => handleOpenDelete(product)}
+                  />
+                </div>
+              ) : (
+                <div />
+              )}
             </div>
           ))}
       </Flex>
 
-      <CreateProductModal handleClose={handleClose} open={open} />
+      <EditProductModal2
+        handleClose={handleClose}
+        open={open}
+        selectedProduct={selectedProduct}
+        id={selectedProduct._id}
+        newImageUrl={newImageUrl}
+        setNewImageUrl={setNewImageUrl}
+      />
+      <DeleteProductModal
+        handleCloseDelete={handleCloseDelete}
+        openDelete={openDelete}
+        product={selectedProduct}
+        id={selectedProduct._id}
+      />
+      <CreateProductModal
+        handleCloseCreate={handleCloseCreate}
+        openCreate={openCreate}
+      />
     </div>
   );
 };
-
-// <Card
-//               hoverable
-//               style={{
-//                 flexWrap: "wrap",
-//                 width: 260,
-//                 height: 194,
-//               }}
-//               bodyStyle={{
-//                 borderRadius: "10px",
-//                 // padding: 10,
-//                 overflow: "hidden",
-//                 backgroundColor:
-//                   theme === "light" ? "transperint" : cardBoxColor,
-//               }}
-//               onClick={() => navigate(`/products/${product._id}`)}
-//             >
-//               <Flex justify="center">
-//                 <Flex
-//                   vertical
-//                   align="center"
-//                   justify="center"
-//                   style={{
-//                     // padding: 10,
-//                     fontSize: 10,
-//                   }}
-//                 >
-//                   <Typography
-//                     level={2}
-//                     style={{
-//                       fontSize: 14,
-//                       color: theme === "light" ? "black" : textColor,
-//                     }}
-//                   >
-//                     <p>Name : {product.name}</p>
-//                     <p>Price : {product.price}</p>
-//                     <p>Description : {product.description}</p>
-//                     <p>Category : {product.category}</p>
-//                   </Typography>
-//                 </Flex>
-//               </Flex>
-//             </Card>

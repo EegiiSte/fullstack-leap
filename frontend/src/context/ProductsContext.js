@@ -8,7 +8,6 @@ export const ProductContexProvider = ({ children }) => {
   const { currentUser, userContextLoading } = useUserContext();
 
   const [products, setProducts] = useState([]);
-
   const [productContextLoading, setProductContextLoading] = useState(true);
 
   useEffect(() => {
@@ -16,8 +15,8 @@ export const ProductContexProvider = ({ children }) => {
       const fetchProducts = async () => {
         try {
           const response = await axios.get(
-            // "https://fullstack-backend-pm5t.onrender.com/products",
-            "http://localhost:8080/products",
+            "https://fullstack-backend-pm5t.onrender.com/products",
+            // "http://localhost:8080/products",
             {
               headers: {
                 Authorization: `Bearer ${currentUser.token}`,

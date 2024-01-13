@@ -1,26 +1,25 @@
 import { Button, Form, Input, InputNumber, Radio } from "antd";
 import axios from "axios";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import React, { useState } from "react";
 import { Modal } from "../../component";
-import { useNotificationContext } from "../../context/NotificationContext";
-import { useProductsContext } from "../../context/ProductsContext";
-import { useUserContext } from "../../context/UserContext";
-import { storage } from "../../firebase/firebase";
+import {
+  useNotificationContext,
+  useProductsContext,
+  useUserContext,
+} from "../../context";
+
+import { uploadImage } from "../../utils";
 
 export const CreateProductModal = (props) => {
-  const { handleClose, open } = props;
+  const { handleCloseCreate, openCreate } = props;
 
   const { currentUser } = useUserContext();
   const { Create_Product } = useProductsContext();
-
-  //input values
   const { successNotification } = useNotificationContext();
 
   const [value3, setValue3] = useState("public");
 
-  const onChange3 = ({ target: { value } }) => {
-    console.log("radio3 checked", value);
+  const onChange = ({ target: { value } }) => {
     setValue3(value);
   };
 
@@ -40,26 +39,13 @@ export const CreateProductModal = (props) => {
 
   const [file, setFile] = useState();
 
-  const uploadImage = async () => {
-    const storageRef = ref(storage, file.name);
-    await uploadBytes(storageRef, file);
-    const downloadImageUrl = await getDownloadURL(storageRef);
-
-    return downloadImageUrl;
-  };
-
   const dulmaa = async (values) => {
-    const imageUrl = await uploadImage();
-
-    // console.log("CreateProductModal-imageUrl", imageUrl);
-
+    const imageUrl = await uploadImage(file);
     console.log("CreateProductModal", { ...values, image: imageUrl });
 
-    // console.log(`dulmaagaas - ${values}`, values);
-
     const response = await axios.post(
-      // "https://fullstack-backend-pm5t.onrender.com/products",
-      "http://localhost:8080/products/",
+      "https://fullstack-backend-pm5t.onrender.com/products",
+      // "http://localhost:8080/products/",
       { ...values, image: imageUrl },
       {
         headers: {
@@ -71,16 +57,14 @@ export const CreateProductModal = (props) => {
 
     const data = await response.data;
 
-    // console.log("CreateProductModal-data", data);
-
     Create_Product(data);
-    handleClose();
+    handleCloseCreate();
     successNotification("Create Product successfully");
   };
 
   return (
     <div>
-      <Modal handleClose={handleClose} open={open}>
+      <Modal handleClose={handleCloseCreate} open={openCreate}>
         <div className="d-flex flex-direction-c gap-10">
           <div className="d-flex just-c">
             <h3>Create Product</h3>
@@ -152,7 +136,7 @@ export const CreateProductModal = (props) => {
             >
               <Radio.Group
                 options={options}
-                onChange={onChange3}
+                onChange={onChange}
                 value={value3}
                 optionType="button"
                 buttonStyle="solid"
@@ -171,7 +155,7 @@ export const CreateProductModal = (props) => {
               <Button
                 block
                 onClick={() => {
-                  handleClose();
+                  handleCloseCreate();
                 }}
                 style={{ width: "100%" }}
               >

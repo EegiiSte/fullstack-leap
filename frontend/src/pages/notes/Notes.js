@@ -1,4 +1,4 @@
-import { Button, Card, ColorPicker, Flex, Space, Typography } from "antd";
+import { Button, ColorPicker, Flex } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../component/header/Header";
@@ -28,7 +28,6 @@ export const Notes = () => {
   return (
     <div className="d-flex align-c flex-wrap-wrap just-c">
       <Header />
-
       <div
         className="d-flex flex-direction-c just-s-evenly width-100pr padding-top-10"
         style={{

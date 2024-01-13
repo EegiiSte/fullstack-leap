@@ -10,6 +10,14 @@ export const ThemeContextProvider = (props) => {
 
   console.log("ThemeContextProvider - theme", theme);
 
+  const textStyle = {
+    textDecoration: "none",
+    color: theme === "light" ? "black" : "white",
+  };
+  const backgroundStyle = {
+    backgroundColor: theme === "light" ? "white" : "black",
+  };
+
   useEffect(() => {
     localStorage.setItem("theme", theme);
   }, [theme]);
@@ -19,6 +27,8 @@ export const ThemeContextProvider = (props) => {
       value={{
         setTheme,
         theme,
+        textStyle,
+        backgroundStyle,
       }}
     >
       {children}
