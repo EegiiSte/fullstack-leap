@@ -22,6 +22,7 @@ app.use(
 const usersRouter = require("./routes/users");
 const productsRouter = require("./routes/products");
 const notesRouter = require("./routes/notes");
+const accountsRouter = require("./routes/accounts");
 
 require("dotenv").config();
 
@@ -43,6 +44,8 @@ app.get("/", (req, res) => {
 app.use("/users", usersRouter);
 
 app.use("/products", productsRouter);
+
+app.use("/account", accountsRouter);
 
 app.use("/notes", notesRouter);
 

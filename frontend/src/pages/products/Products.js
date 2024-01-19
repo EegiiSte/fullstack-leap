@@ -1,5 +1,5 @@
 import { Button, Flex, Image, Tag, Tooltip } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../component/header/Header";
 import { MatrixBG } from "../../component/matrix";
@@ -29,11 +29,29 @@ export const Products = () => {
   const { products, productContextLoading } = useProductsContext();
   const { theme, textStyle } = useThemeContext();
   const { currentUser } = useUserContext();
+  console.log("Products-currentUser=", currentUser);
 
   const [selectedProduct, setSelectedProduct] = useState({});
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [newImageUrl, setNewImageUrl] = useState("");
+
+  // search
+  // console.log("Products-products=", products);
+
+  const [filteredArray, setFilteredArray] = useState(products);
+
+  // console.log("Products-filteredArray", filteredArray);
+
+  const handleInputSearch = (e) => {
+    const value = e.target.value;
+
+    const newPacientes = products.filter((product) =>
+      product.name.toLowerCase().includes(value.toLowerCase())
+    );
+
+    setFilteredArray(newPacientes);
+  };
 
   //function for edit modal
   const handleOpen = (product) => {
@@ -62,6 +80,9 @@ export const Products = () => {
   if (productContextLoading) {
     return <div>...Loading Products</div>;
   }
+  if (!productContextLoading && !products) {
+    return <div>...no data</div>;
+  }
   return (
     <div className="d-flex align-c flex-wrap-wrap just-c">
       <Header />
@@ -79,13 +100,24 @@ export const Products = () => {
           ...textStyle,
         }}
       >
-        <div className=" d-flex flex-direction-row just-s-evenly">
-          This is Products page
-          <div>
+        <div style={{}}>
+          <div className=" d-flex flex-direction-row just-s-evenly">
+            <input
+              onChange={handleInputSearch}
+              // value={searchValue}
+              placeholder="Search by name"
+              style={{
+                height: "40px",
+                width: "500px",
+              }}
+              // placeholder="Search"
+            ></input>
             <Button
               block
               onClick={handleOpenCreate}
               style={{
+                height: "46px",
+                width: "200px ",
                 ...textStyle,
                 backgroundColor: theme === "light" ? "white" : "#0000007c",
               }}
@@ -105,7 +137,7 @@ export const Products = () => {
         }}
       >
         {products &&
-          products.map((product) => (
+          filteredArray.map((product) => (
             <div
               className=" d-flex flex-direction-c just-s-evenly "
               key={product.id}
@@ -125,7 +157,13 @@ export const Products = () => {
                     fontSize: "12px",
                   }}
                 >
-                  Created by : {product.userEmail}
+                  <Image
+                    preview={false}
+                    height={"25px"}
+                    src={product.userPicUrl}
+                    style={{ borderRadius: "50%", border: "1px solid black" }}
+                  />
+                  : {product?.userEmail}
                 </p>
               </div>
               <div
@@ -169,7 +207,10 @@ export const Products = () => {
                   </div>
                 </div>
               </div>
-              {product.userEmail === currentUser.user.email ? (
+              {product.userEmail ===
+              (currentUser.user
+                ? currentUser.user.email
+                : currentUser.newUser.email) ? (
                 <div
                   style={{
                     width: "100%",

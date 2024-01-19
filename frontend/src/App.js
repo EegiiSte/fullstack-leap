@@ -4,6 +4,7 @@ import { SignUp } from "../src/pages/sign-up/SignUp";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import "./mainStyle.css";
 import { useUserContext } from "./context/UserContext";
+import Profile from "./pages/profile/Profile";
 
 export const App = () => {
   const { currentUser, userContextLoading } = useUserContext();
@@ -28,6 +29,10 @@ export const App = () => {
         <Route
           path="/products"
           element={currentUser ? <Products /> : <Navigate to="/sign-in" />}
+        />
+        <Route
+          path="/profile"
+          element={currentUser ? <Profile /> : <Navigate to="/profile" />}
         />
         <Route
           path="/products/:id"

@@ -8,7 +8,7 @@ const CreateToken = (id) => {
 };
 
 const signInUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, name, profilePicUrl } = req.body;
   console.log("signInUser", req.body);
 
   // Check if the email and password are provided
@@ -32,13 +32,15 @@ const signInUser = async (req, res) => {
   }
   const token = CreateToken(user._id);
 
-  res
-    .status(200)
-    .json({
-      message: "Sign in successfully",
-      user: { email: user.email },
-      token,
-    });
+  res.status(200).json({
+    message: "Sign in successfully",
+    user: {
+      email: user.email,
+      name: user.name,
+      profilePicUrl: user.profilePicUrl,
+    },
+    token,
+  });
 };
 
 module.exports = { signInUser };

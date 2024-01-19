@@ -1,13 +1,13 @@
 import { Switch } from "antd";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useNotificationContext } from "../../context/NotificationContext";
 import { useProductsContext } from "../../context/ProductsContext";
 import { useThemeContext } from "../../context/ThemeContext";
 import { useUserContext } from "../../context/UserContext";
 import "./Header.css";
 
-export const Header = () => {
+export const MobileHeader = () => {
   // console.log(`Header:user --> ${user}`);
 
   const { currentUser, signOut, userContextLoading } = useUserContext();
@@ -17,12 +17,11 @@ export const Header = () => {
 
   const { setTheme, theme, textStyle, backgroundStyle } = useThemeContext();
 
-  const navigate = useNavigate();
+  console.log("Header", theme);
 
   const handleLogOut = () => {
     signOut();
     setProducts([]);
-    navigate("/");
     successNotification("You have been logged out.");
   };
 
@@ -75,11 +74,11 @@ export const Header = () => {
 
         <div className="Header-Right">
           <div className="Header-Right_Item">
-            <Link to="/profile" style={textStyle}>
+            <div style={textStyle}>
               {currentUser.user
                 ? currentUser.user.email
                 : currentUser.newUser.email}
-            </Link>
+            </div>
           </div>
         </div>
         <div className="Header-Right">

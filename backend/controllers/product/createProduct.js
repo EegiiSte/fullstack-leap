@@ -1,7 +1,8 @@
 const Product = require("../../models/product");
 
 const createProduct = async (req, res) => {
-  const { name, price, description, category, type, image } = req.body;
+  const { name, price, description, category, type, image, userPicUrl } =
+    req.body;
   const userId = req.user._id;
   const userEmail = req.user.email;
 
@@ -33,6 +34,7 @@ const createProduct = async (req, res) => {
       type,
       userEmail,
       image,
+      userPicUrl,
     });
     res.status(201).json(product);
   } catch (err) {

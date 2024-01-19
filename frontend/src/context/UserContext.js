@@ -25,6 +25,9 @@ export const UserProvider = (props) => {
   const signIn = (userInfo) => {
     setCurrentUser(userInfo);
   };
+  const updateUser = (userInfo) => {
+    setCurrentUser(userInfo);
+  };
 
   const signOut = () => {
     console.log("UserProvider --> logout");
@@ -39,6 +42,7 @@ export const UserProvider = (props) => {
         signOut,
         signIn,
         signUp,
+        updateUser,
         userContextLoading,
       }}
     >

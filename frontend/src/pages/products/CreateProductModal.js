@@ -41,12 +41,16 @@ export const CreateProductModal = (props) => {
 
   const dulmaa = async (values) => {
     const imageUrl = await uploadImage(file);
-    console.log("CreateProductModal", { ...values, image: imageUrl });
+    // console.log("CreateProductModal", { ...values, image: imageUrl });
 
     const response = await axios.post(
-      "https://fullstack-backend-pm5t.onrender.com/products",
-      // "http://localhost:8080/products/",
-      { ...values, image: imageUrl },
+      // "https://fullstack-backend-pm5t.onrender.com/products",
+      "http://localhost:8080/products/",
+      {
+        ...values,
+        image: imageUrl,
+        userPicUrl: currentUser.user.profilePicUrl,
+      },
       {
         headers: {
           "Content-Type": "application/json",

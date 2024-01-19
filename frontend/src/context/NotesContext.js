@@ -16,8 +16,8 @@ export const NotesContexProvider = ({ children }) => {
       const fetchNotes = async () => {
         try {
           const response = await axios.get(
-            "https://fullstack-backend-pm5t.onrender.com/notes",
-            // "http://localhost:8080/notes",
+            // "https://fullstack-backend-pm5t.onrender.com/notes",
+            "http://localhost:8080/notes",
             {
               headers: {
                 Authorization: `Bearer ${currentUser.token}`,

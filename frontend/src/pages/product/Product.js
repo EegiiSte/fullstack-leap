@@ -17,12 +17,15 @@ export const Product = () => {
   //state for edit modal
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+  const handleClose = () => {
+    setOpen(false);
+    setNewImageUrl("");
+  };
   //state for delete modal
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
+  const [newImageUrl, setNewImageUrl] = useState("");
 
   //   console.log(`Product -> id ${id}`);
   const { products, productContextLoading } = useProductsContext();
@@ -185,6 +188,8 @@ export const Product = () => {
           open={open}
           selectedProduct={selectedProduct}
           id={id}
+          newImageUrl={newImageUrl}
+          setNewImageUrl={setNewImageUrl}
         />
         <DeleteProductModal
           handleCloseDelete={handleCloseDelete}

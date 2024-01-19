@@ -35,6 +35,9 @@ const productSchema = new mongoose.Schema(
     image: {
       type: "string",
     },
+    userPicUrl: {
+      type: "string",
+    },
   },
   { timestamps: true }
 );
