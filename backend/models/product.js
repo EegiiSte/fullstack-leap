@@ -8,7 +8,6 @@ const productSchema = new mongoose.Schema(
     },
     userEmail: {
       type: "string",
-      required: [true, "Product userEmail is required"],
     },
     price: {
       type: "number",

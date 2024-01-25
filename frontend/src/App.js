@@ -32,7 +32,7 @@ export const App = () => {
         />
         <Route
           path="/profile"
-          element={currentUser ? <Profile /> : <Navigate to="/profile" />}
+          element={currentUser ? <Profile /> : <Navigate to="/" />}
         />
         <Route
           path="/products/:id"

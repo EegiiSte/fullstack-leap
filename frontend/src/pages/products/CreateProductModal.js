@@ -49,7 +49,6 @@ export const CreateProductModal = (props) => {
       {
         ...values,
         image: imageUrl,
-        userPicUrl: currentUser.user.profilePicUrl,
       },
       {
         headers: {

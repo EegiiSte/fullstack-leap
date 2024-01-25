@@ -3,10 +3,8 @@ const bcrypt = require("bcrypt");
 const User = require("../../models/user");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
+const { CreateToken } = require("../../utils/utils");
 
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1d" });
-};
 const signUpUser = async (req, res) => {
   //Destructure email and password from req.body
   const { name, email, password } = req.body;
@@ -56,7 +54,7 @@ const signUpUser = async (req, res) => {
       email,
       password: hashedPassword,
     });
-    const token = createToken(newUser._id);
+    const token = CreateToken(newUser._id);
 
     // bryprt.compare() sign hiihdee hergelne
 

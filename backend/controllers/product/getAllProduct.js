@@ -1,12 +1,16 @@
 const Product = require("../../models/product");
+const User = require("../../models/user");
 
 const getAllProduct = async (req, res) => {
   const userId = req.user._id;
+  userProduct = await User.findById(userId);
+
+  userEmail = userProduct.email;
 
   try {
     const sort = { createdAt: -1 };
     const products = await Product.find({
-      $or: [{ userId }, { type: "public" }],
+      $or: [{ userId }, { type: "public" }, { userProduct }],
     }).sort(sort);
 
     if (!products) {

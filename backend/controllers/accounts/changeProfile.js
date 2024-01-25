@@ -2,14 +2,23 @@ const User = require("../../models/user");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Product = require("../../models/product");
 
 const CreateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1d" });
 };
 
 const changeProfile = async (req, res) => {
-  const { email, password, newEmail, newPassword, name, profilePicUrl } =
-    req.body;
+  const {
+    email,
+    password,
+    newEmail,
+    newPassword,
+    name,
+    profilePicUrl,
+    phoneNumber,
+    address,
+  } = req.body;
 
   if (!email || !password || !newEmail || !newPassword) {
     res.status(400).json({
@@ -54,6 +63,8 @@ const changeProfile = async (req, res) => {
     user.password = hashedNewPassword;
     user.name = name;
     user.profilePicUrl = profilePicUrl;
+    user.phoneNumber = phoneNumber;
+    user.address = address;
 
     const updatedUser = await user.save();
 
@@ -66,6 +77,8 @@ const changeProfile = async (req, res) => {
         name: updatedUser.name,
         id: updatedUser._id,
         profilePicUrl: updatedUser.profilePicUrl,
+        phoneNumber: updatedUser.phoneNumber,
+        address: updatedUser.address,
       },
       token,
     });

@@ -1,10 +1,12 @@
 const Product = require("../../models/product");
-
+const User = require("../../models/user");
 const createProduct = async (req, res) => {
   const { name, price, description, category, type, image, userPicUrl } =
     req.body;
   const userId = req.user._id;
   const userEmail = req.user.email;
+
+  const userProduct = await User.findById(userId);
 
   if (
     !name ||
@@ -13,7 +15,6 @@ const createProduct = async (req, res) => {
     !category ||
     !userId ||
     !type ||
-    !userEmail ||
     !image
   ) {
     return res.status(400).json({
@@ -32,11 +33,17 @@ const createProduct = async (req, res) => {
       category,
       userId,
       type,
-      userEmail,
       image,
-      userPicUrl,
     });
-    res.status(201).json(product);
+    res.status(200).json({
+      product: {
+        product,
+        userProduct: {
+          email: userProduct.email,
+          profilePicUrl: userProduct.profilePicUrl,
+        },
+      },
+    });
   } catch (err) {
     return res.status(500).json({
       message: err.message,

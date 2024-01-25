@@ -1,5 +1,6 @@
-import { Button, Flex } from "antd";
-import React, { useState } from "react";
+import { Button, Flex, Image, Tag } from "antd";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Header } from "../../component";
 import { MatrixBG } from "../../component/matrix";
@@ -34,6 +35,38 @@ export const Product = () => {
 
   const selectedProduct = products.find((product) => product._id === id);
 
+  console.log("Product-->selectedProduct", selectedProduct);
+
+  const [singleProduct, setSingleProduct] = useState([]);
+
+  console.log("Product-->singleProduct", singleProduct);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          // "https://fullstack-backend-pm5t.onrender.com/products",
+          `http://localhost:8080/products/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${currentUser.token}`,
+            },
+          }
+        );
+
+        const data = await response.data;
+
+        setSingleProduct(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (currentUser) {
+      fetchProducts();
+    }
+    return () => fetchProducts();
+  }, [currentUser]);
+
   // console.log(`Product -> currentUser.email ${currentUser.user.email}`);
   // console.log(`Product -> selectedProduct.email ${selectedProduct.userEmail}`);
 
@@ -64,7 +97,7 @@ export const Product = () => {
           }}
         >
           This is Single Product page
-          {currentUser.user.email === selectedProduct.userEmail ? (
+          {currentUser.user.email === singleProduct.userProduct?.email ? (
             <Flex className="gap-10" wrap="wrap" gap="small">
               <Button
                 block
@@ -91,7 +124,7 @@ export const Product = () => {
             <div />
           )}
         </div>
-        {selectedProduct && (
+        {singleProduct && (
           <div
             // className="box-shadow-gray"
             style={{
@@ -115,18 +148,17 @@ export const Product = () => {
                 color: theme === "light" ? "black" : "white",
               }}
             >
-              <p
-                className="d-flex just-c"
-                style={{
-                  width: "30%",
-                  borderRadius: "5px",
-
-                  backgroundColor:
-                    selectedProduct.type === "public" ? "green" : "gray",
-                }}
-              >
-                {selectedProduct.type}
-              </p>
+              <div className="d-flex align-c just-start">
+                <Tag
+                  color={
+                    singleProduct.product?.type === "public"
+                      ? "success"
+                      : "cyan"
+                  }
+                >
+                  {singleProduct.product?.type}
+                </Tag>
+              </div>
               <div
                 className="d-flex flex-direction-c just-c align-start "
                 style={{ gap: "10px" }}
@@ -134,23 +166,23 @@ export const Product = () => {
                 <p>
                   <div className="d-flex flex-direction-row">
                     <p>Name :</p>
-                    <p>{selectedProduct.name}</p>
+                    <p>{singleProduct.product?.name}</p>
                   </div>
                 </p>
                 <p>
                   <div className="d-flex flex-direction-row">
                     <p>Price : $</p>
-                    <p>{selectedProduct.price}</p>
+                    <p>{singleProduct.product?.price}</p>
                   </div>
                 </p>
                 <p>
                   <div className="d-flex flex-direction-row">
-                    <p>Category :</p> {selectedProduct.category}
+                    <p>Category :</p> {singleProduct.product?.category}
                   </div>
                 </p>
                 <div className="d-flex flex-direction-c gap-10">
                   <span>Description : </span>
-                  <span>{selectedProduct.description}</span>
+                  <span>{singleProduct.product?.description}</span>
                 </div>
               </div>
               <p
@@ -158,7 +190,13 @@ export const Product = () => {
                   fontSize: "12px",
                 }}
               >
-                Created User : {selectedProduct.userEmail}
+                <Image
+                  preview={false}
+                  height={"50px"}
+                  src={singleProduct?.userProduct.profilePicUrl}
+                  style={{ borderRadius: "50%", border: "1px solid black" }}
+                />{" "}
+                : {singleProduct?.userProduct.email}
               </p>
             </div>
             <div
@@ -174,7 +212,7 @@ export const Product = () => {
                 style={{
                   borderRadius: "5px",
                 }}
-                src={selectedProduct.image}
+                src={selectedProduct?.image}
                 alt={"productImage"}
                 // width="350px"
                 // height="150px"

@@ -1,4 +1,5 @@
 const Product = require("../../models/product");
+const User = require("../../models/user");
 const mongoose = require("mongoose");
 
 const getSingleProduct = async (req, res) => {
@@ -12,13 +13,21 @@ const getSingleProduct = async (req, res) => {
 
   const product = await Product.findById(id);
 
+  const userProduct = await User.findById(product.userId);
+
   if (!product) {
     res.status(404).json({
       message: "Get by id --> Product not found",
     });
     return;
   }
-  res.status(200).json(product);
+  res.status(200).json({
+    product,
+    userProduct: {
+      email: userProduct.email,
+      profilePicUrl: userProduct.profilePicUrl,
+    },
+  });
 };
 
 module.exports = { getSingleProduct };

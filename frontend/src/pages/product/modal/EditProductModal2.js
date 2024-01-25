@@ -24,7 +24,7 @@ export const EditProductModal2 = (props) => {
   const { currentUser } = useUserContext();
 
   const [disabledSubmitButton, setDisabledSubmitButton] = useState(true);
-  const [selectedType, setSelectedType] = useState(selectedProduct.type);
+  const [selectedType, setSelectedType] = useState(selectedProduct?.type);
 
   const lenght = newImageUrl?.length;
 

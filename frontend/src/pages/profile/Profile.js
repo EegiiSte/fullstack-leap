@@ -9,7 +9,7 @@ import { ProfileEditModal } from "./ProfileEditModal";
 const Profile = () => {
   const { theme } = useThemeContext();
   const { currentUser } = useUserContext();
-  console.log("Profile-currentUser", currentUser);
+  // console.log("Profile-currentUser", currentUser);
 
   const profileIcons = [
     {
@@ -103,7 +103,7 @@ const Profile = () => {
         >
           <div
             style={{
-              border: "1px solid red",
+              //   border: "1px solid red",
               height: "40%",
               width: "100%",
               display: "flex",
@@ -112,7 +112,7 @@ const Profile = () => {
           >
             <div
               style={{
-                border: "1px solid black",
+                // border: "1px solid black",
                 height: "90%",
                 width: "40%",
                 margin: "1%",
@@ -123,7 +123,7 @@ const Profile = () => {
             >
               <div
                 style={{
-                  border: "1px solid black",
+                  //   border: "1px solid black",
                   height: "90%",
                   width: "90%",
                   margin: "1%",
@@ -162,7 +162,7 @@ const Profile = () => {
             >
               <div
                 style={{
-                  border: "1px solid pink",
+                  //   border: "1px solid pink",
                   height: "90%",
                   width: "96%",
                   margin: "2%",
@@ -184,18 +184,33 @@ const Profile = () => {
                     : currentUser.newUser.email}
                 </div>
                 <div>Password : *******</div>
-                <div>Phone Number : 206 693 0000</div>
-                <div>Address : 9500 Painter Ave S, Seattle, WA 98118</div>
+                <div>
+                  Phone Number :{" "}
+                  {currentUser.user
+                    ? currentUser.user.phoneNumber
+                    : currentUser.newUser.phoneNumber}
+                </div>
+                <div>
+                  Address :
+                  {currentUser.user
+                    ? currentUser.user.address
+                    : currentUser.newUser.address}
+                </div>
               </div>
               <Button icon={<EditOutlined />} onClick={handleOpen} />
             </div>
           </div>
           <div
-            style={{ border: "1px solid  blue", height: "60%", width: "100%" }}
+            style={{
+              border: "1px solid  blue",
+              borderRadius: "5px",
+              height: "60%",
+              width: "100%",
+            }}
           >
             <div
               style={{
-                border: "1px solid pink",
+                // border: "1px solid pink",
                 height: "90%",
                 width: "96%",
                 margin: "2%",

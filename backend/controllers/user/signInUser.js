@@ -2,13 +2,10 @@ const mongoose = require("mongoose");
 const User = require("../../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
-const CreateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1d" });
-};
+const { CreateToken } = require("../../utils/utils");
 
 const signInUser = async (req, res) => {
-  const { email, password, name, profilePicUrl } = req.body;
+  const { email, password, name, profilePicUrl, phoneNumber } = req.body;
   console.log("signInUser", req.body);
 
   // Check if the email and password are provided
@@ -38,6 +35,9 @@ const signInUser = async (req, res) => {
       email: user.email,
       name: user.name,
       profilePicUrl: user.profilePicUrl,
+      phoneNumber: user.phoneNumber,
+      address: user.address,
+      userId: user._id,
     },
     token,
   });

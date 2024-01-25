@@ -74,6 +74,8 @@ export const ProfileEditModal = (props) => {
           newEmail: values.email,
           newPassword: values.newPassword,
           profilePicUrl: profilePicUrl,
+          phoneNumber: values.phoneNumber,
+          address: values.address,
         },
         {
           headers: {
@@ -89,7 +91,7 @@ export const ProfileEditModal = (props) => {
 
       if (data) {
         successNotification(
-          `Edit Profile successfully, Hello ${data.user.email}`
+          `Edit Profile successfully, Thank you ${data.user.email}`
         );
         setSigninLoading(false);
         updateUser(data);
@@ -176,7 +178,6 @@ export const ProfileEditModal = (props) => {
                 ? currentUser.user.name
                 : currentUser.newUser.name
             }
-            tooltip="What do you want others to call you?"
             rules={[
               {
                 required: false,
@@ -187,6 +188,7 @@ export const ProfileEditModal = (props) => {
           >
             <Input onChange={inputPress} />
           </Form.Item>
+
           <Form.Item
             name="email"
             label={
@@ -215,6 +217,60 @@ export const ProfileEditModal = (props) => {
             ]}
           >
             <Input disabled={false} onChange={inputPress} />
+          </Form.Item>
+          <Form.Item
+            name="phoneNumber"
+            label={
+              <span
+                style={{
+                  color: theme === "light" ? "black" : "white",
+                }}
+              >
+                Phone number
+              </span>
+            }
+            // initialValue={"test13"}
+            initialValue={
+              currentUser.user
+                ? currentUser.user.phoneNumber
+                : currentUser.newUser.phoneNumber
+            }
+            rules={[
+              {
+                required: false,
+                message: "Please input your phone number!",
+                whitespace: true,
+              },
+            ]}
+          >
+            <Input onChange={inputPress} />
+          </Form.Item>
+          <Form.Item
+            name="address"
+            label={
+              <span
+                style={{
+                  color: theme === "light" ? "black" : "white",
+                }}
+              >
+                Address
+              </span>
+            }
+            // initialValue={"test13"}
+            initialValue={
+              currentUser.user
+                ? currentUser.user.address
+                : currentUser.newUser.address
+            }
+            rules={[
+              {
+                required: false,
+                message: "Please input your address!",
+                whitespace: true,
+              },
+            ]}
+          >
+            <Input onChange={inputPress} />
           </Form.Item>
           <Form.Item
             name="password"

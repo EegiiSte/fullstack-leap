@@ -29,7 +29,8 @@ export const Products = () => {
   const { products, productContextLoading } = useProductsContext();
   const { theme, textStyle } = useThemeContext();
   const { currentUser } = useUserContext();
-  console.log("Products-currentUser=", currentUser);
+  // console.log("Products-currentUser=", currentUser);
+  // console.log("Products-singleUser=", singleUser);
 
   const [selectedProduct, setSelectedProduct] = useState({});
   const [open, setOpen] = useState(false);
@@ -37,7 +38,7 @@ export const Products = () => {
   const [newImageUrl, setNewImageUrl] = useState("");
 
   // search
-  // console.log("Products-products=", products);
+  console.log("Products-> products", products);
 
   const [filteredArray, setFilteredArray] = useState(products);
 
@@ -160,10 +161,10 @@ export const Products = () => {
                   <Image
                     preview={false}
                     height={"25px"}
-                    src={product.userPicUrl}
+                    src={product?.userProduct.profilePicUrl}
                     style={{ borderRadius: "50%", border: "1px solid black" }}
                   />
-                  : {product?.userEmail}
+                  : {product?.userProduct.email}
                 </p>
               </div>
               <div
@@ -201,7 +202,7 @@ export const Products = () => {
                     <p>Name : {product.name}</p>
                     <p>Price : ${product.price}</p>
                     <p style={{ height: "10" }}>
-                      Description : {product.description.toString[(0, 1)]}
+                      Description : {product.description}
                     </p>
                     <p>Category : {product.category}</p>
                   </div>
